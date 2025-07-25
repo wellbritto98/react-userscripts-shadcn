@@ -1,31 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-interface StatusBarProps {
-    currentTime: string;
-}
+export function StatusBar() {
+    const [currentTime, setCurrentTime] = useState("9:41");
 
-/**
- * Componente responsável pela barra de status do smartphone
- * @param currentTime - Horário atual a ser exibido
- */
-export function StatusBar({ currentTime }: StatusBarProps) {
+    useEffect(() => {
+        const extractTime = (text: string): string => {
+            const timeMatch = text.match(/(\d{1,2}:\d{2})/);
+            return timeMatch ? timeMatch[1] : "9:41";
+        };
+        const updateTimeFromElement = () => {
+            const timeElement = document.getElementById("character-tools-location");
+            if (timeElement && timeElement.textContent) {
+                const extractedTime = extractTime(timeElement.textContent);
+                setCurrentTime(extractedTime);
+            }
+        };
+        updateTimeFromElement();
+        const timeElement = document.getElementById("character-tools-location");
+        if (timeElement) {
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === "childList" || mutation.type === "characterData") {
+                        updateTimeFromElement();
+                    }
+                });
+            });
+            observer.observe(timeElement, {
+                childList: true,
+                subtree: true,
+                characterData: true
+            });
+            return () => {
+                observer.disconnect();
+            };
+        }
+    }, []);
+
     return (
-        <div className="ppm:flex ppm:justify-between ppm:items-center ppm:px-6 ppm:py-2 ppm:bg-white ppm:text-black ppm:text-sm ppm:font-medium">
-            <div className="ppm:flex ppm:items-center ppm:space-x-1">
-                <span>{currentTime}</span>
-            </div>
-            <div className="ppm:flex ppm:items-center ppm:space-x-1">
-                <div className="ppm:flex ppm:space-x-1">
-                    <div className="ppm:w-1 ppm:h-1 ppm:bg-black ppm:rounded-full"></div>
-                    <div className="ppm:w-1 ppm:h-1 ppm:bg-black ppm:rounded-full"></div>
-                    <div className="ppm:w-1 ppm:h-1 ppm:bg-black ppm:rounded-full"></div>
-                    <div className="ppm:w-1 ppm:h-1 ppm:bg-gray-300 ppm:rounded-full"></div>
-                </div>
-                <div className="ppm:w-6 ppm:h-3 ppm:border ppm:border-black ppm:rounded-sm ppm:relative">
-                    <div className="ppm:w-4 ppm:h-2 ppm:bg-black ppm:rounded-sm ppm:absolute ppm:top-0.5 ppm:left-0.5"></div>
-                    <div className="ppm:w-0.5 ppm:h-1 ppm:bg-black ppm:absolute ppm:-right-0.5 ppm:top-1"></div>
-                </div>
+        <div className="ppm:h-12 ppm:bg-gray-50 ppm:flex ppm:items-center ppm:justify-between ppm:px-6 ppm:pt-6">
+            <span className="ppm:text-sm ppm:font-medium">{currentTime}</span>
+            <div className="ppm:flex ppm:items-center ppm:gap-1">
+                <div className="ppm:w-4 ppm:h-2 ppm:bg-green-500 ppm:rounded-sm">100%</div>
             </div>
         </div>
     );
-}
+} 

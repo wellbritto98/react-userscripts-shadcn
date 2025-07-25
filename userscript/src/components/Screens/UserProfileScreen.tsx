@@ -3,12 +3,15 @@ import { Button } from "@/components/ui/button";
 import { CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { User, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
-export function UserProfile() {
+export function UserProfileScreen() {
     const { user, loading, logout } = useAuth();
+    const navigate = useNavigate();
 
     const handleLogout = async () => {
         await logout();
+        navigate("/login");
     };
 
     if (!user) return null;

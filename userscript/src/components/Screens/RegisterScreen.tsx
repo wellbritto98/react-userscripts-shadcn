@@ -4,40 +4,32 @@ import { CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
-export function AuthForm() {
-    const { login, register, loading, error, clearError } = useAuth();
+export function RegisterScreen() {
+    const { register, loading, error, clearError } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isRegistering, setIsRegistering] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         clearError();
-        if (isRegistering) {
-            await register(email, password);
-        } else {
-            await login(email, password);
-        }
+        await register(email, password);
         if (!error) {
             setEmail("");
             setPassword("");
         }
     };
 
-    const toggleMode = () => {
-        setIsRegistering(!isRegistering);
-        clearError();
-    };
-
     return (
         <>
             <CardHeader className="ppm:text-center ppm:pb-6">
                 <CardTitle className="ppm:text-2xl ppm:font-bold ppm:text-gray-900">
-                    {isRegistering ? 'Cadastro' : 'Login'}
+                    Cadastro
                 </CardTitle>
                 <p className="ppm:text-gray-600 ppm:text-sm">
-                    {isRegistering ? 'Crie sua conta' : 'Entre com suas credenciais'}
+                    Crie sua conta
                 </p>
             </CardHeader>
             <CardContent>
@@ -76,11 +68,9 @@ export function AuthForm() {
                             disabled={loading}
                             required
                         />
-                        {isRegistering && (
-                            <p className="ppm:text-xs ppm:text-gray-500">
-                                A senha deve ter pelo menos 6 caracteres
-                            </p>
-                        )}
+                        <p className="ppm:text-xs ppm:text-gray-500">
+                            A senha deve ter pelo menos 6 caracteres
+                        </p>
                     </div>
                     <Button 
                         type="submit" 
@@ -88,16 +78,16 @@ export function AuthForm() {
                         variant="default"
                         disabled={loading}
                     >
-                        {loading ? 'Carregando...' : (isRegistering ? 'Cadastrar' : 'Entrar')}
+                        {loading ? 'Carregando...' : 'Cadastrar'}
                     </Button>
                 </form>
                 <div className="ppm:mt-6 ppm:text-center">
                     <button 
-                        onClick={toggleMode}
+                        onClick={() => { clearError(); navigate("/login"); }}
                         className="ppm:text-sm ppm:text-blue-600 ppm:hover:underline ppm:bg-transparent ppm:border-none ppm:cursor-pointer"
                         disabled={loading}
                     >
-                        {isRegistering ? 'Já tem uma conta? Faça login' : 'Não tem uma conta? Cadastre-se'}
+                        Já tem uma conta? Faça login
                     </button>
                 </div>
             </CardContent>

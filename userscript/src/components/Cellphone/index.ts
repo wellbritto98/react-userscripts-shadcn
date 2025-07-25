@@ -1,5 +1,5 @@
-export { Cellphone } from "./cellphone";
-export { SmartphoneFrame } from "./SmartphoneFrame";
-export { StatusBar } from "./StatusBar";
-export { AuthForm } from "./AuthForm";
-export { UserProfile } from "./UserProfile";
+export * from "./cellphone";
+export * from "./StatusBar";
+export * from "./AuthForm";
+export * from "./UserProfile";
+export * from "./CloseButton";

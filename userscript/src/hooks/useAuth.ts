@@ -54,6 +54,7 @@ export function useAuth(): AuthState & AuthActions {
       setLoading(true);
       setError(null);
       await signInWithEmailAndPassword(auth, email, password);
+      setUser(auth.currentUser);
     } catch (err) {
       const authError = err as AuthError;
       setError(getErrorMessage(authError.code));

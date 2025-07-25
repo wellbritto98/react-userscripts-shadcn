@@ -1,12 +1,19 @@
 import { PluginOption, defineConfig } from "vite";
 import fs from "node:fs";
+import path from "path";
+import { execSync } from "child_process";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig(({ mode }) => {
     console.log("Building in", mode);
     return {
-        plugins: [bundlePlugin],
+        plugins: [react(), tailwindPlugin, bundlePlugin],
+        resolve: {
+            alias: {
+                "@": path.resolve(__dirname, "./src"),
+            },
+        },
         base: "./",
-        root: "../",
         build: {
             cssCodeSplit: false,
             cssMinify: false,
@@ -14,17 +21,22 @@ export default defineConfig(({ mode }) => {
             outDir: "dist",
             minify: false,
             sourcemap: false,
-            lib: {
-                entry: "userscript/src/index.tsx",
-                name: "userscript",
-                fileName: (_format) => `react-userscripts.user.js`,
-                formats: ["iife"],
+            watch: {
+                // Configuração do watch mode baseada no Rollup
+                include: 'src/**',
+                exclude: 'node_modules/**'
             },
             rollupOptions: {
-                output: {
-                    banner: `// ==UserScript==`,
-                    inlineDynamicImports: true,
+                input: {
+                    'react-userscripts.user': 'src/index.tsx'
                 },
+                external: [],
+                output: {
+                    entryFileNames: '[name].js',
+                    format: 'iife',
+                    name: 'ReactUserscripts',
+                    globals: {}
+                }
             },
         },
         preview: {
@@ -38,6 +50,26 @@ export default defineConfig(({ mode }) => {
         },
     };
 });
+
+// Plugin para executar Tailwind CSS antes do build
+const tailwindPlugin: PluginOption = {
+    name: "tailwind-plugin",
+    apply: "build",
+    enforce: "pre",
+    buildStart() {
+        console.log("\nExecutando Tailwind CSS...");
+        try {
+            execSync("npx @tailwindcss/cli -i ./src/globals.css -o ./src/App.css --minify", {
+                stdio: "inherit",
+                cwd: process.cwd()
+            });
+            console.log("Tailwind CSS executado com sucesso!");
+        } catch (error) {
+            console.error("Erro ao executar Tailwind CSS:", error);
+            throw error;
+        }
+    }
+};
 
 const bundlePlugin: PluginOption = {
     name: "bundle-plugin",

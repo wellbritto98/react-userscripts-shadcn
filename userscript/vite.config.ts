@@ -21,11 +21,6 @@ export default defineConfig(({ mode }) => {
             outDir: "dist",
             minify: false,
             sourcemap: false,
-            watch: {
-                // Configuração do watch mode baseada no Rollup
-                include: 'src/**',
-                exclude: 'node_modules/**'
-            },
             rollupOptions: {
                 input: {
                     'react-userscripts.user': 'src/index.tsx'

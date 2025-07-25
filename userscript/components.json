@@ -8,7 +8,7 @@
     "css": "src/globals.css",
     "baseColor": "neutral",
     "cssVariables": true,
-    "prefix": ""
+    "prefix": "ppm"
   },
   "aliases": {
     "components": "@/components",

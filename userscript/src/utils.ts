@@ -4,7 +4,7 @@
  * @export
  * @param {*} args
  */
-export function log(...args) {
+export function log(...args: string[]) {
     console.log(
         "%cUserscript (React Mode):",
         "color: purple; font-weight: bold",
@@ -19,8 +19,8 @@ export function log(...args) {
  * @param {string} arg
  * @returns {Promise} - the `fetch` promise
  */
-export function logFetch(arg) {
-    const url = new URL(arg, window.location);
+export function logFetch(arg: string | URL) {
+    const url = new URL(arg, window.location.toString());
     log("fetching", "" + url);
     return fetch("" + url, { credentials: "include" });
 }
@@ -33,13 +33,18 @@ export function logFetch(arg) {
  * @param {function} callback - function to be called when URL changes
  * @returns {MutationObserver} - MutationObserver that watches the URL
  */
-export function addLocationChangeCallback(callback) {
+export function addLocationChangeCallback(callback: () => void): MutationObserver {
     // Run the callback once right at the start
     window.setTimeout(callback, 0);
 
     // Set up a `MutationObserver` to watch for changes in the URL
     let oldHref = window.location.href;
     const body = document.querySelector("body");
+    
+    if (!body) {
+        throw new Error("Body element not found");
+    }
+    
     const observer = new MutationObserver((mutations) => {
         if (mutations.some(() => oldHref !== document.location.href)) {
             oldHref = document.location.href;
@@ -60,10 +65,10 @@ export function addLocationChangeCallback(callback) {
  * @param {string} selector
  * @returns {DOMNode}
  */
-export async function awaitElement(selector) {
+export async function awaitElement(selector: string): Promise<Element> {
     const MAX_TRIES = 60;
     let tries = 0;
-    return new Promise((resolve, reject) => {
+    return new Promise<Element>((resolve, reject) => {
         function probe() {
             tries++;
             return document.querySelector(selector);

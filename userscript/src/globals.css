@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import "tailwindcss" prefix(ppm);
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -115,9 +115,9 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply ppm:border-border ppm:outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply ppm:bg-background ppm:text-foreground;
   }
 }

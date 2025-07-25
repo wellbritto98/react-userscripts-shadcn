@@ -5,27 +5,27 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "ppm:inline-flex ppm:items-center ppm:justify-center ppm:gap-2 ppm:whitespace-nowrap ppm:rounded-md ppm:text-sm ppm:font-medium ppm:transition-all ppm:disabled:pointer-events-none ppm:disabled:opacity-50 ppm:[&_svg]:pointer-events-none ppm:[&_svg:not([class*=size-])]:size-4 ppm:shrink-0 ppm:[&_svg]:shrink-0 ppm:outline-none ppm:focus-visible:border-ring ppm:focus-visible:ring-ring/50 ppm:focus-visible:ring-[3px] ppm:aria-invalid:ring-destructive/20 ppm:dark:aria-invalid:ring-destructive/40 ppm:aria-invalid:border-destructive",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+          "ppm:bg-primary ppm:text-primary-foreground ppm:shadow-xs ppm:hover:bg-primary/90",
         destructive:
-          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "ppm:bg-destructive ppm:text-white ppm:shadow-xs ppm:hover:bg-destructive/90 ppm:focus-visible:ring-destructive/20 ppm:dark:focus-visible:ring-destructive/40 ppm:dark:bg-destructive/60",
         outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+          "ppm:border ppm:bg-background ppm:shadow-xs ppm:hover:bg-accent ppm:hover:text-accent-foreground ppm:dark:bg-input/30 ppm:dark:border-input ppm:dark:hover:bg-input/50",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
+          "ppm:bg-secondary ppm:text-secondary-foreground ppm:shadow-xs ppm:hover:bg-secondary/80",
         ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
+          "ppm:hover:bg-accent ppm:hover:text-accent-foreground ppm:dark:hover:bg-accent/50",
+        link: "ppm:text-primary ppm:underline-offset-4 ppm:hover:underline",
       },
       size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-        icon: "size-9",
+        default: "ppm:h-9 ppm:px-4 ppm:py-2 ppm:has-[>svg]:px-3",
+        sm: "ppm:h-8 ppm:rounded-md ppm:gap-1.5 ppm:px-3 ppm:has-[>svg]:px-2.5",
+        lg: "ppm:h-10 ppm:rounded-md ppm:px-6 ppm:has-[>svg]:px-4",
+        icon: "ppm:size-9",
       },
     },
     defaultVariants: {

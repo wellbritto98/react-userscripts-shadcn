@@ -7,7 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 export function LoginScreen() {
-    const { login, loading, error, clearError, user } = useAuth();
+    const { login, loading, error, clearError } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -16,9 +16,6 @@ export function LoginScreen() {
         e.preventDefault();
         clearError();
         await login(email, password);
-        if (user) {
-            navigate("/profile");
-        }
         if (!error) {
             setEmail("");
             setPassword("");

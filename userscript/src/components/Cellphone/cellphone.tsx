@@ -1,54 +1,27 @@
-import React from "react";
-import { Card } from "@/components/ui/card";
-import { useAuth } from "@/hooks/useAuth";
+
 import { StatusBar } from "./StatusBar";
 import { CloseButton } from "./CloseButton";
-import { MemoryRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { MemoryRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LoginScreen } from "@/components/Screens/LoginScreen";
 import { RegisterScreen } from "@/components/Screens/RegisterScreen";
 import { UserProfileScreen } from "@/components/Screens/UserProfileScreen";
+import { MainScreen } from "../Screens/MainScreen";
+import { AjudaScreen } from "../Screens/AjudaScreen";
+import { ProtectedRoute } from "../Screens/ProtectedRoute";
+import { AuthenticatedLayout } from "../Screens/AuthenticatedLayout";
+import { HomeScreen } from "../Screens/HomeScreen";
+import { FindScreen } from "../Screens/FindScreen";
+import { PlusScreen } from "../Screens/PlusScreen";
+import { FavoritesScreen } from "../Screens/FavoritesScreen";
 
 interface CellphoneProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
-function MainScreen() {
-    const { user } = useAuth();
-    const location = useLocation();
-    // Redireciona para a tela correta conforme autenticação
-    if (user) {
-        if (location.pathname !== "/profile") {
-            return <Navigate to="/profile" replace />;
-        }
-    } else {
-        if (location.pathname !== "/login" && location.pathname !== "/register") {
-            return <Navigate to="/login" replace />;
-        }
-    }
-    return null;
-}
 
-function ConfigScreen() {
-    return (
-        <div className="ppm:space-y-4">
-            <h2 className="ppm:text-lg ppm:font-bold">Configurações</h2>
-            <p className="ppm:text-sm">Aqui vão as configurações do app.</p>
-            <Button variant="outline" size="sm" onClick={() => window.history.back()}>Voltar</Button>
-        </div>
-    );
-}
 
-function AjudaScreen() {
-    return (
-        <div className="ppm:space-y-4">
-            <h2 className="ppm:text-lg ppm:font-bold">Ajuda</h2>
-            <p className="ppm:text-sm">Aqui vão informações de ajuda.</p>
-            <Button variant="outline" size="sm" onClick={() => window.history.back()}>Voltar</Button>
-        </div>
-    );
-}
+
 
 export function Cellphone({ isOpen, onClose }: CellphoneProps) {
     if (!isOpen) return null;
@@ -63,13 +36,21 @@ export function Cellphone({ isOpen, onClose }: CellphoneProps) {
                     <MemoryRouter initialEntries={["/login"]}>
                         <div className="ppm:flex-1 ppm:p-6 ppm:pt-8">
                             <Routes>
-                                <Route path="/" element={<MainScreen />} />
+                                {/* Rotas públicas */}
                                 <Route path="/login" element={<LoginScreen />} />
                                 <Route path="/register" element={<RegisterScreen />} />
-                                <Route path="/profile" element={<UserProfileScreen />} />
-                                <Route path="/config" element={<ConfigScreen />} />
                                 <Route path="/ajuda" element={<AjudaScreen />} />
-                                <Route path="*" element={<Navigate to="/" replace />} />
+
+                                {/* Rotas autenticadas com layout */}
+                                <Route element={<ProtectedRoute><AuthenticatedLayout /></ProtectedRoute>}>
+                                    <Route path="/home" element={<HomeScreen />} />
+                                    <Route path="/find" element={<FindScreen />} />
+                                    <Route path="/plus" element={<PlusScreen />} />
+                                    <Route path="/favorites" element={<FavoritesScreen />} />
+                                    <Route path="/profile" element={<UserProfileScreen />} />
+                                </Route>
+
+                                <Route path="*" element={<Navigate to="/home" replace />} />
                             </Routes>
                         </div>
                     </MemoryRouter>

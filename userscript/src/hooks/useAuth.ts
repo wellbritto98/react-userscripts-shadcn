@@ -9,6 +9,7 @@ import {
   AuthError
 } from 'firebase/auth';
 import { auth } from '../lib/firebase';
+import { useNavigate } from 'react-router-dom';
 
 export interface AuthState {
   user: User | null;
@@ -31,6 +32,7 @@ export function useAuth(): AuthState & AuthActions {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   /**
    * Monitora mudanças no estado de autenticação
@@ -55,6 +57,9 @@ export function useAuth(): AuthState & AuthActions {
       setError(null);
       await signInWithEmailAndPassword(auth, email, password);
       setUser(auth.currentUser);
+      console.log(auth.currentUser);
+      navigate("/profile");
+
     } catch (err) {
       const authError = err as AuthError;
       setError(getErrorMessage(authError.code));
@@ -73,6 +78,7 @@ export function useAuth(): AuthState & AuthActions {
       setLoading(true);
       setError(null);
       await createUserWithEmailAndPassword(auth, email, password);
+      navigate("/login")
     } catch (err) {
       const authError = err as AuthError;
       setError(getErrorMessage(authError.code));
@@ -89,6 +95,8 @@ export function useAuth(): AuthState & AuthActions {
       setLoading(true);
       setError(null);
       await signOut(auth);
+      setUser(null);
+      navigate("/login")  
     } catch (err) {
       const authError = err as AuthError;
       setError(getErrorMessage(authError.code));

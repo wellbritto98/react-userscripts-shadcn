@@ -10,6 +10,9 @@
 
 (function() {
   "use strict";
+  function getDefaultExportFromCjs(x2) {
+    return x2 && x2.__esModule && Object.prototype.hasOwnProperty.call(x2, "default") ? x2["default"] : x2;
+  }
   var jsxRuntime = { exports: {} };
   var reactJsxRuntime_production_min = {};
   var react = { exports: {} };
@@ -301,6 +304,7 @@
     react.exports = react_production_min;
   }
   var reactExports = react.exports;
+  const React = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
   /**
    * @license React
    * react-jsx-runtime.production.min.js
@@ -10726,6 +10730,2391 @@
       }
     );
   }
+  function StatusBar() {
+    const [currentTime, setCurrentTime] = reactExports.useState("9:41");
+    reactExports.useEffect(() => {
+      const extractTime = (text) => {
+        const timeMatch = text.match(/(\d{1,2}:\d{2})/);
+        return timeMatch ? timeMatch[1] : "9:41";
+      };
+      const updateTimeFromElement = () => {
+        const timeElement2 = document.getElementById("character-tools-location");
+        if (timeElement2 && timeElement2.textContent) {
+          const extractedTime = extractTime(timeElement2.textContent);
+          setCurrentTime(extractedTime);
+        }
+      };
+      updateTimeFromElement();
+      const timeElement = document.getElementById("character-tools-location");
+      if (timeElement) {
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type === "childList" || mutation.type === "characterData") {
+              updateTimeFromElement();
+            }
+          });
+        });
+        observer.observe(timeElement, {
+          childList: true,
+          subtree: true,
+          characterData: true
+        });
+        return () => {
+          observer.disconnect();
+        };
+      }
+    }, []);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ppm:h-12 ppm:bg-gray-50 ppm:flex ppm:items-center ppm:justify-between ppm:px-6 ppm:pt-6", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ppm:text-sm ppm:font-medium", children: currentTime }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:flex ppm:items-center ppm:gap-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:w-4 ppm:h-2 ppm:bg-green-500 ppm:rounded-sm", children: "100%" }) })
+    ] });
+  }
+  /**
+   * @license lucide-react v0.525.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   */
+  const toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+  const toCamelCase = (string) => string.replace(
+    /^([A-Z])|[\s-_]+(\w)/g,
+    (match, p1, p2) => p2 ? p2.toUpperCase() : p1.toLowerCase()
+  );
+  const toPascalCase = (string) => {
+    const camelCase = toCamelCase(string);
+    return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+  };
+  const mergeClasses = (...classes) => classes.filter((className, index, array) => {
+    return Boolean(className) && className.trim() !== "" && array.indexOf(className) === index;
+  }).join(" ").trim();
+  const hasA11yProp = (props) => {
+    for (const prop in props) {
+      if (prop.startsWith("aria-") || prop === "role" || prop === "title") {
+        return true;
+      }
+    }
+  };
+  /**
+   * @license lucide-react v0.525.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   */
+  var defaultAttributes = {
+    xmlns: "http://www.w3.org/2000/svg",
+    width: 24,
+    height: 24,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 2,
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  };
+  /**
+   * @license lucide-react v0.525.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   */
+  const Icon = reactExports.forwardRef(
+    ({
+      color = "currentColor",
+      size = 24,
+      strokeWidth = 2,
+      absoluteStrokeWidth,
+      className = "",
+      children,
+      iconNode,
+      ...rest
+    }, ref) => reactExports.createElement(
+      "svg",
+      {
+        ref,
+        ...defaultAttributes,
+        width: size,
+        height: size,
+        stroke: color,
+        strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
+        className: mergeClasses("lucide", className),
+        ...!children && !hasA11yProp(rest) && { "aria-hidden": "true" },
+        ...rest
+      },
+      [
+        ...iconNode.map(([tag, attrs]) => reactExports.createElement(tag, attrs)),
+        ...Array.isArray(children) ? children : [children]
+      ]
+    )
+  );
+  /**
+   * @license lucide-react v0.525.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   */
+  const createLucideIcon = (iconName, iconNode) => {
+    const Component2 = reactExports.forwardRef(
+      ({ className, ...props }, ref) => reactExports.createElement(Icon, {
+        ref,
+        iconNode,
+        className: mergeClasses(
+          `lucide-${toKebabCase(toPascalCase(iconName))}`,
+          `lucide-${iconName}`,
+          className
+        ),
+        ...props
+      })
+    );
+    Component2.displayName = toPascalCase(iconName);
+    return Component2;
+  };
+  /**
+   * @license lucide-react v0.525.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   */
+  const __iconNode$2 = [
+    ["path", { d: "m16 17 5-5-5-5", key: "1bji2h" }],
+    ["path", { d: "M21 12H9", key: "dn1m92" }],
+    ["path", { d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4", key: "1uf3rs" }]
+  ];
+  const LogOut = createLucideIcon("log-out", __iconNode$2);
+  /**
+   * @license lucide-react v0.525.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   */
+  const __iconNode$1 = [
+    ["path", { d: "M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2", key: "975kel" }],
+    ["circle", { cx: "12", cy: "7", r: "4", key: "17ys0d" }]
+  ];
+  const User$1 = createLucideIcon("user", __iconNode$1);
+  /**
+   * @license lucide-react v0.525.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   */
+  const __iconNode = [
+    ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
+    ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
+  ];
+  const X = createLucideIcon("x", __iconNode);
+  function CloseButton({ onClose }) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Button,
+      {
+        onClick: onClose,
+        variant: "ghost",
+        size: "sm",
+        className: "ppm:absolute ppm:-top-2 ppm:-right-2 ppm:bg-white ppm:rounded-full ppm:w-8 ppm:h-8 ppm:p-0 ppm:z-10",
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "ppm:w-4 ppm:h-4" })
+      }
+    );
+  }
+  /**
+   * react-router v7.7.1
+   *
+   * Copyright (c) Remix Software Inc.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   */
+  function createMemoryHistory(options = {}) {
+    let { initialEntries = ["/"], initialIndex, v5Compat = false } = options;
+    let entries;
+    entries = initialEntries.map(
+      (entry, index2) => createMemoryLocation(
+        entry,
+        typeof entry === "string" ? null : entry.state,
+        index2 === 0 ? "default" : void 0
+      )
+    );
+    let index = clampIndex(
+      initialIndex == null ? entries.length - 1 : initialIndex
+    );
+    let action = "POP";
+    let listener = null;
+    function clampIndex(n2) {
+      return Math.min(Math.max(n2, 0), entries.length - 1);
+    }
+    function getCurrentLocation() {
+      return entries[index];
+    }
+    function createMemoryLocation(to, state = null, key) {
+      let location2 = createLocation(
+        entries ? getCurrentLocation().pathname : "/",
+        to,
+        state,
+        key
+      );
+      warning(
+        location2.pathname.charAt(0) === "/",
+        `relative pathnames are not supported in memory history: ${JSON.stringify(
+          to
+        )}`
+      );
+      return location2;
+    }
+    function createHref2(to) {
+      return typeof to === "string" ? to : createPath(to);
+    }
+    let history = {
+      get index() {
+        return index;
+      },
+      get action() {
+        return action;
+      },
+      get location() {
+        return getCurrentLocation();
+      },
+      createHref: createHref2,
+      createURL(to) {
+        return new URL(createHref2(to), "http://localhost");
+      },
+      encodeLocation(to) {
+        let path = typeof to === "string" ? parsePath(to) : to;
+        return {
+          pathname: path.pathname || "",
+          search: path.search || "",
+          hash: path.hash || ""
+        };
+      },
+      push(to, state) {
+        action = "PUSH";
+        let nextLocation = createMemoryLocation(to, state);
+        index += 1;
+        entries.splice(index, entries.length, nextLocation);
+        if (v5Compat && listener) {
+          listener({ action, location: nextLocation, delta: 1 });
+        }
+      },
+      replace(to, state) {
+        action = "REPLACE";
+        let nextLocation = createMemoryLocation(to, state);
+        entries[index] = nextLocation;
+        if (v5Compat && listener) {
+          listener({ action, location: nextLocation, delta: 0 });
+        }
+      },
+      go(delta) {
+        action = "POP";
+        let nextIndex = clampIndex(index + delta);
+        let nextLocation = entries[nextIndex];
+        index = nextIndex;
+        if (listener) {
+          listener({ action, location: nextLocation, delta });
+        }
+      },
+      listen(fn) {
+        listener = fn;
+        return () => {
+          listener = null;
+        };
+      }
+    };
+    return history;
+  }
+  function invariant(value, message) {
+    if (value === false || value === null || typeof value === "undefined") {
+      throw new Error(message);
+    }
+  }
+  function warning(cond, message) {
+    if (!cond) {
+      if (typeof console !== "undefined")
+        console.warn(message);
+      try {
+        throw new Error(message);
+      } catch (e) {
+      }
+    }
+  }
+  function createKey() {
+    return Math.random().toString(36).substring(2, 10);
+  }
+  function createLocation(current, to, state = null, key) {
+    let location2 = {
+      pathname: typeof current === "string" ? current : current.pathname,
+      search: "",
+      hash: "",
+      ...typeof to === "string" ? parsePath(to) : to,
+      state,
+      // TODO: This could be cleaned up.  push/replace should probably just take
+      // full Locations now and avoid the need to run through this flow at all
+      // But that's a pretty big refactor to the current test suite so going to
+      // keep as is for the time being and just let any incoming keys take precedence
+      key: to && to.key || key || createKey()
+    };
+    return location2;
+  }
+  function createPath({
+    pathname = "/",
+    search = "",
+    hash = ""
+  }) {
+    if (search && search !== "?")
+      pathname += search.charAt(0) === "?" ? search : "?" + search;
+    if (hash && hash !== "#")
+      pathname += hash.charAt(0) === "#" ? hash : "#" + hash;
+    return pathname;
+  }
+  function parsePath(path) {
+    let parsedPath = {};
+    if (path) {
+      let hashIndex = path.indexOf("#");
+      if (hashIndex >= 0) {
+        parsedPath.hash = path.substring(hashIndex);
+        path = path.substring(0, hashIndex);
+      }
+      let searchIndex = path.indexOf("?");
+      if (searchIndex >= 0) {
+        parsedPath.search = path.substring(searchIndex);
+        path = path.substring(0, searchIndex);
+      }
+      if (path) {
+        parsedPath.pathname = path;
+      }
+    }
+    return parsedPath;
+  }
+  function matchRoutes(routes, locationArg, basename = "/") {
+    return matchRoutesImpl(routes, locationArg, basename, false);
+  }
+  function matchRoutesImpl(routes, locationArg, basename, allowPartial) {
+    let location2 = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
+    let pathname = stripBasename(location2.pathname || "/", basename);
+    if (pathname == null) {
+      return null;
+    }
+    let branches = flattenRoutes(routes);
+    rankRouteBranches(branches);
+    let matches = null;
+    for (let i = 0; matches == null && i < branches.length; ++i) {
+      let decoded = decodePath(pathname);
+      matches = matchRouteBranch(
+        branches[i],
+        decoded,
+        allowPartial
+      );
+    }
+    return matches;
+  }
+  function flattenRoutes(routes, branches = [], parentsMeta = [], parentPath = "") {
+    let flattenRoute = (route, index, relativePath) => {
+      let meta = {
+        relativePath: relativePath === void 0 ? route.path || "" : relativePath,
+        caseSensitive: route.caseSensitive === true,
+        childrenIndex: index,
+        route
+      };
+      if (meta.relativePath.startsWith("/")) {
+        invariant(
+          meta.relativePath.startsWith(parentPath),
+          `Absolute route path "${meta.relativePath}" nested under path "${parentPath}" is not valid. An absolute child route path must start with the combined path of all its parent routes.`
+        );
+        meta.relativePath = meta.relativePath.slice(parentPath.length);
+      }
+      let path = joinPaths([parentPath, meta.relativePath]);
+      let routesMeta = parentsMeta.concat(meta);
+      if (route.children && route.children.length > 0) {
+        invariant(
+          // Our types know better, but runtime JS may not!
+          // @ts-expect-error
+          route.index !== true,
+          `Index routes must not have child routes. Please remove all child routes from route path "${path}".`
+        );
+        flattenRoutes(route.children, branches, routesMeta, path);
+      }
+      if (route.path == null && !route.index) {
+        return;
+      }
+      branches.push({
+        path,
+        score: computeScore(path, route.index),
+        routesMeta
+      });
+    };
+    routes.forEach((route, index) => {
+      var _a;
+      if (route.path === "" || !((_a = route.path) == null ? void 0 : _a.includes("?"))) {
+        flattenRoute(route, index);
+      } else {
+        for (let exploded of explodeOptionalSegments(route.path)) {
+          flattenRoute(route, index, exploded);
+        }
+      }
+    });
+    return branches;
+  }
+  function explodeOptionalSegments(path) {
+    let segments = path.split("/");
+    if (segments.length === 0)
+      return [];
+    let [first, ...rest] = segments;
+    let isOptional = first.endsWith("?");
+    let required = first.replace(/\?$/, "");
+    if (rest.length === 0) {
+      return isOptional ? [required, ""] : [required];
+    }
+    let restExploded = explodeOptionalSegments(rest.join("/"));
+    let result = [];
+    result.push(
+      ...restExploded.map(
+        (subpath) => subpath === "" ? required : [required, subpath].join("/")
+      )
+    );
+    if (isOptional) {
+      result.push(...restExploded);
+    }
+    return result.map(
+      (exploded) => path.startsWith("/") && exploded === "" ? "/" : exploded
+    );
+  }
+  function rankRouteBranches(branches) {
+    branches.sort(
+      (a, b) => a.score !== b.score ? b.score - a.score : compareIndexes(
+        a.routesMeta.map((meta) => meta.childrenIndex),
+        b.routesMeta.map((meta) => meta.childrenIndex)
+      )
+    );
+  }
+  var paramRe = /^:[\w-]+$/;
+  var dynamicSegmentValue = 3;
+  var indexRouteValue = 2;
+  var emptySegmentValue = 1;
+  var staticSegmentValue = 10;
+  var splatPenalty = -2;
+  var isSplat = (s) => s === "*";
+  function computeScore(path, index) {
+    let segments = path.split("/");
+    let initialScore = segments.length;
+    if (segments.some(isSplat)) {
+      initialScore += splatPenalty;
+    }
+    if (index) {
+      initialScore += indexRouteValue;
+    }
+    return segments.filter((s) => !isSplat(s)).reduce(
+      (score, segment) => score + (paramRe.test(segment) ? dynamicSegmentValue : segment === "" ? emptySegmentValue : staticSegmentValue),
+      initialScore
+    );
+  }
+  function compareIndexes(a, b) {
+    let siblings = a.length === b.length && a.slice(0, -1).every((n2, i) => n2 === b[i]);
+    return siblings ? (
+      // If two routes are siblings, we should try to match the earlier sibling
+      // first. This allows people to have fine-grained control over the matching
+      // behavior by simply putting routes with identical paths in the order they
+      // want them tried.
+      a[a.length - 1] - b[b.length - 1]
+    ) : (
+      // Otherwise, it doesn't really make sense to rank non-siblings by index,
+      // so they sort equally.
+      0
+    );
+  }
+  function matchRouteBranch(branch, pathname, allowPartial = false) {
+    let { routesMeta } = branch;
+    let matchedParams = {};
+    let matchedPathname = "/";
+    let matches = [];
+    for (let i = 0; i < routesMeta.length; ++i) {
+      let meta = routesMeta[i];
+      let end = i === routesMeta.length - 1;
+      let remainingPathname = matchedPathname === "/" ? pathname : pathname.slice(matchedPathname.length) || "/";
+      let match = matchPath(
+        { path: meta.relativePath, caseSensitive: meta.caseSensitive, end },
+        remainingPathname
+      );
+      let route = meta.route;
+      if (!match && end && allowPartial && !routesMeta[routesMeta.length - 1].route.index) {
+        match = matchPath(
+          {
+            path: meta.relativePath,
+            caseSensitive: meta.caseSensitive,
+            end: false
+          },
+          remainingPathname
+        );
+      }
+      if (!match) {
+        return null;
+      }
+      Object.assign(matchedParams, match.params);
+      matches.push({
+        // TODO: Can this as be avoided?
+        params: matchedParams,
+        pathname: joinPaths([matchedPathname, match.pathname]),
+        pathnameBase: normalizePathname(
+          joinPaths([matchedPathname, match.pathnameBase])
+        ),
+        route
+      });
+      if (match.pathnameBase !== "/") {
+        matchedPathname = joinPaths([matchedPathname, match.pathnameBase]);
+      }
+    }
+    return matches;
+  }
+  function matchPath(pattern, pathname) {
+    if (typeof pattern === "string") {
+      pattern = { path: pattern, caseSensitive: false, end: true };
+    }
+    let [matcher, compiledParams] = compilePath(
+      pattern.path,
+      pattern.caseSensitive,
+      pattern.end
+    );
+    let match = pathname.match(matcher);
+    if (!match)
+      return null;
+    let matchedPathname = match[0];
+    let pathnameBase = matchedPathname.replace(/(.)\/+$/, "$1");
+    let captureGroups = match.slice(1);
+    let params = compiledParams.reduce(
+      (memo2, { paramName, isOptional }, index) => {
+        if (paramName === "*") {
+          let splatValue = captureGroups[index] || "";
+          pathnameBase = matchedPathname.slice(0, matchedPathname.length - splatValue.length).replace(/(.)\/+$/, "$1");
+        }
+        const value = captureGroups[index];
+        if (isOptional && !value) {
+          memo2[paramName] = void 0;
+        } else {
+          memo2[paramName] = (value || "").replace(/%2F/g, "/");
+        }
+        return memo2;
+      },
+      {}
+    );
+    return {
+      params,
+      pathname: matchedPathname,
+      pathnameBase,
+      pattern
+    };
+  }
+  function compilePath(path, caseSensitive = false, end = true) {
+    warning(
+      path === "*" || !path.endsWith("*") || path.endsWith("/*"),
+      `Route path "${path}" will be treated as if it were "${path.replace(/\*$/, "/*")}" because the \`*\` character must always follow a \`/\` in the pattern. To get rid of this warning, please change the route path to "${path.replace(/\*$/, "/*")}".`
+    );
+    let params = [];
+    let regexpSource = "^" + path.replace(/\/*\*?$/, "").replace(/^\/*/, "/").replace(/[\\.*+^${}|()[\]]/g, "\\$&").replace(
+      /\/:([\w-]+)(\?)?/g,
+      (_, paramName, isOptional) => {
+        params.push({ paramName, isOptional: isOptional != null });
+        return isOptional ? "/?([^\\/]+)?" : "/([^\\/]+)";
+      }
+    );
+    if (path.endsWith("*")) {
+      params.push({ paramName: "*" });
+      regexpSource += path === "*" || path === "/*" ? "(.*)$" : "(?:\\/(.+)|\\/*)$";
+    } else if (end) {
+      regexpSource += "\\/*$";
+    } else if (path !== "" && path !== "/") {
+      regexpSource += "(?:(?=\\/|$))";
+    } else
+      ;
+    let matcher = new RegExp(regexpSource, caseSensitive ? void 0 : "i");
+    return [matcher, params];
+  }
+  function decodePath(value) {
+    try {
+      return value.split("/").map((v2) => decodeURIComponent(v2).replace(/\//g, "%2F")).join("/");
+    } catch (error) {
+      warning(
+        false,
+        `The URL path "${value}" could not be decoded because it is a malformed URL segment. This is probably due to a bad percent encoding (${error}).`
+      );
+      return value;
+    }
+  }
+  function stripBasename(pathname, basename) {
+    if (basename === "/")
+      return pathname;
+    if (!pathname.toLowerCase().startsWith(basename.toLowerCase())) {
+      return null;
+    }
+    let startIndex = basename.endsWith("/") ? basename.length - 1 : basename.length;
+    let nextChar = pathname.charAt(startIndex);
+    if (nextChar && nextChar !== "/") {
+      return null;
+    }
+    return pathname.slice(startIndex) || "/";
+  }
+  function resolvePath(to, fromPathname = "/") {
+    let {
+      pathname: toPathname,
+      search = "",
+      hash = ""
+    } = typeof to === "string" ? parsePath(to) : to;
+    let pathname = toPathname ? toPathname.startsWith("/") ? toPathname : resolvePathname(toPathname, fromPathname) : fromPathname;
+    return {
+      pathname,
+      search: normalizeSearch(search),
+      hash: normalizeHash(hash)
+    };
+  }
+  function resolvePathname(relativePath, fromPathname) {
+    let segments = fromPathname.replace(/\/+$/, "").split("/");
+    let relativeSegments = relativePath.split("/");
+    relativeSegments.forEach((segment) => {
+      if (segment === "..") {
+        if (segments.length > 1)
+          segments.pop();
+      } else if (segment !== ".") {
+        segments.push(segment);
+      }
+    });
+    return segments.length > 1 ? segments.join("/") : "/";
+  }
+  function getInvalidPathError(char, field, dest, path) {
+    return `Cannot include a '${char}' character in a manually specified \`to.${field}\` field [${JSON.stringify(
+      path
+    )}].  Please separate it out to the \`to.${dest}\` field. Alternatively you may provide the full path as a string in <Link to="..."> and the router will parse it for you.`;
+  }
+  function getPathContributingMatches(matches) {
+    return matches.filter(
+      (match, index) => index === 0 || match.route.path && match.route.path.length > 0
+    );
+  }
+  function getResolveToMatches(matches) {
+    let pathMatches = getPathContributingMatches(matches);
+    return pathMatches.map(
+      (match, idx) => idx === pathMatches.length - 1 ? match.pathname : match.pathnameBase
+    );
+  }
+  function resolveTo(toArg, routePathnames, locationPathname, isPathRelative = false) {
+    let to;
+    if (typeof toArg === "string") {
+      to = parsePath(toArg);
+    } else {
+      to = { ...toArg };
+      invariant(
+        !to.pathname || !to.pathname.includes("?"),
+        getInvalidPathError("?", "pathname", "search", to)
+      );
+      invariant(
+        !to.pathname || !to.pathname.includes("#"),
+        getInvalidPathError("#", "pathname", "hash", to)
+      );
+      invariant(
+        !to.search || !to.search.includes("#"),
+        getInvalidPathError("#", "search", "hash", to)
+      );
+    }
+    let isEmptyPath = toArg === "" || to.pathname === "";
+    let toPathname = isEmptyPath ? "/" : to.pathname;
+    let from;
+    if (toPathname == null) {
+      from = locationPathname;
+    } else {
+      let routePathnameIndex = routePathnames.length - 1;
+      if (!isPathRelative && toPathname.startsWith("..")) {
+        let toSegments = toPathname.split("/");
+        while (toSegments[0] === "..") {
+          toSegments.shift();
+          routePathnameIndex -= 1;
+        }
+        to.pathname = toSegments.join("/");
+      }
+      from = routePathnameIndex >= 0 ? routePathnames[routePathnameIndex] : "/";
+    }
+    let path = resolvePath(to, from);
+    let hasExplicitTrailingSlash = toPathname && toPathname !== "/" && toPathname.endsWith("/");
+    let hasCurrentTrailingSlash = (isEmptyPath || toPathname === ".") && locationPathname.endsWith("/");
+    if (!path.pathname.endsWith("/") && (hasExplicitTrailingSlash || hasCurrentTrailingSlash)) {
+      path.pathname += "/";
+    }
+    return path;
+  }
+  var joinPaths = (paths) => paths.join("/").replace(/\/\/+/g, "/");
+  var normalizePathname = (pathname) => pathname.replace(/\/+$/, "").replace(/^\/*/, "/");
+  var normalizeSearch = (search) => !search || search === "?" ? "" : search.startsWith("?") ? search : "?" + search;
+  var normalizeHash = (hash) => !hash || hash === "#" ? "" : hash.startsWith("#") ? hash : "#" + hash;
+  function isRouteErrorResponse(error) {
+    return error != null && typeof error.status === "number" && typeof error.statusText === "string" && typeof error.internal === "boolean" && "data" in error;
+  }
+  var validMutationMethodsArr = [
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE"
+  ];
+  new Set(
+    validMutationMethodsArr
+  );
+  var validRequestMethodsArr = [
+    "GET",
+    ...validMutationMethodsArr
+  ];
+  new Set(validRequestMethodsArr);
+  var DataRouterContext = reactExports.createContext(null);
+  DataRouterContext.displayName = "DataRouter";
+  var DataRouterStateContext = reactExports.createContext(null);
+  DataRouterStateContext.displayName = "DataRouterState";
+  reactExports.createContext(false);
+  var ViewTransitionContext = reactExports.createContext({
+    isTransitioning: false
+  });
+  ViewTransitionContext.displayName = "ViewTransition";
+  var FetchersContext = reactExports.createContext(
+    /* @__PURE__ */ new Map()
+  );
+  FetchersContext.displayName = "Fetchers";
+  var AwaitContext = reactExports.createContext(null);
+  AwaitContext.displayName = "Await";
+  var NavigationContext = reactExports.createContext(
+    null
+  );
+  NavigationContext.displayName = "Navigation";
+  var LocationContext = reactExports.createContext(
+    null
+  );
+  LocationContext.displayName = "Location";
+  var RouteContext = reactExports.createContext({
+    outlet: null,
+    matches: [],
+    isDataRoute: false
+  });
+  RouteContext.displayName = "Route";
+  var RouteErrorContext = reactExports.createContext(null);
+  RouteErrorContext.displayName = "RouteError";
+  function useHref(to, { relative } = {}) {
+    invariant(
+      useInRouterContext(),
+      // TODO: This error is probably because they somehow have 2 versions of the
+      // router loaded. We can help them understand how to avoid that.
+      `useHref() may be used only in the context of a <Router> component.`
+    );
+    let { basename, navigator: navigator2 } = reactExports.useContext(NavigationContext);
+    let { hash, pathname, search } = useResolvedPath(to, { relative });
+    let joinedPathname = pathname;
+    if (basename !== "/") {
+      joinedPathname = pathname === "/" ? basename : joinPaths([basename, pathname]);
+    }
+    return navigator2.createHref({ pathname: joinedPathname, search, hash });
+  }
+  function useInRouterContext() {
+    return reactExports.useContext(LocationContext) != null;
+  }
+  function useLocation() {
+    invariant(
+      useInRouterContext(),
+      // TODO: This error is probably because they somehow have 2 versions of the
+      // router loaded. We can help them understand how to avoid that.
+      `useLocation() may be used only in the context of a <Router> component.`
+    );
+    return reactExports.useContext(LocationContext).location;
+  }
+  var navigateEffectWarning = `You should call navigate() in a React.useEffect(), not when your component is first rendered.`;
+  function useIsomorphicLayoutEffect(cb2) {
+    let isStatic = reactExports.useContext(NavigationContext).static;
+    if (!isStatic) {
+      reactExports.useLayoutEffect(cb2);
+    }
+  }
+  function useNavigate() {
+    let { isDataRoute } = reactExports.useContext(RouteContext);
+    return isDataRoute ? useNavigateStable() : useNavigateUnstable();
+  }
+  function useNavigateUnstable() {
+    invariant(
+      useInRouterContext(),
+      // TODO: This error is probably because they somehow have 2 versions of the
+      // router loaded. We can help them understand how to avoid that.
+      `useNavigate() may be used only in the context of a <Router> component.`
+    );
+    let dataRouterContext = reactExports.useContext(DataRouterContext);
+    let { basename, navigator: navigator2 } = reactExports.useContext(NavigationContext);
+    let { matches } = reactExports.useContext(RouteContext);
+    let { pathname: locationPathname } = useLocation();
+    let routePathnamesJson = JSON.stringify(getResolveToMatches(matches));
+    let activeRef = reactExports.useRef(false);
+    useIsomorphicLayoutEffect(() => {
+      activeRef.current = true;
+    });
+    let navigate = reactExports.useCallback(
+      (to, options = {}) => {
+        warning(activeRef.current, navigateEffectWarning);
+        if (!activeRef.current)
+          return;
+        if (typeof to === "number") {
+          navigator2.go(to);
+          return;
+        }
+        let path = resolveTo(
+          to,
+          JSON.parse(routePathnamesJson),
+          locationPathname,
+          options.relative === "path"
+        );
+        if (dataRouterContext == null && basename !== "/") {
+          path.pathname = path.pathname === "/" ? basename : joinPaths([basename, path.pathname]);
+        }
+        (!!options.replace ? navigator2.replace : navigator2.push)(
+          path,
+          options.state,
+          options
+        );
+      },
+      [
+        basename,
+        navigator2,
+        routePathnamesJson,
+        locationPathname,
+        dataRouterContext
+      ]
+    );
+    return navigate;
+  }
+  var OutletContext = reactExports.createContext(null);
+  function useOutlet(context) {
+    let outlet = reactExports.useContext(RouteContext).outlet;
+    if (outlet) {
+      return /* @__PURE__ */ reactExports.createElement(OutletContext.Provider, { value: context }, outlet);
+    }
+    return outlet;
+  }
+  function useResolvedPath(to, { relative } = {}) {
+    let { matches } = reactExports.useContext(RouteContext);
+    let { pathname: locationPathname } = useLocation();
+    let routePathnamesJson = JSON.stringify(getResolveToMatches(matches));
+    return reactExports.useMemo(
+      () => resolveTo(
+        to,
+        JSON.parse(routePathnamesJson),
+        locationPathname,
+        relative === "path"
+      ),
+      [to, routePathnamesJson, locationPathname, relative]
+    );
+  }
+  function useRoutes(routes, locationArg) {
+    return useRoutesImpl(routes, locationArg);
+  }
+  function useRoutesImpl(routes, locationArg, dataRouterState, future) {
+    var _a;
+    invariant(
+      useInRouterContext(),
+      // TODO: This error is probably because they somehow have 2 versions of the
+      // router loaded. We can help them understand how to avoid that.
+      `useRoutes() may be used only in the context of a <Router> component.`
+    );
+    let { navigator: navigator2 } = reactExports.useContext(NavigationContext);
+    let { matches: parentMatches } = reactExports.useContext(RouteContext);
+    let routeMatch = parentMatches[parentMatches.length - 1];
+    let parentParams = routeMatch ? routeMatch.params : {};
+    let parentPathname = routeMatch ? routeMatch.pathname : "/";
+    let parentPathnameBase = routeMatch ? routeMatch.pathnameBase : "/";
+    let parentRoute = routeMatch && routeMatch.route;
+    {
+      let parentPath = parentRoute && parentRoute.path || "";
+      warningOnce(
+        parentPathname,
+        !parentRoute || parentPath.endsWith("*") || parentPath.endsWith("*?"),
+        `You rendered descendant <Routes> (or called \`useRoutes()\`) at "${parentPathname}" (under <Route path="${parentPath}">) but the parent route path has no trailing "*". This means if you navigate deeper, the parent won't match anymore and therefore the child routes will never render.
+
+Please change the parent <Route path="${parentPath}"> to <Route path="${parentPath === "/" ? "*" : `${parentPath}/*`}">.`
+      );
+    }
+    let locationFromContext = useLocation();
+    let location2;
+    if (locationArg) {
+      let parsedLocationArg = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
+      invariant(
+        parentPathnameBase === "/" || ((_a = parsedLocationArg.pathname) == null ? void 0 : _a.startsWith(parentPathnameBase)),
+        `When overriding the location using \`<Routes location>\` or \`useRoutes(routes, location)\`, the location pathname must begin with the portion of the URL pathname that was matched by all parent routes. The current pathname base is "${parentPathnameBase}" but pathname "${parsedLocationArg.pathname}" was given in the \`location\` prop.`
+      );
+      location2 = parsedLocationArg;
+    } else {
+      location2 = locationFromContext;
+    }
+    let pathname = location2.pathname || "/";
+    let remainingPathname = pathname;
+    if (parentPathnameBase !== "/") {
+      let parentSegments = parentPathnameBase.replace(/^\//, "").split("/");
+      let segments = pathname.replace(/^\//, "").split("/");
+      remainingPathname = "/" + segments.slice(parentSegments.length).join("/");
+    }
+    let matches = matchRoutes(routes, { pathname: remainingPathname });
+    {
+      warning(
+        parentRoute || matches != null,
+        `No routes matched location "${location2.pathname}${location2.search}${location2.hash}" `
+      );
+      warning(
+        matches == null || matches[matches.length - 1].route.element !== void 0 || matches[matches.length - 1].route.Component !== void 0 || matches[matches.length - 1].route.lazy !== void 0,
+        `Matched leaf route at location "${location2.pathname}${location2.search}${location2.hash}" does not have an element or Component. This means it will render an <Outlet /> with a null value by default resulting in an "empty" page.`
+      );
+    }
+    let renderedMatches = _renderMatches(
+      matches && matches.map(
+        (match) => Object.assign({}, match, {
+          params: Object.assign({}, parentParams, match.params),
+          pathname: joinPaths([
+            parentPathnameBase,
+            // Re-encode pathnames that were decoded inside matchRoutes
+            navigator2.encodeLocation ? navigator2.encodeLocation(match.pathname).pathname : match.pathname
+          ]),
+          pathnameBase: match.pathnameBase === "/" ? parentPathnameBase : joinPaths([
+            parentPathnameBase,
+            // Re-encode pathnames that were decoded inside matchRoutes
+            navigator2.encodeLocation ? navigator2.encodeLocation(match.pathnameBase).pathname : match.pathnameBase
+          ])
+        })
+      ),
+      parentMatches,
+      dataRouterState,
+      future
+    );
+    if (locationArg && renderedMatches) {
+      return /* @__PURE__ */ reactExports.createElement(
+        LocationContext.Provider,
+        {
+          value: {
+            location: {
+              pathname: "/",
+              search: "",
+              hash: "",
+              state: null,
+              key: "default",
+              ...location2
+            },
+            navigationType: "POP"
+            /* Pop */
+          }
+        },
+        renderedMatches
+      );
+    }
+    return renderedMatches;
+  }
+  function DefaultErrorComponent() {
+    let error = useRouteError();
+    let message = isRouteErrorResponse(error) ? `${error.status} ${error.statusText}` : error instanceof Error ? error.message : JSON.stringify(error);
+    let stack = error instanceof Error ? error.stack : null;
+    let lightgrey = "rgba(200,200,200, 0.5)";
+    let preStyles = { padding: "0.5rem", backgroundColor: lightgrey };
+    let codeStyles = { padding: "2px 4px", backgroundColor: lightgrey };
+    let devInfo = null;
+    {
+      console.error(
+        "Error handled by React Router default ErrorBoundary:",
+        error
+      );
+      devInfo = /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("p", null, "💿 Hey developer 👋"), /* @__PURE__ */ reactExports.createElement("p", null, "You can provide a way better UX than this when your app throws errors by providing your own ", /* @__PURE__ */ reactExports.createElement("code", { style: codeStyles }, "ErrorBoundary"), " or", " ", /* @__PURE__ */ reactExports.createElement("code", { style: codeStyles }, "errorElement"), " prop on your route."));
+    }
+    return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("h2", null, "Unexpected Application Error!"), /* @__PURE__ */ reactExports.createElement("h3", { style: { fontStyle: "italic" } }, message), stack ? /* @__PURE__ */ reactExports.createElement("pre", { style: preStyles }, stack) : null, devInfo);
+  }
+  var defaultErrorElement = /* @__PURE__ */ reactExports.createElement(DefaultErrorComponent, null);
+  var RenderErrorBoundary = class extends reactExports.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        location: props.location,
+        revalidation: props.revalidation,
+        error: props.error
+      };
+    }
+    static getDerivedStateFromError(error) {
+      return { error };
+    }
+    static getDerivedStateFromProps(props, state) {
+      if (state.location !== props.location || state.revalidation !== "idle" && props.revalidation === "idle") {
+        return {
+          error: props.error,
+          location: props.location,
+          revalidation: props.revalidation
+        };
+      }
+      return {
+        error: props.error !== void 0 ? props.error : state.error,
+        location: state.location,
+        revalidation: props.revalidation || state.revalidation
+      };
+    }
+    componentDidCatch(error, errorInfo) {
+      console.error(
+        "React Router caught the following error during render",
+        error,
+        errorInfo
+      );
+    }
+    render() {
+      return this.state.error !== void 0 ? /* @__PURE__ */ reactExports.createElement(RouteContext.Provider, { value: this.props.routeContext }, /* @__PURE__ */ reactExports.createElement(
+        RouteErrorContext.Provider,
+        {
+          value: this.state.error,
+          children: this.props.component
+        }
+      )) : this.props.children;
+    }
+  };
+  function RenderedRoute({ routeContext, match, children }) {
+    let dataRouterContext = reactExports.useContext(DataRouterContext);
+    if (dataRouterContext && dataRouterContext.static && dataRouterContext.staticContext && (match.route.errorElement || match.route.ErrorBoundary)) {
+      dataRouterContext.staticContext._deepestRenderedBoundaryId = match.route.id;
+    }
+    return /* @__PURE__ */ reactExports.createElement(RouteContext.Provider, { value: routeContext }, children);
+  }
+  function _renderMatches(matches, parentMatches = [], dataRouterState = null, future = null) {
+    if (matches == null) {
+      if (!dataRouterState) {
+        return null;
+      }
+      if (dataRouterState.errors) {
+        matches = dataRouterState.matches;
+      } else if (parentMatches.length === 0 && !dataRouterState.initialized && dataRouterState.matches.length > 0) {
+        matches = dataRouterState.matches;
+      } else {
+        return null;
+      }
+    }
+    let renderedMatches = matches;
+    let errors = dataRouterState == null ? void 0 : dataRouterState.errors;
+    if (errors != null) {
+      let errorIndex = renderedMatches.findIndex(
+        (m2) => m2.route.id && (errors == null ? void 0 : errors[m2.route.id]) !== void 0
+      );
+      invariant(
+        errorIndex >= 0,
+        `Could not find a matching route for errors on route IDs: ${Object.keys(
+          errors
+        ).join(",")}`
+      );
+      renderedMatches = renderedMatches.slice(
+        0,
+        Math.min(renderedMatches.length, errorIndex + 1)
+      );
+    }
+    let renderFallback = false;
+    let fallbackIndex = -1;
+    if (dataRouterState) {
+      for (let i = 0; i < renderedMatches.length; i++) {
+        let match = renderedMatches[i];
+        if (match.route.HydrateFallback || match.route.hydrateFallbackElement) {
+          fallbackIndex = i;
+        }
+        if (match.route.id) {
+          let { loaderData, errors: errors2 } = dataRouterState;
+          let needsToRunLoader = match.route.loader && !loaderData.hasOwnProperty(match.route.id) && (!errors2 || errors2[match.route.id] === void 0);
+          if (match.route.lazy || needsToRunLoader) {
+            renderFallback = true;
+            if (fallbackIndex >= 0) {
+              renderedMatches = renderedMatches.slice(0, fallbackIndex + 1);
+            } else {
+              renderedMatches = [renderedMatches[0]];
+            }
+            break;
+          }
+        }
+      }
+    }
+    return renderedMatches.reduceRight(
+      (outlet, match, index) => {
+        let error;
+        let shouldRenderHydrateFallback = false;
+        let errorElement = null;
+        let hydrateFallbackElement = null;
+        if (dataRouterState) {
+          error = errors && match.route.id ? errors[match.route.id] : void 0;
+          errorElement = match.route.errorElement || defaultErrorElement;
+          if (renderFallback) {
+            if (fallbackIndex < 0 && index === 0) {
+              warningOnce(
+                "route-fallback",
+                false,
+                "No `HydrateFallback` element provided to render during initial hydration"
+              );
+              shouldRenderHydrateFallback = true;
+              hydrateFallbackElement = null;
+            } else if (fallbackIndex === index) {
+              shouldRenderHydrateFallback = true;
+              hydrateFallbackElement = match.route.hydrateFallbackElement || null;
+            }
+          }
+        }
+        let matches2 = parentMatches.concat(renderedMatches.slice(0, index + 1));
+        let getChildren = () => {
+          let children;
+          if (error) {
+            children = errorElement;
+          } else if (shouldRenderHydrateFallback) {
+            children = hydrateFallbackElement;
+          } else if (match.route.Component) {
+            children = /* @__PURE__ */ reactExports.createElement(match.route.Component, null);
+          } else if (match.route.element) {
+            children = match.route.element;
+          } else {
+            children = outlet;
+          }
+          return /* @__PURE__ */ reactExports.createElement(
+            RenderedRoute,
+            {
+              match,
+              routeContext: {
+                outlet,
+                matches: matches2,
+                isDataRoute: dataRouterState != null
+              },
+              children
+            }
+          );
+        };
+        return dataRouterState && (match.route.ErrorBoundary || match.route.errorElement || index === 0) ? /* @__PURE__ */ reactExports.createElement(
+          RenderErrorBoundary,
+          {
+            location: dataRouterState.location,
+            revalidation: dataRouterState.revalidation,
+            component: errorElement,
+            error,
+            children: getChildren(),
+            routeContext: { outlet: null, matches: matches2, isDataRoute: true }
+          }
+        ) : getChildren();
+      },
+      null
+    );
+  }
+  function getDataRouterConsoleError(hookName) {
+    return `${hookName} must be used within a data router.  See https://reactrouter.com/en/main/routers/picking-a-router.`;
+  }
+  function useDataRouterContext(hookName) {
+    let ctx = reactExports.useContext(DataRouterContext);
+    invariant(ctx, getDataRouterConsoleError(hookName));
+    return ctx;
+  }
+  function useDataRouterState(hookName) {
+    let state = reactExports.useContext(DataRouterStateContext);
+    invariant(state, getDataRouterConsoleError(hookName));
+    return state;
+  }
+  function useRouteContext(hookName) {
+    let route = reactExports.useContext(RouteContext);
+    invariant(route, getDataRouterConsoleError(hookName));
+    return route;
+  }
+  function useCurrentRouteId(hookName) {
+    let route = useRouteContext(hookName);
+    let thisRoute = route.matches[route.matches.length - 1];
+    invariant(
+      thisRoute.route.id,
+      `${hookName} can only be used on routes that contain a unique "id"`
+    );
+    return thisRoute.route.id;
+  }
+  function useRouteId() {
+    return useCurrentRouteId(
+      "useRouteId"
+      /* UseRouteId */
+    );
+  }
+  function useRouteError() {
+    var _a;
+    let error = reactExports.useContext(RouteErrorContext);
+    let state = useDataRouterState(
+      "useRouteError"
+      /* UseRouteError */
+    );
+    let routeId = useCurrentRouteId(
+      "useRouteError"
+      /* UseRouteError */
+    );
+    if (error !== void 0) {
+      return error;
+    }
+    return (_a = state.errors) == null ? void 0 : _a[routeId];
+  }
+  function useNavigateStable() {
+    let { router } = useDataRouterContext(
+      "useNavigate"
+      /* UseNavigateStable */
+    );
+    let id2 = useCurrentRouteId(
+      "useNavigate"
+      /* UseNavigateStable */
+    );
+    let activeRef = reactExports.useRef(false);
+    useIsomorphicLayoutEffect(() => {
+      activeRef.current = true;
+    });
+    let navigate = reactExports.useCallback(
+      async (to, options = {}) => {
+        warning(activeRef.current, navigateEffectWarning);
+        if (!activeRef.current)
+          return;
+        if (typeof to === "number") {
+          router.navigate(to);
+        } else {
+          await router.navigate(to, { fromRouteId: id2, ...options });
+        }
+      },
+      [router, id2]
+    );
+    return navigate;
+  }
+  var alreadyWarned = {};
+  function warningOnce(key, cond, message) {
+    if (!cond && !alreadyWarned[key]) {
+      alreadyWarned[key] = true;
+      warning(false, message);
+    }
+  }
+  reactExports.memo(DataRoutes);
+  function DataRoutes({
+    routes,
+    future,
+    state
+  }) {
+    return useRoutesImpl(routes, void 0, state, future);
+  }
+  function MemoryRouter({
+    basename,
+    children,
+    initialEntries,
+    initialIndex
+  }) {
+    let historyRef = reactExports.useRef();
+    if (historyRef.current == null) {
+      historyRef.current = createMemoryHistory({
+        initialEntries,
+        initialIndex,
+        v5Compat: true
+      });
+    }
+    let history = historyRef.current;
+    let [state, setStateImpl] = reactExports.useState({
+      action: history.action,
+      location: history.location
+    });
+    let setState = reactExports.useCallback(
+      (newState) => {
+        reactExports.startTransition(() => setStateImpl(newState));
+      },
+      [setStateImpl]
+    );
+    reactExports.useLayoutEffect(() => history.listen(setState), [history, setState]);
+    return /* @__PURE__ */ reactExports.createElement(
+      Router,
+      {
+        basename,
+        children,
+        location: state.location,
+        navigationType: state.action,
+        navigator: history
+      }
+    );
+  }
+  function Navigate({
+    to,
+    replace: replace2,
+    state,
+    relative
+  }) {
+    invariant(
+      useInRouterContext(),
+      // TODO: This error is probably because they somehow have 2 versions of
+      // the router loaded. We can help them understand how to avoid that.
+      `<Navigate> may be used only in the context of a <Router> component.`
+    );
+    let { static: isStatic } = reactExports.useContext(NavigationContext);
+    warning(
+      !isStatic,
+      `<Navigate> must not be used on the initial render in a <StaticRouter>. This is a no-op, but you should modify your code so the <Navigate> is only ever rendered in response to some user interaction or state change.`
+    );
+    let { matches } = reactExports.useContext(RouteContext);
+    let { pathname: locationPathname } = useLocation();
+    let navigate = useNavigate();
+    let path = resolveTo(
+      to,
+      getResolveToMatches(matches),
+      locationPathname,
+      relative === "path"
+    );
+    let jsonPath = JSON.stringify(path);
+    reactExports.useEffect(() => {
+      navigate(JSON.parse(jsonPath), { replace: replace2, state, relative });
+    }, [navigate, jsonPath, relative, replace2, state]);
+    return null;
+  }
+  function Outlet(props) {
+    return useOutlet(props.context);
+  }
+  function Route(props) {
+    invariant(
+      false,
+      `A <Route> is only ever to be used as the child of <Routes> element, never rendered directly. Please wrap your <Route> in a <Routes>.`
+    );
+  }
+  function Router({
+    basename: basenameProp = "/",
+    children = null,
+    location: locationProp,
+    navigationType = "POP",
+    navigator: navigator2,
+    static: staticProp = false
+  }) {
+    invariant(
+      !useInRouterContext(),
+      `You cannot render a <Router> inside another <Router>. You should never have more than one in your app.`
+    );
+    let basename = basenameProp.replace(/^\/*/, "/");
+    let navigationContext = reactExports.useMemo(
+      () => ({
+        basename,
+        navigator: navigator2,
+        static: staticProp,
+        future: {}
+      }),
+      [basename, navigator2, staticProp]
+    );
+    if (typeof locationProp === "string") {
+      locationProp = parsePath(locationProp);
+    }
+    let {
+      pathname = "/",
+      search = "",
+      hash = "",
+      state = null,
+      key = "default"
+    } = locationProp;
+    let locationContext = reactExports.useMemo(() => {
+      let trailingPathname = stripBasename(pathname, basename);
+      if (trailingPathname == null) {
+        return null;
+      }
+      return {
+        location: {
+          pathname: trailingPathname,
+          search,
+          hash,
+          state,
+          key
+        },
+        navigationType
+      };
+    }, [basename, pathname, search, hash, state, key, navigationType]);
+    warning(
+      locationContext != null,
+      `<Router basename="${basename}"> is not able to match the URL "${pathname}${search}${hash}" because it does not start with the basename, so the <Router> won't render anything.`
+    );
+    if (locationContext == null) {
+      return null;
+    }
+    return /* @__PURE__ */ reactExports.createElement(NavigationContext.Provider, { value: navigationContext }, /* @__PURE__ */ reactExports.createElement(LocationContext.Provider, { children, value: locationContext }));
+  }
+  function Routes({
+    children,
+    location: location2
+  }) {
+    return useRoutes(createRoutesFromChildren(children), location2);
+  }
+  function createRoutesFromChildren(children, parentPath = []) {
+    let routes = [];
+    reactExports.Children.forEach(children, (element, index) => {
+      if (!reactExports.isValidElement(element)) {
+        return;
+      }
+      let treePath = [...parentPath, index];
+      if (element.type === reactExports.Fragment) {
+        routes.push.apply(
+          routes,
+          createRoutesFromChildren(element.props.children, treePath)
+        );
+        return;
+      }
+      invariant(
+        element.type === Route,
+        `[${typeof element.type === "string" ? element.type : element.type.name}] is not a <Route> component. All component children of <Routes> must be a <Route> or <React.Fragment>`
+      );
+      invariant(
+        !element.props.index || !element.props.children,
+        "An index route cannot have child routes."
+      );
+      let route = {
+        id: element.props.id || treePath.join("-"),
+        caseSensitive: element.props.caseSensitive,
+        element: element.props.element,
+        Component: element.props.Component,
+        index: element.props.index,
+        path: element.props.path,
+        loader: element.props.loader,
+        action: element.props.action,
+        hydrateFallbackElement: element.props.hydrateFallbackElement,
+        HydrateFallback: element.props.HydrateFallback,
+        errorElement: element.props.errorElement,
+        ErrorBoundary: element.props.ErrorBoundary,
+        hasErrorBoundary: element.props.hasErrorBoundary === true || element.props.ErrorBoundary != null || element.props.errorElement != null,
+        shouldRevalidate: element.props.shouldRevalidate,
+        handle: element.props.handle,
+        lazy: element.props.lazy
+      };
+      if (element.props.children) {
+        route.children = createRoutesFromChildren(
+          element.props.children,
+          treePath
+        );
+      }
+      routes.push(route);
+    });
+    return routes;
+  }
+  var defaultMethod = "get";
+  var defaultEncType = "application/x-www-form-urlencoded";
+  function isHtmlElement(object) {
+    return object != null && typeof object.tagName === "string";
+  }
+  function isButtonElement(object) {
+    return isHtmlElement(object) && object.tagName.toLowerCase() === "button";
+  }
+  function isFormElement(object) {
+    return isHtmlElement(object) && object.tagName.toLowerCase() === "form";
+  }
+  function isInputElement(object) {
+    return isHtmlElement(object) && object.tagName.toLowerCase() === "input";
+  }
+  function isModifiedEvent(event) {
+    return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
+  }
+  function shouldProcessLinkClick(event, target) {
+    return event.button === 0 && // Ignore everything but left clicks
+    (!target || target === "_self") && // Let browser handle "target=_blank" etc.
+    !isModifiedEvent(event);
+  }
+  var _formDataSupportsSubmitter = null;
+  function isFormDataSubmitterSupported() {
+    if (_formDataSupportsSubmitter === null) {
+      try {
+        new FormData(
+          document.createElement("form"),
+          // @ts-expect-error if FormData supports the submitter parameter, this will throw
+          0
+        );
+        _formDataSupportsSubmitter = false;
+      } catch (e) {
+        _formDataSupportsSubmitter = true;
+      }
+    }
+    return _formDataSupportsSubmitter;
+  }
+  var supportedFormEncTypes = /* @__PURE__ */ new Set([
+    "application/x-www-form-urlencoded",
+    "multipart/form-data",
+    "text/plain"
+  ]);
+  function getFormEncType(encType) {
+    if (encType != null && !supportedFormEncTypes.has(encType)) {
+      warning(
+        false,
+        `"${encType}" is not a valid \`encType\` for \`<Form>\`/\`<fetcher.Form>\` and will default to "${defaultEncType}"`
+      );
+      return null;
+    }
+    return encType;
+  }
+  function getFormSubmissionInfo(target, basename) {
+    let method;
+    let action;
+    let encType;
+    let formData;
+    let body;
+    if (isFormElement(target)) {
+      let attr = target.getAttribute("action");
+      action = attr ? stripBasename(attr, basename) : null;
+      method = target.getAttribute("method") || defaultMethod;
+      encType = getFormEncType(target.getAttribute("enctype")) || defaultEncType;
+      formData = new FormData(target);
+    } else if (isButtonElement(target) || isInputElement(target) && (target.type === "submit" || target.type === "image")) {
+      let form = target.form;
+      if (form == null) {
+        throw new Error(
+          `Cannot submit a <button> or <input type="submit"> without a <form>`
+        );
+      }
+      let attr = target.getAttribute("formaction") || form.getAttribute("action");
+      action = attr ? stripBasename(attr, basename) : null;
+      method = target.getAttribute("formmethod") || form.getAttribute("method") || defaultMethod;
+      encType = getFormEncType(target.getAttribute("formenctype")) || getFormEncType(form.getAttribute("enctype")) || defaultEncType;
+      formData = new FormData(form, target);
+      if (!isFormDataSubmitterSupported()) {
+        let { name: name2, type, value } = target;
+        if (type === "image") {
+          let prefix = name2 ? `${name2}.` : "";
+          formData.append(`${prefix}x`, "0");
+          formData.append(`${prefix}y`, "0");
+        } else if (name2) {
+          formData.append(name2, value);
+        }
+      }
+    } else if (isHtmlElement(target)) {
+      throw new Error(
+        `Cannot submit element that is not <form>, <button>, or <input type="submit|image">`
+      );
+    } else {
+      method = defaultMethod;
+      action = null;
+      encType = defaultEncType;
+      body = target;
+    }
+    if (formData && encType === "text/plain") {
+      body = formData;
+      formData = void 0;
+    }
+    return { action, method: method.toLowerCase(), encType, formData, body };
+  }
+  Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
+  function invariant2(value, message) {
+    if (value === false || value === null || typeof value === "undefined") {
+      throw new Error(message);
+    }
+  }
+  function singleFetchUrl(reqUrl, basename, extension) {
+    let url = typeof reqUrl === "string" ? new URL(
+      reqUrl,
+      // This can be called during the SSR flow via PrefetchPageLinksImpl so
+      // don't assume window is available
+      typeof window === "undefined" ? "server://singlefetch/" : window.location.origin
+    ) : reqUrl;
+    if (url.pathname === "/") {
+      url.pathname = `_root.${extension}`;
+    } else if (basename && stripBasename(url.pathname, basename) === "/") {
+      url.pathname = `${basename.replace(/\/$/, "")}/_root.${extension}`;
+    } else {
+      url.pathname = `${url.pathname.replace(/\/$/, "")}.${extension}`;
+    }
+    return url;
+  }
+  async function loadRouteModule(route, routeModulesCache) {
+    if (route.id in routeModulesCache) {
+      return routeModulesCache[route.id];
+    }
+    try {
+      let routeModule = await import(
+        /* @vite-ignore */
+        /* webpackIgnore: true */
+        route.module
+      );
+      routeModulesCache[route.id] = routeModule;
+      return routeModule;
+    } catch (error) {
+      console.error(
+        `Error loading route module \`${route.module}\`, reloading page...`
+      );
+      console.error(error);
+      if (window.__reactRouterContext && window.__reactRouterContext.isSpaMode && // @ts-expect-error
+      void 0) {
+        throw error;
+      }
+      window.location.reload();
+      return new Promise(() => {
+      });
+    }
+  }
+  function isHtmlLinkDescriptor(object) {
+    if (object == null) {
+      return false;
+    }
+    if (object.href == null) {
+      return object.rel === "preload" && typeof object.imageSrcSet === "string" && typeof object.imageSizes === "string";
+    }
+    return typeof object.rel === "string" && typeof object.href === "string";
+  }
+  async function getKeyedPrefetchLinks(matches, manifest, routeModules) {
+    let links = await Promise.all(
+      matches.map(async (match) => {
+        let route = manifest.routes[match.route.id];
+        if (route) {
+          let mod = await loadRouteModule(route, routeModules);
+          return mod.links ? mod.links() : [];
+        }
+        return [];
+      })
+    );
+    return dedupeLinkDescriptors(
+      links.flat(1).filter(isHtmlLinkDescriptor).filter((link) => link.rel === "stylesheet" || link.rel === "preload").map(
+        (link) => link.rel === "stylesheet" ? { ...link, rel: "prefetch", as: "style" } : { ...link, rel: "prefetch" }
+      )
+    );
+  }
+  function getNewMatchesForLinks(page, nextMatches, currentMatches, manifest, location2, mode) {
+    let isNew = (match, index) => {
+      if (!currentMatches[index])
+        return true;
+      return match.route.id !== currentMatches[index].route.id;
+    };
+    let matchPathChanged = (match, index) => {
+      var _a;
+      return (
+        // param change, /users/123 -> /users/456
+        currentMatches[index].pathname !== match.pathname || // splat param changed, which is not present in match.path
+        // e.g. /files/images/avatar.jpg -> files/finances.xls
+        ((_a = currentMatches[index].route.path) == null ? void 0 : _a.endsWith("*")) && currentMatches[index].params["*"] !== match.params["*"]
+      );
+    };
+    if (mode === "assets") {
+      return nextMatches.filter(
+        (match, index) => isNew(match, index) || matchPathChanged(match, index)
+      );
+    }
+    if (mode === "data") {
+      return nextMatches.filter((match, index) => {
+        var _a;
+        let manifestRoute = manifest.routes[match.route.id];
+        if (!manifestRoute || !manifestRoute.hasLoader) {
+          return false;
+        }
+        if (isNew(match, index) || matchPathChanged(match, index)) {
+          return true;
+        }
+        if (match.route.shouldRevalidate) {
+          let routeChoice = match.route.shouldRevalidate({
+            currentUrl: new URL(
+              location2.pathname + location2.search + location2.hash,
+              window.origin
+            ),
+            currentParams: ((_a = currentMatches[0]) == null ? void 0 : _a.params) || {},
+            nextUrl: new URL(page, window.origin),
+            nextParams: match.params,
+            defaultShouldRevalidate: true
+          });
+          if (typeof routeChoice === "boolean") {
+            return routeChoice;
+          }
+        }
+        return true;
+      });
+    }
+    return [];
+  }
+  function getModuleLinkHrefs(matches, manifest, { includeHydrateFallback } = {}) {
+    return dedupeHrefs(
+      matches.map((match) => {
+        let route = manifest.routes[match.route.id];
+        if (!route)
+          return [];
+        let hrefs = [route.module];
+        if (route.clientActionModule) {
+          hrefs = hrefs.concat(route.clientActionModule);
+        }
+        if (route.clientLoaderModule) {
+          hrefs = hrefs.concat(route.clientLoaderModule);
+        }
+        if (includeHydrateFallback && route.hydrateFallbackModule) {
+          hrefs = hrefs.concat(route.hydrateFallbackModule);
+        }
+        if (route.imports) {
+          hrefs = hrefs.concat(route.imports);
+        }
+        return hrefs;
+      }).flat(1)
+    );
+  }
+  function dedupeHrefs(hrefs) {
+    return [...new Set(hrefs)];
+  }
+  function sortKeys(obj) {
+    let sorted = {};
+    let keys = Object.keys(obj).sort();
+    for (let key of keys) {
+      sorted[key] = obj[key];
+    }
+    return sorted;
+  }
+  function dedupeLinkDescriptors(descriptors, preloads) {
+    let set = /* @__PURE__ */ new Set();
+    new Set(preloads);
+    return descriptors.reduce((deduped, descriptor) => {
+      let key = JSON.stringify(sortKeys(descriptor));
+      if (!set.has(key)) {
+        set.add(key);
+        deduped.push({ key, link: descriptor });
+      }
+      return deduped;
+    }, []);
+  }
+  function useDataRouterContext2() {
+    let context = reactExports.useContext(DataRouterContext);
+    invariant2(
+      context,
+      "You must render this element inside a <DataRouterContext.Provider> element"
+    );
+    return context;
+  }
+  function useDataRouterStateContext() {
+    let context = reactExports.useContext(DataRouterStateContext);
+    invariant2(
+      context,
+      "You must render this element inside a <DataRouterStateContext.Provider> element"
+    );
+    return context;
+  }
+  var FrameworkContext = reactExports.createContext(void 0);
+  FrameworkContext.displayName = "FrameworkContext";
+  function useFrameworkContext() {
+    let context = reactExports.useContext(FrameworkContext);
+    invariant2(
+      context,
+      "You must render this element inside a <HydratedRouter> element"
+    );
+    return context;
+  }
+  function usePrefetchBehavior(prefetch, theirElementProps) {
+    let frameworkContext = reactExports.useContext(FrameworkContext);
+    let [maybePrefetch, setMaybePrefetch] = reactExports.useState(false);
+    let [shouldPrefetch, setShouldPrefetch] = reactExports.useState(false);
+    let { onFocus, onBlur, onMouseEnter, onMouseLeave, onTouchStart } = theirElementProps;
+    let ref = reactExports.useRef(null);
+    reactExports.useEffect(() => {
+      if (prefetch === "render") {
+        setShouldPrefetch(true);
+      }
+      if (prefetch === "viewport") {
+        let callback = (entries) => {
+          entries.forEach((entry) => {
+            setShouldPrefetch(entry.isIntersecting);
+          });
+        };
+        let observer = new IntersectionObserver(callback, { threshold: 0.5 });
+        if (ref.current)
+          observer.observe(ref.current);
+        return () => {
+          observer.disconnect();
+        };
+      }
+    }, [prefetch]);
+    reactExports.useEffect(() => {
+      if (maybePrefetch) {
+        let id2 = setTimeout(() => {
+          setShouldPrefetch(true);
+        }, 100);
+        return () => {
+          clearTimeout(id2);
+        };
+      }
+    }, [maybePrefetch]);
+    let setIntent = () => {
+      setMaybePrefetch(true);
+    };
+    let cancelIntent = () => {
+      setMaybePrefetch(false);
+      setShouldPrefetch(false);
+    };
+    if (!frameworkContext) {
+      return [false, ref, {}];
+    }
+    if (prefetch !== "intent") {
+      return [shouldPrefetch, ref, {}];
+    }
+    return [
+      shouldPrefetch,
+      ref,
+      {
+        onFocus: composeEventHandlers(onFocus, setIntent),
+        onBlur: composeEventHandlers(onBlur, cancelIntent),
+        onMouseEnter: composeEventHandlers(onMouseEnter, setIntent),
+        onMouseLeave: composeEventHandlers(onMouseLeave, cancelIntent),
+        onTouchStart: composeEventHandlers(onTouchStart, setIntent)
+      }
+    ];
+  }
+  function composeEventHandlers(theirHandler, ourHandler) {
+    return (event) => {
+      theirHandler && theirHandler(event);
+      if (!event.defaultPrevented) {
+        ourHandler(event);
+      }
+    };
+  }
+  function PrefetchPageLinks({ page, ...linkProps }) {
+    let { router } = useDataRouterContext2();
+    let matches = reactExports.useMemo(
+      () => matchRoutes(router.routes, page, router.basename),
+      [router.routes, page, router.basename]
+    );
+    if (!matches) {
+      return null;
+    }
+    return /* @__PURE__ */ reactExports.createElement(PrefetchPageLinksImpl, { page, matches, ...linkProps });
+  }
+  function useKeyedPrefetchLinks(matches) {
+    let { manifest, routeModules } = useFrameworkContext();
+    let [keyedPrefetchLinks, setKeyedPrefetchLinks] = reactExports.useState([]);
+    reactExports.useEffect(() => {
+      let interrupted = false;
+      void getKeyedPrefetchLinks(matches, manifest, routeModules).then(
+        (links) => {
+          if (!interrupted) {
+            setKeyedPrefetchLinks(links);
+          }
+        }
+      );
+      return () => {
+        interrupted = true;
+      };
+    }, [matches, manifest, routeModules]);
+    return keyedPrefetchLinks;
+  }
+  function PrefetchPageLinksImpl({
+    page,
+    matches: nextMatches,
+    ...linkProps
+  }) {
+    let location2 = useLocation();
+    let { manifest, routeModules } = useFrameworkContext();
+    let { basename } = useDataRouterContext2();
+    let { loaderData, matches } = useDataRouterStateContext();
+    let newMatchesForData = reactExports.useMemo(
+      () => getNewMatchesForLinks(
+        page,
+        nextMatches,
+        matches,
+        manifest,
+        location2,
+        "data"
+      ),
+      [page, nextMatches, matches, manifest, location2]
+    );
+    let newMatchesForAssets = reactExports.useMemo(
+      () => getNewMatchesForLinks(
+        page,
+        nextMatches,
+        matches,
+        manifest,
+        location2,
+        "assets"
+      ),
+      [page, nextMatches, matches, manifest, location2]
+    );
+    let dataHrefs = reactExports.useMemo(() => {
+      if (page === location2.pathname + location2.search + location2.hash) {
+        return [];
+      }
+      let routesParams = /* @__PURE__ */ new Set();
+      let foundOptOutRoute = false;
+      nextMatches.forEach((m2) => {
+        var _a;
+        let manifestRoute = manifest.routes[m2.route.id];
+        if (!manifestRoute || !manifestRoute.hasLoader) {
+          return;
+        }
+        if (!newMatchesForData.some((m22) => m22.route.id === m2.route.id) && m2.route.id in loaderData && ((_a = routeModules[m2.route.id]) == null ? void 0 : _a.shouldRevalidate)) {
+          foundOptOutRoute = true;
+        } else if (manifestRoute.hasClientLoader) {
+          foundOptOutRoute = true;
+        } else {
+          routesParams.add(m2.route.id);
+        }
+      });
+      if (routesParams.size === 0) {
+        return [];
+      }
+      let url = singleFetchUrl(page, basename, "data");
+      if (foundOptOutRoute && routesParams.size > 0) {
+        url.searchParams.set(
+          "_routes",
+          nextMatches.filter((m2) => routesParams.has(m2.route.id)).map((m2) => m2.route.id).join(",")
+        );
+      }
+      return [url.pathname + url.search];
+    }, [
+      basename,
+      loaderData,
+      location2,
+      manifest,
+      newMatchesForData,
+      nextMatches,
+      page,
+      routeModules
+    ]);
+    let moduleHrefs = reactExports.useMemo(
+      () => getModuleLinkHrefs(newMatchesForAssets, manifest),
+      [newMatchesForAssets, manifest]
+    );
+    let keyedPrefetchLinks = useKeyedPrefetchLinks(newMatchesForAssets);
+    return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, dataHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "prefetch", as: "fetch", href, ...linkProps })), moduleHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "modulepreload", href, ...linkProps })), keyedPrefetchLinks.map(({ key, link }) => (
+      // these don't spread `linkProps` because they are full link descriptors
+      // already with their own props
+      /* @__PURE__ */ reactExports.createElement("link", { key, ...link })
+    )));
+  }
+  function mergeRefs(...refs) {
+    return (value) => {
+      refs.forEach((ref) => {
+        if (typeof ref === "function") {
+          ref(value);
+        } else if (ref != null) {
+          ref.current = value;
+        }
+      });
+    };
+  }
+  var isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
+  try {
+    if (isBrowser) {
+      window.__reactRouterVersion = // @ts-expect-error
+      "7.7.1";
+    }
+  } catch (e) {
+  }
+  var ABSOLUTE_URL_REGEX2 = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
+  var Link = reactExports.forwardRef(
+    function LinkWithRef({
+      onClick,
+      discover = "render",
+      prefetch = "none",
+      relative,
+      reloadDocument,
+      replace: replace2,
+      state,
+      target,
+      to,
+      preventScrollReset,
+      viewTransition,
+      ...rest
+    }, forwardedRef) {
+      let { basename } = reactExports.useContext(NavigationContext);
+      let isAbsolute = typeof to === "string" && ABSOLUTE_URL_REGEX2.test(to);
+      let absoluteHref;
+      let isExternal = false;
+      if (typeof to === "string" && isAbsolute) {
+        absoluteHref = to;
+        if (isBrowser) {
+          try {
+            let currentUrl = new URL(window.location.href);
+            let targetUrl = to.startsWith("//") ? new URL(currentUrl.protocol + to) : new URL(to);
+            let path = stripBasename(targetUrl.pathname, basename);
+            if (targetUrl.origin === currentUrl.origin && path != null) {
+              to = path + targetUrl.search + targetUrl.hash;
+            } else {
+              isExternal = true;
+            }
+          } catch (e) {
+            warning(
+              false,
+              `<Link to="${to}"> contains an invalid URL which will probably break when clicked - please update to a valid URL path.`
+            );
+          }
+        }
+      }
+      let href = useHref(to, { relative });
+      let [shouldPrefetch, prefetchRef, prefetchHandlers] = usePrefetchBehavior(
+        prefetch,
+        rest
+      );
+      let internalOnClick = useLinkClickHandler(to, {
+        replace: replace2,
+        state,
+        target,
+        preventScrollReset,
+        relative,
+        viewTransition
+      });
+      function handleClick(event) {
+        if (onClick)
+          onClick(event);
+        if (!event.defaultPrevented) {
+          internalOnClick(event);
+        }
+      }
+      let link = (
+        // eslint-disable-next-line jsx-a11y/anchor-has-content
+        /* @__PURE__ */ reactExports.createElement(
+          "a",
+          {
+            ...rest,
+            ...prefetchHandlers,
+            href: absoluteHref || href,
+            onClick: isExternal || reloadDocument ? onClick : handleClick,
+            ref: mergeRefs(forwardedRef, prefetchRef),
+            target,
+            "data-discover": !isAbsolute && discover === "render" ? "true" : void 0
+          }
+        )
+      );
+      return shouldPrefetch && !isAbsolute ? /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, link, /* @__PURE__ */ reactExports.createElement(PrefetchPageLinks, { page: href })) : link;
+    }
+  );
+  Link.displayName = "Link";
+  var NavLink = reactExports.forwardRef(
+    function NavLinkWithRef({
+      "aria-current": ariaCurrentProp = "page",
+      caseSensitive = false,
+      className: classNameProp = "",
+      end = false,
+      style: styleProp,
+      to,
+      viewTransition,
+      children,
+      ...rest
+    }, ref) {
+      let path = useResolvedPath(to, { relative: rest.relative });
+      let location2 = useLocation();
+      let routerState = reactExports.useContext(DataRouterStateContext);
+      let { navigator: navigator2, basename } = reactExports.useContext(NavigationContext);
+      let isTransitioning = routerState != null && // Conditional usage is OK here because the usage of a data router is static
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useViewTransitionState(path) && viewTransition === true;
+      let toPathname = navigator2.encodeLocation ? navigator2.encodeLocation(path).pathname : path.pathname;
+      let locationPathname = location2.pathname;
+      let nextLocationPathname = routerState && routerState.navigation && routerState.navigation.location ? routerState.navigation.location.pathname : null;
+      if (!caseSensitive) {
+        locationPathname = locationPathname.toLowerCase();
+        nextLocationPathname = nextLocationPathname ? nextLocationPathname.toLowerCase() : null;
+        toPathname = toPathname.toLowerCase();
+      }
+      if (nextLocationPathname && basename) {
+        nextLocationPathname = stripBasename(nextLocationPathname, basename) || nextLocationPathname;
+      }
+      const endSlashPosition = toPathname !== "/" && toPathname.endsWith("/") ? toPathname.length - 1 : toPathname.length;
+      let isActive = locationPathname === toPathname || !end && locationPathname.startsWith(toPathname) && locationPathname.charAt(endSlashPosition) === "/";
+      let isPending = nextLocationPathname != null && (nextLocationPathname === toPathname || !end && nextLocationPathname.startsWith(toPathname) && nextLocationPathname.charAt(toPathname.length) === "/");
+      let renderProps = {
+        isActive,
+        isPending,
+        isTransitioning
+      };
+      let ariaCurrent = isActive ? ariaCurrentProp : void 0;
+      let className;
+      if (typeof classNameProp === "function") {
+        className = classNameProp(renderProps);
+      } else {
+        className = [
+          classNameProp,
+          isActive ? "active" : null,
+          isPending ? "pending" : null,
+          isTransitioning ? "transitioning" : null
+        ].filter(Boolean).join(" ");
+      }
+      let style = typeof styleProp === "function" ? styleProp(renderProps) : styleProp;
+      return /* @__PURE__ */ reactExports.createElement(
+        Link,
+        {
+          ...rest,
+          "aria-current": ariaCurrent,
+          className,
+          ref,
+          style,
+          to,
+          viewTransition
+        },
+        typeof children === "function" ? children(renderProps) : children
+      );
+    }
+  );
+  NavLink.displayName = "NavLink";
+  var Form = reactExports.forwardRef(
+    ({
+      discover = "render",
+      fetcherKey,
+      navigate,
+      reloadDocument,
+      replace: replace2,
+      state,
+      method = defaultMethod,
+      action,
+      onSubmit,
+      relative,
+      preventScrollReset,
+      viewTransition,
+      ...props
+    }, forwardedRef) => {
+      let submit = useSubmit();
+      let formAction = useFormAction(action, { relative });
+      let formMethod = method.toLowerCase() === "get" ? "get" : "post";
+      let isAbsolute = typeof action === "string" && ABSOLUTE_URL_REGEX2.test(action);
+      let submitHandler = (event) => {
+        onSubmit && onSubmit(event);
+        if (event.defaultPrevented)
+          return;
+        event.preventDefault();
+        let submitter = event.nativeEvent.submitter;
+        let submitMethod = (submitter == null ? void 0 : submitter.getAttribute("formmethod")) || method;
+        submit(submitter || event.currentTarget, {
+          fetcherKey,
+          method: submitMethod,
+          navigate,
+          replace: replace2,
+          state,
+          relative,
+          preventScrollReset,
+          viewTransition
+        });
+      };
+      return /* @__PURE__ */ reactExports.createElement(
+        "form",
+        {
+          ref: forwardedRef,
+          method: formMethod,
+          action: formAction,
+          onSubmit: reloadDocument ? onSubmit : submitHandler,
+          ...props,
+          "data-discover": !isAbsolute && discover === "render" ? "true" : void 0
+        }
+      );
+    }
+  );
+  Form.displayName = "Form";
+  function getDataRouterConsoleError2(hookName) {
+    return `${hookName} must be used within a data router.  See https://reactrouter.com/en/main/routers/picking-a-router.`;
+  }
+  function useDataRouterContext3(hookName) {
+    let ctx = reactExports.useContext(DataRouterContext);
+    invariant(ctx, getDataRouterConsoleError2(hookName));
+    return ctx;
+  }
+  function useLinkClickHandler(to, {
+    target,
+    replace: replaceProp,
+    state,
+    preventScrollReset,
+    relative,
+    viewTransition
+  } = {}) {
+    let navigate = useNavigate();
+    let location2 = useLocation();
+    let path = useResolvedPath(to, { relative });
+    return reactExports.useCallback(
+      (event) => {
+        if (shouldProcessLinkClick(event, target)) {
+          event.preventDefault();
+          let replace2 = replaceProp !== void 0 ? replaceProp : createPath(location2) === createPath(path);
+          navigate(to, {
+            replace: replace2,
+            state,
+            preventScrollReset,
+            relative,
+            viewTransition
+          });
+        }
+      },
+      [
+        location2,
+        navigate,
+        path,
+        replaceProp,
+        state,
+        target,
+        to,
+        preventScrollReset,
+        relative,
+        viewTransition
+      ]
+    );
+  }
+  var fetcherId = 0;
+  var getUniqueFetcherId = () => `__${String(++fetcherId)}__`;
+  function useSubmit() {
+    let { router } = useDataRouterContext3(
+      "useSubmit"
+      /* UseSubmit */
+    );
+    let { basename } = reactExports.useContext(NavigationContext);
+    let currentRouteId = useRouteId();
+    return reactExports.useCallback(
+      async (target, options = {}) => {
+        let { action, method, encType, formData, body } = getFormSubmissionInfo(
+          target,
+          basename
+        );
+        if (options.navigate === false) {
+          let key = options.fetcherKey || getUniqueFetcherId();
+          await router.fetch(key, currentRouteId, options.action || action, {
+            preventScrollReset: options.preventScrollReset,
+            formData,
+            body,
+            formMethod: options.method || method,
+            formEncType: options.encType || encType,
+            flushSync: options.flushSync
+          });
+        } else {
+          await router.navigate(options.action || action, {
+            preventScrollReset: options.preventScrollReset,
+            formData,
+            body,
+            formMethod: options.method || method,
+            formEncType: options.encType || encType,
+            replace: options.replace,
+            state: options.state,
+            fromRouteId: currentRouteId,
+            flushSync: options.flushSync,
+            viewTransition: options.viewTransition
+          });
+        }
+      },
+      [router, basename, currentRouteId]
+    );
+  }
+  function useFormAction(action, { relative } = {}) {
+    let { basename } = reactExports.useContext(NavigationContext);
+    let routeContext = reactExports.useContext(RouteContext);
+    invariant(routeContext, "useFormAction must be used inside a RouteContext");
+    let [match] = routeContext.matches.slice(-1);
+    let path = { ...useResolvedPath(action ? action : ".", { relative }) };
+    let location2 = useLocation();
+    if (action == null) {
+      path.search = location2.search;
+      let params = new URLSearchParams(path.search);
+      let indexValues = params.getAll("index");
+      let hasNakedIndexParam = indexValues.some((v2) => v2 === "");
+      if (hasNakedIndexParam) {
+        params.delete("index");
+        indexValues.filter((v2) => v2).forEach((v2) => params.append("index", v2));
+        let qs = params.toString();
+        path.search = qs ? `?${qs}` : "";
+      }
+    }
+    if ((!action || action === ".") && match.route.index) {
+      path.search = path.search ? path.search.replace(/^\?/, "?index&") : "?index";
+    }
+    if (basename !== "/") {
+      path.pathname = path.pathname === "/" ? basename : joinPaths([basename, path.pathname]);
+    }
+    return createPath(path);
+  }
+  function useViewTransitionState(to, { relative } = {}) {
+    let vtContext = reactExports.useContext(ViewTransitionContext);
+    invariant(
+      vtContext != null,
+      "`useViewTransitionState` must be used within `react-router-dom`'s `RouterProvider`.  Did you accidentally import `RouterProvider` from `react-router`?"
+    );
+    let { basename } = useDataRouterContext3(
+      "useViewTransitionState"
+      /* useViewTransitionState */
+    );
+    let path = useResolvedPath(to, { relative });
+    if (!vtContext.isTransitioning) {
+      return false;
+    }
+    let currentPath = stripBasename(vtContext.currentLocation.pathname, basename) || vtContext.currentLocation.pathname;
+    let nextPath = stripBasename(vtContext.nextLocation.pathname, basename) || vtContext.nextLocation.pathname;
+    return matchPath(path.pathname, nextPath) != null || matchPath(path.pathname, currentPath) != null;
+  }
+  function CardHeader({ className, ...props }) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        "data-slot": "card-header",
+        className: cn(
+          "ppm:@container/card-header ppm:grid ppm:auto-rows-min ppm:grid-rows-[auto_auto] ppm:items-start ppm:gap-1.5 ppm:px-6 ppm:has-data-[slot=card-action]:grid-cols-[1fr_auto] ppm:[.border-b]:pb-6",
+          className
+        ),
+        ...props
+      }
+    );
+  }
+  function CardTitle({ className, ...props }) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        "data-slot": "card-title",
+        className: cn("ppm:leading-none ppm:font-semibold", className),
+        ...props
+      }
+    );
+  }
+  function CardContent({ className, ...props }) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        "data-slot": "card-content",
+        className: cn("ppm:px-6", className),
+        ...props
+      }
+    );
+  }
+  function Input({ className, type, ...props }) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "input",
+      {
+        type,
+        "data-slot": "input",
+        className: cn(
+          "ppm:file:text-foreground ppm:placeholder:text-muted-foreground ppm:selection:bg-primary ppm:selection:text-primary-foreground ppm:dark:bg-input/30 ppm:border-input ppm:flex ppm:h-9 ppm:w-full ppm:min-w-0 ppm:rounded-md ppm:border ppm:bg-transparent ppm:px-3 ppm:py-1 ppm:text-base ppm:shadow-xs ppm:transition-[color,box-shadow] ppm:outline-none ppm:file:inline-flex ppm:file:h-7 ppm:file:border-0 ppm:file:bg-transparent ppm:file:text-sm ppm:file:font-medium ppm:disabled:pointer-events-none ppm:disabled:cursor-not-allowed ppm:disabled:opacity-50 ppm:md:text-sm",
+          "ppm:focus-visible:border-ring ppm:focus-visible:ring-ring/50 ppm:focus-visible:ring-[3px]",
+          "ppm:aria-invalid:ring-destructive/20 ppm:dark:aria-invalid:ring-destructive/40 ppm:aria-invalid:border-destructive",
+          className
+        ),
+        ...props
+      }
+    );
+  }
+  var NODES = [
+    "a",
+    "button",
+    "div",
+    "form",
+    "h2",
+    "h3",
+    "img",
+    "input",
+    "label",
+    "li",
+    "nav",
+    "ol",
+    "p",
+    "select",
+    "span",
+    "svg",
+    "ul"
+  ];
+  var Primitive = NODES.reduce((primitive, node) => {
+    const Slot2 = /* @__PURE__ */ createSlot(`Primitive.${node}`);
+    const Node = reactExports.forwardRef((props, forwardedRef) => {
+      const { asChild, ...primitiveProps } = props;
+      const Comp = asChild ? Slot2 : node;
+      if (typeof window !== "undefined") {
+        window[Symbol.for("radix-ui")] = true;
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(Comp, { ...primitiveProps, ref: forwardedRef });
+    });
+    Node.displayName = `Primitive.${node}`;
+    return { ...primitive, [node]: Node };
+  }, {});
+  var NAME = "Label";
+  var Label$1 = reactExports.forwardRef((props, forwardedRef) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Primitive.label,
+      {
+        ...props,
+        ref: forwardedRef,
+        onMouseDown: (event) => {
+          var _a;
+          const target = event.target;
+          if (target.closest("button, input, select, textarea"))
+            return;
+          (_a = props.onMouseDown) == null ? void 0 : _a.call(props, event);
+          if (!event.defaultPrevented && event.detail > 1)
+            event.preventDefault();
+        }
+      }
+    );
+  });
+  Label$1.displayName = NAME;
+  var Root = Label$1;
+  function Label({
+    className,
+    ...props
+  }) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Root,
+      {
+        "data-slot": "label",
+        className: cn(
+          "ppm:flex ppm:items-center ppm:gap-2 ppm:text-sm ppm:leading-none ppm:font-medium ppm:select-none ppm:group-data-[disabled=true]:pointer-events-none ppm:group-data-[disabled=true]:opacity-50 ppm:peer-disabled:cursor-not-allowed ppm:peer-disabled:opacity-50",
+          className
+        ),
+        ...props
+      }
+    );
+  }
   const getDefaultsFromPostinstall = () => void 0;
   var define_process_env_default = {};
   /**
@@ -19515,6 +21904,7 @@
     const [user, setUser] = reactExports.useState(null);
     const [loading, setLoading] = reactExports.useState(true);
     const [error, setError] = reactExports.useState(null);
+    const navigate = useNavigate();
     reactExports.useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (user2) => {
         setUser(user2);
@@ -19528,6 +21918,8 @@
         setError(null);
         await signInWithEmailAndPassword(auth, email, password);
         setUser(auth.currentUser);
+        console.log(auth.currentUser);
+        navigate("/profile");
       } catch (err) {
         const authError = err;
         setError(getErrorMessage(authError.code));
@@ -19540,6 +21932,7 @@
         setLoading(true);
         setError(null);
         await createUserWithEmailAndPassword(auth, email, password);
+        navigate("/login");
       } catch (err) {
         const authError = err;
         setError(getErrorMessage(authError.code));
@@ -19552,6 +21945,8 @@
         setLoading(true);
         setError(null);
         await signOut(auth);
+        setUser(null);
+        navigate("/login");
       } catch (err) {
         const authError = err;
         setError(getErrorMessage(authError.code));
@@ -19590,2383 +21985,8 @@
         return "Erro de autenticação. Tente novamente.";
     }
   }
-  function StatusBar() {
-    const [currentTime, setCurrentTime] = reactExports.useState("9:41");
-    reactExports.useEffect(() => {
-      const extractTime = (text) => {
-        const timeMatch = text.match(/(\d{1,2}:\d{2})/);
-        return timeMatch ? timeMatch[1] : "9:41";
-      };
-      const updateTimeFromElement = () => {
-        const timeElement2 = document.getElementById("character-tools-location");
-        if (timeElement2 && timeElement2.textContent) {
-          const extractedTime = extractTime(timeElement2.textContent);
-          setCurrentTime(extractedTime);
-        }
-      };
-      updateTimeFromElement();
-      const timeElement = document.getElementById("character-tools-location");
-      if (timeElement) {
-        const observer = new MutationObserver((mutations) => {
-          mutations.forEach((mutation) => {
-            if (mutation.type === "childList" || mutation.type === "characterData") {
-              updateTimeFromElement();
-            }
-          });
-        });
-        observer.observe(timeElement, {
-          childList: true,
-          subtree: true,
-          characterData: true
-        });
-        return () => {
-          observer.disconnect();
-        };
-      }
-    }, []);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ppm:h-12 ppm:bg-gray-50 ppm:flex ppm:items-center ppm:justify-between ppm:px-6 ppm:pt-6", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ppm:text-sm ppm:font-medium", children: currentTime }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:flex ppm:items-center ppm:gap-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:w-4 ppm:h-2 ppm:bg-green-500 ppm:rounded-sm", children: "100%" }) })
-    ] });
-  }
-  /**
-   * @license lucide-react v0.525.0 - ISC
-   *
-   * This source code is licensed under the ISC license.
-   * See the LICENSE file in the root directory of this source tree.
-   */
-  const toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
-  const toCamelCase = (string) => string.replace(
-    /^([A-Z])|[\s-_]+(\w)/g,
-    (match, p1, p2) => p2 ? p2.toUpperCase() : p1.toLowerCase()
-  );
-  const toPascalCase = (string) => {
-    const camelCase = toCamelCase(string);
-    return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
-  };
-  const mergeClasses = (...classes) => classes.filter((className, index, array) => {
-    return Boolean(className) && className.trim() !== "" && array.indexOf(className) === index;
-  }).join(" ").trim();
-  const hasA11yProp = (props) => {
-    for (const prop in props) {
-      if (prop.startsWith("aria-") || prop === "role" || prop === "title") {
-        return true;
-      }
-    }
-  };
-  /**
-   * @license lucide-react v0.525.0 - ISC
-   *
-   * This source code is licensed under the ISC license.
-   * See the LICENSE file in the root directory of this source tree.
-   */
-  var defaultAttributes = {
-    xmlns: "http://www.w3.org/2000/svg",
-    width: 24,
-    height: 24,
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 2,
-    strokeLinecap: "round",
-    strokeLinejoin: "round"
-  };
-  /**
-   * @license lucide-react v0.525.0 - ISC
-   *
-   * This source code is licensed under the ISC license.
-   * See the LICENSE file in the root directory of this source tree.
-   */
-  const Icon = reactExports.forwardRef(
-    ({
-      color = "currentColor",
-      size = 24,
-      strokeWidth = 2,
-      absoluteStrokeWidth,
-      className = "",
-      children,
-      iconNode,
-      ...rest
-    }, ref) => reactExports.createElement(
-      "svg",
-      {
-        ref,
-        ...defaultAttributes,
-        width: size,
-        height: size,
-        stroke: color,
-        strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
-        className: mergeClasses("lucide", className),
-        ...!children && !hasA11yProp(rest) && { "aria-hidden": "true" },
-        ...rest
-      },
-      [
-        ...iconNode.map(([tag, attrs]) => reactExports.createElement(tag, attrs)),
-        ...Array.isArray(children) ? children : [children]
-      ]
-    )
-  );
-  /**
-   * @license lucide-react v0.525.0 - ISC
-   *
-   * This source code is licensed under the ISC license.
-   * See the LICENSE file in the root directory of this source tree.
-   */
-  const createLucideIcon = (iconName, iconNode) => {
-    const Component2 = reactExports.forwardRef(
-      ({ className, ...props }, ref) => reactExports.createElement(Icon, {
-        ref,
-        iconNode,
-        className: mergeClasses(
-          `lucide-${toKebabCase(toPascalCase(iconName))}`,
-          `lucide-${iconName}`,
-          className
-        ),
-        ...props
-      })
-    );
-    Component2.displayName = toPascalCase(iconName);
-    return Component2;
-  };
-  /**
-   * @license lucide-react v0.525.0 - ISC
-   *
-   * This source code is licensed under the ISC license.
-   * See the LICENSE file in the root directory of this source tree.
-   */
-  const __iconNode$2 = [
-    ["path", { d: "m16 17 5-5-5-5", key: "1bji2h" }],
-    ["path", { d: "M21 12H9", key: "dn1m92" }],
-    ["path", { d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4", key: "1uf3rs" }]
-  ];
-  const LogOut = createLucideIcon("log-out", __iconNode$2);
-  /**
-   * @license lucide-react v0.525.0 - ISC
-   *
-   * This source code is licensed under the ISC license.
-   * See the LICENSE file in the root directory of this source tree.
-   */
-  const __iconNode$1 = [
-    ["path", { d: "M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2", key: "975kel" }],
-    ["circle", { cx: "12", cy: "7", r: "4", key: "17ys0d" }]
-  ];
-  const User = createLucideIcon("user", __iconNode$1);
-  /**
-   * @license lucide-react v0.525.0 - ISC
-   *
-   * This source code is licensed under the ISC license.
-   * See the LICENSE file in the root directory of this source tree.
-   */
-  const __iconNode = [
-    ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
-    ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
-  ];
-  const X = createLucideIcon("x", __iconNode);
-  function CloseButton({ onClose }) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Button,
-      {
-        onClick: onClose,
-        variant: "ghost",
-        size: "sm",
-        className: "ppm:absolute ppm:-top-2 ppm:-right-2 ppm:bg-white ppm:rounded-full ppm:w-8 ppm:h-8 ppm:p-0 ppm:z-10",
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "ppm:w-4 ppm:h-4" })
-      }
-    );
-  }
-  /**
-   * react-router v7.7.1
-   *
-   * Copyright (c) Remix Software Inc.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE.md file in the root directory of this source tree.
-   *
-   * @license MIT
-   */
-  function createMemoryHistory(options = {}) {
-    let { initialEntries = ["/"], initialIndex, v5Compat = false } = options;
-    let entries;
-    entries = initialEntries.map(
-      (entry, index2) => createMemoryLocation(
-        entry,
-        typeof entry === "string" ? null : entry.state,
-        index2 === 0 ? "default" : void 0
-      )
-    );
-    let index = clampIndex(
-      initialIndex == null ? entries.length - 1 : initialIndex
-    );
-    let action = "POP";
-    let listener = null;
-    function clampIndex(n2) {
-      return Math.min(Math.max(n2, 0), entries.length - 1);
-    }
-    function getCurrentLocation() {
-      return entries[index];
-    }
-    function createMemoryLocation(to, state = null, key) {
-      let location2 = createLocation(
-        entries ? getCurrentLocation().pathname : "/",
-        to,
-        state,
-        key
-      );
-      warning(
-        location2.pathname.charAt(0) === "/",
-        `relative pathnames are not supported in memory history: ${JSON.stringify(
-          to
-        )}`
-      );
-      return location2;
-    }
-    function createHref2(to) {
-      return typeof to === "string" ? to : createPath(to);
-    }
-    let history = {
-      get index() {
-        return index;
-      },
-      get action() {
-        return action;
-      },
-      get location() {
-        return getCurrentLocation();
-      },
-      createHref: createHref2,
-      createURL(to) {
-        return new URL(createHref2(to), "http://localhost");
-      },
-      encodeLocation(to) {
-        let path = typeof to === "string" ? parsePath(to) : to;
-        return {
-          pathname: path.pathname || "",
-          search: path.search || "",
-          hash: path.hash || ""
-        };
-      },
-      push(to, state) {
-        action = "PUSH";
-        let nextLocation = createMemoryLocation(to, state);
-        index += 1;
-        entries.splice(index, entries.length, nextLocation);
-        if (v5Compat && listener) {
-          listener({ action, location: nextLocation, delta: 1 });
-        }
-      },
-      replace(to, state) {
-        action = "REPLACE";
-        let nextLocation = createMemoryLocation(to, state);
-        entries[index] = nextLocation;
-        if (v5Compat && listener) {
-          listener({ action, location: nextLocation, delta: 0 });
-        }
-      },
-      go(delta) {
-        action = "POP";
-        let nextIndex = clampIndex(index + delta);
-        let nextLocation = entries[nextIndex];
-        index = nextIndex;
-        if (listener) {
-          listener({ action, location: nextLocation, delta });
-        }
-      },
-      listen(fn) {
-        listener = fn;
-        return () => {
-          listener = null;
-        };
-      }
-    };
-    return history;
-  }
-  function invariant(value, message) {
-    if (value === false || value === null || typeof value === "undefined") {
-      throw new Error(message);
-    }
-  }
-  function warning(cond, message) {
-    if (!cond) {
-      if (typeof console !== "undefined")
-        console.warn(message);
-      try {
-        throw new Error(message);
-      } catch (e) {
-      }
-    }
-  }
-  function createKey() {
-    return Math.random().toString(36).substring(2, 10);
-  }
-  function createLocation(current, to, state = null, key) {
-    let location2 = {
-      pathname: typeof current === "string" ? current : current.pathname,
-      search: "",
-      hash: "",
-      ...typeof to === "string" ? parsePath(to) : to,
-      state,
-      // TODO: This could be cleaned up.  push/replace should probably just take
-      // full Locations now and avoid the need to run through this flow at all
-      // But that's a pretty big refactor to the current test suite so going to
-      // keep as is for the time being and just let any incoming keys take precedence
-      key: to && to.key || key || createKey()
-    };
-    return location2;
-  }
-  function createPath({
-    pathname = "/",
-    search = "",
-    hash = ""
-  }) {
-    if (search && search !== "?")
-      pathname += search.charAt(0) === "?" ? search : "?" + search;
-    if (hash && hash !== "#")
-      pathname += hash.charAt(0) === "#" ? hash : "#" + hash;
-    return pathname;
-  }
-  function parsePath(path) {
-    let parsedPath = {};
-    if (path) {
-      let hashIndex = path.indexOf("#");
-      if (hashIndex >= 0) {
-        parsedPath.hash = path.substring(hashIndex);
-        path = path.substring(0, hashIndex);
-      }
-      let searchIndex = path.indexOf("?");
-      if (searchIndex >= 0) {
-        parsedPath.search = path.substring(searchIndex);
-        path = path.substring(0, searchIndex);
-      }
-      if (path) {
-        parsedPath.pathname = path;
-      }
-    }
-    return parsedPath;
-  }
-  function matchRoutes(routes, locationArg, basename = "/") {
-    return matchRoutesImpl(routes, locationArg, basename, false);
-  }
-  function matchRoutesImpl(routes, locationArg, basename, allowPartial) {
-    let location2 = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
-    let pathname = stripBasename(location2.pathname || "/", basename);
-    if (pathname == null) {
-      return null;
-    }
-    let branches = flattenRoutes(routes);
-    rankRouteBranches(branches);
-    let matches = null;
-    for (let i = 0; matches == null && i < branches.length; ++i) {
-      let decoded = decodePath(pathname);
-      matches = matchRouteBranch(
-        branches[i],
-        decoded,
-        allowPartial
-      );
-    }
-    return matches;
-  }
-  function flattenRoutes(routes, branches = [], parentsMeta = [], parentPath = "") {
-    let flattenRoute = (route, index, relativePath) => {
-      let meta = {
-        relativePath: relativePath === void 0 ? route.path || "" : relativePath,
-        caseSensitive: route.caseSensitive === true,
-        childrenIndex: index,
-        route
-      };
-      if (meta.relativePath.startsWith("/")) {
-        invariant(
-          meta.relativePath.startsWith(parentPath),
-          `Absolute route path "${meta.relativePath}" nested under path "${parentPath}" is not valid. An absolute child route path must start with the combined path of all its parent routes.`
-        );
-        meta.relativePath = meta.relativePath.slice(parentPath.length);
-      }
-      let path = joinPaths([parentPath, meta.relativePath]);
-      let routesMeta = parentsMeta.concat(meta);
-      if (route.children && route.children.length > 0) {
-        invariant(
-          // Our types know better, but runtime JS may not!
-          // @ts-expect-error
-          route.index !== true,
-          `Index routes must not have child routes. Please remove all child routes from route path "${path}".`
-        );
-        flattenRoutes(route.children, branches, routesMeta, path);
-      }
-      if (route.path == null && !route.index) {
-        return;
-      }
-      branches.push({
-        path,
-        score: computeScore(path, route.index),
-        routesMeta
-      });
-    };
-    routes.forEach((route, index) => {
-      var _a;
-      if (route.path === "" || !((_a = route.path) == null ? void 0 : _a.includes("?"))) {
-        flattenRoute(route, index);
-      } else {
-        for (let exploded of explodeOptionalSegments(route.path)) {
-          flattenRoute(route, index, exploded);
-        }
-      }
-    });
-    return branches;
-  }
-  function explodeOptionalSegments(path) {
-    let segments = path.split("/");
-    if (segments.length === 0)
-      return [];
-    let [first, ...rest] = segments;
-    let isOptional = first.endsWith("?");
-    let required = first.replace(/\?$/, "");
-    if (rest.length === 0) {
-      return isOptional ? [required, ""] : [required];
-    }
-    let restExploded = explodeOptionalSegments(rest.join("/"));
-    let result = [];
-    result.push(
-      ...restExploded.map(
-        (subpath) => subpath === "" ? required : [required, subpath].join("/")
-      )
-    );
-    if (isOptional) {
-      result.push(...restExploded);
-    }
-    return result.map(
-      (exploded) => path.startsWith("/") && exploded === "" ? "/" : exploded
-    );
-  }
-  function rankRouteBranches(branches) {
-    branches.sort(
-      (a, b) => a.score !== b.score ? b.score - a.score : compareIndexes(
-        a.routesMeta.map((meta) => meta.childrenIndex),
-        b.routesMeta.map((meta) => meta.childrenIndex)
-      )
-    );
-  }
-  var paramRe = /^:[\w-]+$/;
-  var dynamicSegmentValue = 3;
-  var indexRouteValue = 2;
-  var emptySegmentValue = 1;
-  var staticSegmentValue = 10;
-  var splatPenalty = -2;
-  var isSplat = (s) => s === "*";
-  function computeScore(path, index) {
-    let segments = path.split("/");
-    let initialScore = segments.length;
-    if (segments.some(isSplat)) {
-      initialScore += splatPenalty;
-    }
-    if (index) {
-      initialScore += indexRouteValue;
-    }
-    return segments.filter((s) => !isSplat(s)).reduce(
-      (score, segment) => score + (paramRe.test(segment) ? dynamicSegmentValue : segment === "" ? emptySegmentValue : staticSegmentValue),
-      initialScore
-    );
-  }
-  function compareIndexes(a, b) {
-    let siblings = a.length === b.length && a.slice(0, -1).every((n2, i) => n2 === b[i]);
-    return siblings ? (
-      // If two routes are siblings, we should try to match the earlier sibling
-      // first. This allows people to have fine-grained control over the matching
-      // behavior by simply putting routes with identical paths in the order they
-      // want them tried.
-      a[a.length - 1] - b[b.length - 1]
-    ) : (
-      // Otherwise, it doesn't really make sense to rank non-siblings by index,
-      // so they sort equally.
-      0
-    );
-  }
-  function matchRouteBranch(branch, pathname, allowPartial = false) {
-    let { routesMeta } = branch;
-    let matchedParams = {};
-    let matchedPathname = "/";
-    let matches = [];
-    for (let i = 0; i < routesMeta.length; ++i) {
-      let meta = routesMeta[i];
-      let end = i === routesMeta.length - 1;
-      let remainingPathname = matchedPathname === "/" ? pathname : pathname.slice(matchedPathname.length) || "/";
-      let match = matchPath(
-        { path: meta.relativePath, caseSensitive: meta.caseSensitive, end },
-        remainingPathname
-      );
-      let route = meta.route;
-      if (!match && end && allowPartial && !routesMeta[routesMeta.length - 1].route.index) {
-        match = matchPath(
-          {
-            path: meta.relativePath,
-            caseSensitive: meta.caseSensitive,
-            end: false
-          },
-          remainingPathname
-        );
-      }
-      if (!match) {
-        return null;
-      }
-      Object.assign(matchedParams, match.params);
-      matches.push({
-        // TODO: Can this as be avoided?
-        params: matchedParams,
-        pathname: joinPaths([matchedPathname, match.pathname]),
-        pathnameBase: normalizePathname(
-          joinPaths([matchedPathname, match.pathnameBase])
-        ),
-        route
-      });
-      if (match.pathnameBase !== "/") {
-        matchedPathname = joinPaths([matchedPathname, match.pathnameBase]);
-      }
-    }
-    return matches;
-  }
-  function matchPath(pattern, pathname) {
-    if (typeof pattern === "string") {
-      pattern = { path: pattern, caseSensitive: false, end: true };
-    }
-    let [matcher, compiledParams] = compilePath(
-      pattern.path,
-      pattern.caseSensitive,
-      pattern.end
-    );
-    let match = pathname.match(matcher);
-    if (!match)
-      return null;
-    let matchedPathname = match[0];
-    let pathnameBase = matchedPathname.replace(/(.)\/+$/, "$1");
-    let captureGroups = match.slice(1);
-    let params = compiledParams.reduce(
-      (memo2, { paramName, isOptional }, index) => {
-        if (paramName === "*") {
-          let splatValue = captureGroups[index] || "";
-          pathnameBase = matchedPathname.slice(0, matchedPathname.length - splatValue.length).replace(/(.)\/+$/, "$1");
-        }
-        const value = captureGroups[index];
-        if (isOptional && !value) {
-          memo2[paramName] = void 0;
-        } else {
-          memo2[paramName] = (value || "").replace(/%2F/g, "/");
-        }
-        return memo2;
-      },
-      {}
-    );
-    return {
-      params,
-      pathname: matchedPathname,
-      pathnameBase,
-      pattern
-    };
-  }
-  function compilePath(path, caseSensitive = false, end = true) {
-    warning(
-      path === "*" || !path.endsWith("*") || path.endsWith("/*"),
-      `Route path "${path}" will be treated as if it were "${path.replace(/\*$/, "/*")}" because the \`*\` character must always follow a \`/\` in the pattern. To get rid of this warning, please change the route path to "${path.replace(/\*$/, "/*")}".`
-    );
-    let params = [];
-    let regexpSource = "^" + path.replace(/\/*\*?$/, "").replace(/^\/*/, "/").replace(/[\\.*+^${}|()[\]]/g, "\\$&").replace(
-      /\/:([\w-]+)(\?)?/g,
-      (_, paramName, isOptional) => {
-        params.push({ paramName, isOptional: isOptional != null });
-        return isOptional ? "/?([^\\/]+)?" : "/([^\\/]+)";
-      }
-    );
-    if (path.endsWith("*")) {
-      params.push({ paramName: "*" });
-      regexpSource += path === "*" || path === "/*" ? "(.*)$" : "(?:\\/(.+)|\\/*)$";
-    } else if (end) {
-      regexpSource += "\\/*$";
-    } else if (path !== "" && path !== "/") {
-      regexpSource += "(?:(?=\\/|$))";
-    } else
-      ;
-    let matcher = new RegExp(regexpSource, caseSensitive ? void 0 : "i");
-    return [matcher, params];
-  }
-  function decodePath(value) {
-    try {
-      return value.split("/").map((v2) => decodeURIComponent(v2).replace(/\//g, "%2F")).join("/");
-    } catch (error) {
-      warning(
-        false,
-        `The URL path "${value}" could not be decoded because it is a malformed URL segment. This is probably due to a bad percent encoding (${error}).`
-      );
-      return value;
-    }
-  }
-  function stripBasename(pathname, basename) {
-    if (basename === "/")
-      return pathname;
-    if (!pathname.toLowerCase().startsWith(basename.toLowerCase())) {
-      return null;
-    }
-    let startIndex = basename.endsWith("/") ? basename.length - 1 : basename.length;
-    let nextChar = pathname.charAt(startIndex);
-    if (nextChar && nextChar !== "/") {
-      return null;
-    }
-    return pathname.slice(startIndex) || "/";
-  }
-  function resolvePath(to, fromPathname = "/") {
-    let {
-      pathname: toPathname,
-      search = "",
-      hash = ""
-    } = typeof to === "string" ? parsePath(to) : to;
-    let pathname = toPathname ? toPathname.startsWith("/") ? toPathname : resolvePathname(toPathname, fromPathname) : fromPathname;
-    return {
-      pathname,
-      search: normalizeSearch(search),
-      hash: normalizeHash(hash)
-    };
-  }
-  function resolvePathname(relativePath, fromPathname) {
-    let segments = fromPathname.replace(/\/+$/, "").split("/");
-    let relativeSegments = relativePath.split("/");
-    relativeSegments.forEach((segment) => {
-      if (segment === "..") {
-        if (segments.length > 1)
-          segments.pop();
-      } else if (segment !== ".") {
-        segments.push(segment);
-      }
-    });
-    return segments.length > 1 ? segments.join("/") : "/";
-  }
-  function getInvalidPathError(char, field, dest, path) {
-    return `Cannot include a '${char}' character in a manually specified \`to.${field}\` field [${JSON.stringify(
-      path
-    )}].  Please separate it out to the \`to.${dest}\` field. Alternatively you may provide the full path as a string in <Link to="..."> and the router will parse it for you.`;
-  }
-  function getPathContributingMatches(matches) {
-    return matches.filter(
-      (match, index) => index === 0 || match.route.path && match.route.path.length > 0
-    );
-  }
-  function getResolveToMatches(matches) {
-    let pathMatches = getPathContributingMatches(matches);
-    return pathMatches.map(
-      (match, idx) => idx === pathMatches.length - 1 ? match.pathname : match.pathnameBase
-    );
-  }
-  function resolveTo(toArg, routePathnames, locationPathname, isPathRelative = false) {
-    let to;
-    if (typeof toArg === "string") {
-      to = parsePath(toArg);
-    } else {
-      to = { ...toArg };
-      invariant(
-        !to.pathname || !to.pathname.includes("?"),
-        getInvalidPathError("?", "pathname", "search", to)
-      );
-      invariant(
-        !to.pathname || !to.pathname.includes("#"),
-        getInvalidPathError("#", "pathname", "hash", to)
-      );
-      invariant(
-        !to.search || !to.search.includes("#"),
-        getInvalidPathError("#", "search", "hash", to)
-      );
-    }
-    let isEmptyPath = toArg === "" || to.pathname === "";
-    let toPathname = isEmptyPath ? "/" : to.pathname;
-    let from;
-    if (toPathname == null) {
-      from = locationPathname;
-    } else {
-      let routePathnameIndex = routePathnames.length - 1;
-      if (!isPathRelative && toPathname.startsWith("..")) {
-        let toSegments = toPathname.split("/");
-        while (toSegments[0] === "..") {
-          toSegments.shift();
-          routePathnameIndex -= 1;
-        }
-        to.pathname = toSegments.join("/");
-      }
-      from = routePathnameIndex >= 0 ? routePathnames[routePathnameIndex] : "/";
-    }
-    let path = resolvePath(to, from);
-    let hasExplicitTrailingSlash = toPathname && toPathname !== "/" && toPathname.endsWith("/");
-    let hasCurrentTrailingSlash = (isEmptyPath || toPathname === ".") && locationPathname.endsWith("/");
-    if (!path.pathname.endsWith("/") && (hasExplicitTrailingSlash || hasCurrentTrailingSlash)) {
-      path.pathname += "/";
-    }
-    return path;
-  }
-  var joinPaths = (paths) => paths.join("/").replace(/\/\/+/g, "/");
-  var normalizePathname = (pathname) => pathname.replace(/\/+$/, "").replace(/^\/*/, "/");
-  var normalizeSearch = (search) => !search || search === "?" ? "" : search.startsWith("?") ? search : "?" + search;
-  var normalizeHash = (hash) => !hash || hash === "#" ? "" : hash.startsWith("#") ? hash : "#" + hash;
-  function isRouteErrorResponse(error) {
-    return error != null && typeof error.status === "number" && typeof error.statusText === "string" && typeof error.internal === "boolean" && "data" in error;
-  }
-  var validMutationMethodsArr = [
-    "POST",
-    "PUT",
-    "PATCH",
-    "DELETE"
-  ];
-  new Set(
-    validMutationMethodsArr
-  );
-  var validRequestMethodsArr = [
-    "GET",
-    ...validMutationMethodsArr
-  ];
-  new Set(validRequestMethodsArr);
-  var DataRouterContext = reactExports.createContext(null);
-  DataRouterContext.displayName = "DataRouter";
-  var DataRouterStateContext = reactExports.createContext(null);
-  DataRouterStateContext.displayName = "DataRouterState";
-  reactExports.createContext(false);
-  var ViewTransitionContext = reactExports.createContext({
-    isTransitioning: false
-  });
-  ViewTransitionContext.displayName = "ViewTransition";
-  var FetchersContext = reactExports.createContext(
-    /* @__PURE__ */ new Map()
-  );
-  FetchersContext.displayName = "Fetchers";
-  var AwaitContext = reactExports.createContext(null);
-  AwaitContext.displayName = "Await";
-  var NavigationContext = reactExports.createContext(
-    null
-  );
-  NavigationContext.displayName = "Navigation";
-  var LocationContext = reactExports.createContext(
-    null
-  );
-  LocationContext.displayName = "Location";
-  var RouteContext = reactExports.createContext({
-    outlet: null,
-    matches: [],
-    isDataRoute: false
-  });
-  RouteContext.displayName = "Route";
-  var RouteErrorContext = reactExports.createContext(null);
-  RouteErrorContext.displayName = "RouteError";
-  function useHref(to, { relative } = {}) {
-    invariant(
-      useInRouterContext(),
-      // TODO: This error is probably because they somehow have 2 versions of the
-      // router loaded. We can help them understand how to avoid that.
-      `useHref() may be used only in the context of a <Router> component.`
-    );
-    let { basename, navigator: navigator2 } = reactExports.useContext(NavigationContext);
-    let { hash, pathname, search } = useResolvedPath(to, { relative });
-    let joinedPathname = pathname;
-    if (basename !== "/") {
-      joinedPathname = pathname === "/" ? basename : joinPaths([basename, pathname]);
-    }
-    return navigator2.createHref({ pathname: joinedPathname, search, hash });
-  }
-  function useInRouterContext() {
-    return reactExports.useContext(LocationContext) != null;
-  }
-  function useLocation() {
-    invariant(
-      useInRouterContext(),
-      // TODO: This error is probably because they somehow have 2 versions of the
-      // router loaded. We can help them understand how to avoid that.
-      `useLocation() may be used only in the context of a <Router> component.`
-    );
-    return reactExports.useContext(LocationContext).location;
-  }
-  var navigateEffectWarning = `You should call navigate() in a React.useEffect(), not when your component is first rendered.`;
-  function useIsomorphicLayoutEffect(cb2) {
-    let isStatic = reactExports.useContext(NavigationContext).static;
-    if (!isStatic) {
-      reactExports.useLayoutEffect(cb2);
-    }
-  }
-  function useNavigate() {
-    let { isDataRoute } = reactExports.useContext(RouteContext);
-    return isDataRoute ? useNavigateStable() : useNavigateUnstable();
-  }
-  function useNavigateUnstable() {
-    invariant(
-      useInRouterContext(),
-      // TODO: This error is probably because they somehow have 2 versions of the
-      // router loaded. We can help them understand how to avoid that.
-      `useNavigate() may be used only in the context of a <Router> component.`
-    );
-    let dataRouterContext = reactExports.useContext(DataRouterContext);
-    let { basename, navigator: navigator2 } = reactExports.useContext(NavigationContext);
-    let { matches } = reactExports.useContext(RouteContext);
-    let { pathname: locationPathname } = useLocation();
-    let routePathnamesJson = JSON.stringify(getResolveToMatches(matches));
-    let activeRef = reactExports.useRef(false);
-    useIsomorphicLayoutEffect(() => {
-      activeRef.current = true;
-    });
-    let navigate = reactExports.useCallback(
-      (to, options = {}) => {
-        warning(activeRef.current, navigateEffectWarning);
-        if (!activeRef.current)
-          return;
-        if (typeof to === "number") {
-          navigator2.go(to);
-          return;
-        }
-        let path = resolveTo(
-          to,
-          JSON.parse(routePathnamesJson),
-          locationPathname,
-          options.relative === "path"
-        );
-        if (dataRouterContext == null && basename !== "/") {
-          path.pathname = path.pathname === "/" ? basename : joinPaths([basename, path.pathname]);
-        }
-        (!!options.replace ? navigator2.replace : navigator2.push)(
-          path,
-          options.state,
-          options
-        );
-      },
-      [
-        basename,
-        navigator2,
-        routePathnamesJson,
-        locationPathname,
-        dataRouterContext
-      ]
-    );
-    return navigate;
-  }
-  reactExports.createContext(null);
-  function useResolvedPath(to, { relative } = {}) {
-    let { matches } = reactExports.useContext(RouteContext);
-    let { pathname: locationPathname } = useLocation();
-    let routePathnamesJson = JSON.stringify(getResolveToMatches(matches));
-    return reactExports.useMemo(
-      () => resolveTo(
-        to,
-        JSON.parse(routePathnamesJson),
-        locationPathname,
-        relative === "path"
-      ),
-      [to, routePathnamesJson, locationPathname, relative]
-    );
-  }
-  function useRoutes(routes, locationArg) {
-    return useRoutesImpl(routes, locationArg);
-  }
-  function useRoutesImpl(routes, locationArg, dataRouterState, future) {
-    var _a;
-    invariant(
-      useInRouterContext(),
-      // TODO: This error is probably because they somehow have 2 versions of the
-      // router loaded. We can help them understand how to avoid that.
-      `useRoutes() may be used only in the context of a <Router> component.`
-    );
-    let { navigator: navigator2 } = reactExports.useContext(NavigationContext);
-    let { matches: parentMatches } = reactExports.useContext(RouteContext);
-    let routeMatch = parentMatches[parentMatches.length - 1];
-    let parentParams = routeMatch ? routeMatch.params : {};
-    let parentPathname = routeMatch ? routeMatch.pathname : "/";
-    let parentPathnameBase = routeMatch ? routeMatch.pathnameBase : "/";
-    let parentRoute = routeMatch && routeMatch.route;
-    {
-      let parentPath = parentRoute && parentRoute.path || "";
-      warningOnce(
-        parentPathname,
-        !parentRoute || parentPath.endsWith("*") || parentPath.endsWith("*?"),
-        `You rendered descendant <Routes> (or called \`useRoutes()\`) at "${parentPathname}" (under <Route path="${parentPath}">) but the parent route path has no trailing "*". This means if you navigate deeper, the parent won't match anymore and therefore the child routes will never render.
-
-Please change the parent <Route path="${parentPath}"> to <Route path="${parentPath === "/" ? "*" : `${parentPath}/*`}">.`
-      );
-    }
-    let locationFromContext = useLocation();
-    let location2;
-    if (locationArg) {
-      let parsedLocationArg = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
-      invariant(
-        parentPathnameBase === "/" || ((_a = parsedLocationArg.pathname) == null ? void 0 : _a.startsWith(parentPathnameBase)),
-        `When overriding the location using \`<Routes location>\` or \`useRoutes(routes, location)\`, the location pathname must begin with the portion of the URL pathname that was matched by all parent routes. The current pathname base is "${parentPathnameBase}" but pathname "${parsedLocationArg.pathname}" was given in the \`location\` prop.`
-      );
-      location2 = parsedLocationArg;
-    } else {
-      location2 = locationFromContext;
-    }
-    let pathname = location2.pathname || "/";
-    let remainingPathname = pathname;
-    if (parentPathnameBase !== "/") {
-      let parentSegments = parentPathnameBase.replace(/^\//, "").split("/");
-      let segments = pathname.replace(/^\//, "").split("/");
-      remainingPathname = "/" + segments.slice(parentSegments.length).join("/");
-    }
-    let matches = matchRoutes(routes, { pathname: remainingPathname });
-    {
-      warning(
-        parentRoute || matches != null,
-        `No routes matched location "${location2.pathname}${location2.search}${location2.hash}" `
-      );
-      warning(
-        matches == null || matches[matches.length - 1].route.element !== void 0 || matches[matches.length - 1].route.Component !== void 0 || matches[matches.length - 1].route.lazy !== void 0,
-        `Matched leaf route at location "${location2.pathname}${location2.search}${location2.hash}" does not have an element or Component. This means it will render an <Outlet /> with a null value by default resulting in an "empty" page.`
-      );
-    }
-    let renderedMatches = _renderMatches(
-      matches && matches.map(
-        (match) => Object.assign({}, match, {
-          params: Object.assign({}, parentParams, match.params),
-          pathname: joinPaths([
-            parentPathnameBase,
-            // Re-encode pathnames that were decoded inside matchRoutes
-            navigator2.encodeLocation ? navigator2.encodeLocation(match.pathname).pathname : match.pathname
-          ]),
-          pathnameBase: match.pathnameBase === "/" ? parentPathnameBase : joinPaths([
-            parentPathnameBase,
-            // Re-encode pathnames that were decoded inside matchRoutes
-            navigator2.encodeLocation ? navigator2.encodeLocation(match.pathnameBase).pathname : match.pathnameBase
-          ])
-        })
-      ),
-      parentMatches,
-      dataRouterState,
-      future
-    );
-    if (locationArg && renderedMatches) {
-      return /* @__PURE__ */ reactExports.createElement(
-        LocationContext.Provider,
-        {
-          value: {
-            location: {
-              pathname: "/",
-              search: "",
-              hash: "",
-              state: null,
-              key: "default",
-              ...location2
-            },
-            navigationType: "POP"
-            /* Pop */
-          }
-        },
-        renderedMatches
-      );
-    }
-    return renderedMatches;
-  }
-  function DefaultErrorComponent() {
-    let error = useRouteError();
-    let message = isRouteErrorResponse(error) ? `${error.status} ${error.statusText}` : error instanceof Error ? error.message : JSON.stringify(error);
-    let stack = error instanceof Error ? error.stack : null;
-    let lightgrey = "rgba(200,200,200, 0.5)";
-    let preStyles = { padding: "0.5rem", backgroundColor: lightgrey };
-    let codeStyles = { padding: "2px 4px", backgroundColor: lightgrey };
-    let devInfo = null;
-    {
-      console.error(
-        "Error handled by React Router default ErrorBoundary:",
-        error
-      );
-      devInfo = /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("p", null, "💿 Hey developer 👋"), /* @__PURE__ */ reactExports.createElement("p", null, "You can provide a way better UX than this when your app throws errors by providing your own ", /* @__PURE__ */ reactExports.createElement("code", { style: codeStyles }, "ErrorBoundary"), " or", " ", /* @__PURE__ */ reactExports.createElement("code", { style: codeStyles }, "errorElement"), " prop on your route."));
-    }
-    return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("h2", null, "Unexpected Application Error!"), /* @__PURE__ */ reactExports.createElement("h3", { style: { fontStyle: "italic" } }, message), stack ? /* @__PURE__ */ reactExports.createElement("pre", { style: preStyles }, stack) : null, devInfo);
-  }
-  var defaultErrorElement = /* @__PURE__ */ reactExports.createElement(DefaultErrorComponent, null);
-  var RenderErrorBoundary = class extends reactExports.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        location: props.location,
-        revalidation: props.revalidation,
-        error: props.error
-      };
-    }
-    static getDerivedStateFromError(error) {
-      return { error };
-    }
-    static getDerivedStateFromProps(props, state) {
-      if (state.location !== props.location || state.revalidation !== "idle" && props.revalidation === "idle") {
-        return {
-          error: props.error,
-          location: props.location,
-          revalidation: props.revalidation
-        };
-      }
-      return {
-        error: props.error !== void 0 ? props.error : state.error,
-        location: state.location,
-        revalidation: props.revalidation || state.revalidation
-      };
-    }
-    componentDidCatch(error, errorInfo) {
-      console.error(
-        "React Router caught the following error during render",
-        error,
-        errorInfo
-      );
-    }
-    render() {
-      return this.state.error !== void 0 ? /* @__PURE__ */ reactExports.createElement(RouteContext.Provider, { value: this.props.routeContext }, /* @__PURE__ */ reactExports.createElement(
-        RouteErrorContext.Provider,
-        {
-          value: this.state.error,
-          children: this.props.component
-        }
-      )) : this.props.children;
-    }
-  };
-  function RenderedRoute({ routeContext, match, children }) {
-    let dataRouterContext = reactExports.useContext(DataRouterContext);
-    if (dataRouterContext && dataRouterContext.static && dataRouterContext.staticContext && (match.route.errorElement || match.route.ErrorBoundary)) {
-      dataRouterContext.staticContext._deepestRenderedBoundaryId = match.route.id;
-    }
-    return /* @__PURE__ */ reactExports.createElement(RouteContext.Provider, { value: routeContext }, children);
-  }
-  function _renderMatches(matches, parentMatches = [], dataRouterState = null, future = null) {
-    if (matches == null) {
-      if (!dataRouterState) {
-        return null;
-      }
-      if (dataRouterState.errors) {
-        matches = dataRouterState.matches;
-      } else if (parentMatches.length === 0 && !dataRouterState.initialized && dataRouterState.matches.length > 0) {
-        matches = dataRouterState.matches;
-      } else {
-        return null;
-      }
-    }
-    let renderedMatches = matches;
-    let errors = dataRouterState == null ? void 0 : dataRouterState.errors;
-    if (errors != null) {
-      let errorIndex = renderedMatches.findIndex(
-        (m2) => m2.route.id && (errors == null ? void 0 : errors[m2.route.id]) !== void 0
-      );
-      invariant(
-        errorIndex >= 0,
-        `Could not find a matching route for errors on route IDs: ${Object.keys(
-          errors
-        ).join(",")}`
-      );
-      renderedMatches = renderedMatches.slice(
-        0,
-        Math.min(renderedMatches.length, errorIndex + 1)
-      );
-    }
-    let renderFallback = false;
-    let fallbackIndex = -1;
-    if (dataRouterState) {
-      for (let i = 0; i < renderedMatches.length; i++) {
-        let match = renderedMatches[i];
-        if (match.route.HydrateFallback || match.route.hydrateFallbackElement) {
-          fallbackIndex = i;
-        }
-        if (match.route.id) {
-          let { loaderData, errors: errors2 } = dataRouterState;
-          let needsToRunLoader = match.route.loader && !loaderData.hasOwnProperty(match.route.id) && (!errors2 || errors2[match.route.id] === void 0);
-          if (match.route.lazy || needsToRunLoader) {
-            renderFallback = true;
-            if (fallbackIndex >= 0) {
-              renderedMatches = renderedMatches.slice(0, fallbackIndex + 1);
-            } else {
-              renderedMatches = [renderedMatches[0]];
-            }
-            break;
-          }
-        }
-      }
-    }
-    return renderedMatches.reduceRight(
-      (outlet, match, index) => {
-        let error;
-        let shouldRenderHydrateFallback = false;
-        let errorElement = null;
-        let hydrateFallbackElement = null;
-        if (dataRouterState) {
-          error = errors && match.route.id ? errors[match.route.id] : void 0;
-          errorElement = match.route.errorElement || defaultErrorElement;
-          if (renderFallback) {
-            if (fallbackIndex < 0 && index === 0) {
-              warningOnce(
-                "route-fallback",
-                false,
-                "No `HydrateFallback` element provided to render during initial hydration"
-              );
-              shouldRenderHydrateFallback = true;
-              hydrateFallbackElement = null;
-            } else if (fallbackIndex === index) {
-              shouldRenderHydrateFallback = true;
-              hydrateFallbackElement = match.route.hydrateFallbackElement || null;
-            }
-          }
-        }
-        let matches2 = parentMatches.concat(renderedMatches.slice(0, index + 1));
-        let getChildren = () => {
-          let children;
-          if (error) {
-            children = errorElement;
-          } else if (shouldRenderHydrateFallback) {
-            children = hydrateFallbackElement;
-          } else if (match.route.Component) {
-            children = /* @__PURE__ */ reactExports.createElement(match.route.Component, null);
-          } else if (match.route.element) {
-            children = match.route.element;
-          } else {
-            children = outlet;
-          }
-          return /* @__PURE__ */ reactExports.createElement(
-            RenderedRoute,
-            {
-              match,
-              routeContext: {
-                outlet,
-                matches: matches2,
-                isDataRoute: dataRouterState != null
-              },
-              children
-            }
-          );
-        };
-        return dataRouterState && (match.route.ErrorBoundary || match.route.errorElement || index === 0) ? /* @__PURE__ */ reactExports.createElement(
-          RenderErrorBoundary,
-          {
-            location: dataRouterState.location,
-            revalidation: dataRouterState.revalidation,
-            component: errorElement,
-            error,
-            children: getChildren(),
-            routeContext: { outlet: null, matches: matches2, isDataRoute: true }
-          }
-        ) : getChildren();
-      },
-      null
-    );
-  }
-  function getDataRouterConsoleError(hookName) {
-    return `${hookName} must be used within a data router.  See https://reactrouter.com/en/main/routers/picking-a-router.`;
-  }
-  function useDataRouterContext(hookName) {
-    let ctx = reactExports.useContext(DataRouterContext);
-    invariant(ctx, getDataRouterConsoleError(hookName));
-    return ctx;
-  }
-  function useDataRouterState(hookName) {
-    let state = reactExports.useContext(DataRouterStateContext);
-    invariant(state, getDataRouterConsoleError(hookName));
-    return state;
-  }
-  function useRouteContext(hookName) {
-    let route = reactExports.useContext(RouteContext);
-    invariant(route, getDataRouterConsoleError(hookName));
-    return route;
-  }
-  function useCurrentRouteId(hookName) {
-    let route = useRouteContext(hookName);
-    let thisRoute = route.matches[route.matches.length - 1];
-    invariant(
-      thisRoute.route.id,
-      `${hookName} can only be used on routes that contain a unique "id"`
-    );
-    return thisRoute.route.id;
-  }
-  function useRouteId() {
-    return useCurrentRouteId(
-      "useRouteId"
-      /* UseRouteId */
-    );
-  }
-  function useRouteError() {
-    var _a;
-    let error = reactExports.useContext(RouteErrorContext);
-    let state = useDataRouterState(
-      "useRouteError"
-      /* UseRouteError */
-    );
-    let routeId = useCurrentRouteId(
-      "useRouteError"
-      /* UseRouteError */
-    );
-    if (error !== void 0) {
-      return error;
-    }
-    return (_a = state.errors) == null ? void 0 : _a[routeId];
-  }
-  function useNavigateStable() {
-    let { router } = useDataRouterContext(
-      "useNavigate"
-      /* UseNavigateStable */
-    );
-    let id2 = useCurrentRouteId(
-      "useNavigate"
-      /* UseNavigateStable */
-    );
-    let activeRef = reactExports.useRef(false);
-    useIsomorphicLayoutEffect(() => {
-      activeRef.current = true;
-    });
-    let navigate = reactExports.useCallback(
-      async (to, options = {}) => {
-        warning(activeRef.current, navigateEffectWarning);
-        if (!activeRef.current)
-          return;
-        if (typeof to === "number") {
-          router.navigate(to);
-        } else {
-          await router.navigate(to, { fromRouteId: id2, ...options });
-        }
-      },
-      [router, id2]
-    );
-    return navigate;
-  }
-  var alreadyWarned = {};
-  function warningOnce(key, cond, message) {
-    if (!cond && !alreadyWarned[key]) {
-      alreadyWarned[key] = true;
-      warning(false, message);
-    }
-  }
-  reactExports.memo(DataRoutes);
-  function DataRoutes({
-    routes,
-    future,
-    state
-  }) {
-    return useRoutesImpl(routes, void 0, state, future);
-  }
-  function MemoryRouter({
-    basename,
-    children,
-    initialEntries,
-    initialIndex
-  }) {
-    let historyRef = reactExports.useRef();
-    if (historyRef.current == null) {
-      historyRef.current = createMemoryHistory({
-        initialEntries,
-        initialIndex,
-        v5Compat: true
-      });
-    }
-    let history = historyRef.current;
-    let [state, setStateImpl] = reactExports.useState({
-      action: history.action,
-      location: history.location
-    });
-    let setState = reactExports.useCallback(
-      (newState) => {
-        reactExports.startTransition(() => setStateImpl(newState));
-      },
-      [setStateImpl]
-    );
-    reactExports.useLayoutEffect(() => history.listen(setState), [history, setState]);
-    return /* @__PURE__ */ reactExports.createElement(
-      Router,
-      {
-        basename,
-        children,
-        location: state.location,
-        navigationType: state.action,
-        navigator: history
-      }
-    );
-  }
-  function Navigate({
-    to,
-    replace: replace2,
-    state,
-    relative
-  }) {
-    invariant(
-      useInRouterContext(),
-      // TODO: This error is probably because they somehow have 2 versions of
-      // the router loaded. We can help them understand how to avoid that.
-      `<Navigate> may be used only in the context of a <Router> component.`
-    );
-    let { static: isStatic } = reactExports.useContext(NavigationContext);
-    warning(
-      !isStatic,
-      `<Navigate> must not be used on the initial render in a <StaticRouter>. This is a no-op, but you should modify your code so the <Navigate> is only ever rendered in response to some user interaction or state change.`
-    );
-    let { matches } = reactExports.useContext(RouteContext);
-    let { pathname: locationPathname } = useLocation();
-    let navigate = useNavigate();
-    let path = resolveTo(
-      to,
-      getResolveToMatches(matches),
-      locationPathname,
-      relative === "path"
-    );
-    let jsonPath = JSON.stringify(path);
-    reactExports.useEffect(() => {
-      navigate(JSON.parse(jsonPath), { replace: replace2, state, relative });
-    }, [navigate, jsonPath, relative, replace2, state]);
-    return null;
-  }
-  function Route(props) {
-    invariant(
-      false,
-      `A <Route> is only ever to be used as the child of <Routes> element, never rendered directly. Please wrap your <Route> in a <Routes>.`
-    );
-  }
-  function Router({
-    basename: basenameProp = "/",
-    children = null,
-    location: locationProp,
-    navigationType = "POP",
-    navigator: navigator2,
-    static: staticProp = false
-  }) {
-    invariant(
-      !useInRouterContext(),
-      `You cannot render a <Router> inside another <Router>. You should never have more than one in your app.`
-    );
-    let basename = basenameProp.replace(/^\/*/, "/");
-    let navigationContext = reactExports.useMemo(
-      () => ({
-        basename,
-        navigator: navigator2,
-        static: staticProp,
-        future: {}
-      }),
-      [basename, navigator2, staticProp]
-    );
-    if (typeof locationProp === "string") {
-      locationProp = parsePath(locationProp);
-    }
-    let {
-      pathname = "/",
-      search = "",
-      hash = "",
-      state = null,
-      key = "default"
-    } = locationProp;
-    let locationContext = reactExports.useMemo(() => {
-      let trailingPathname = stripBasename(pathname, basename);
-      if (trailingPathname == null) {
-        return null;
-      }
-      return {
-        location: {
-          pathname: trailingPathname,
-          search,
-          hash,
-          state,
-          key
-        },
-        navigationType
-      };
-    }, [basename, pathname, search, hash, state, key, navigationType]);
-    warning(
-      locationContext != null,
-      `<Router basename="${basename}"> is not able to match the URL "${pathname}${search}${hash}" because it does not start with the basename, so the <Router> won't render anything.`
-    );
-    if (locationContext == null) {
-      return null;
-    }
-    return /* @__PURE__ */ reactExports.createElement(NavigationContext.Provider, { value: navigationContext }, /* @__PURE__ */ reactExports.createElement(LocationContext.Provider, { children, value: locationContext }));
-  }
-  function Routes({
-    children,
-    location: location2
-  }) {
-    return useRoutes(createRoutesFromChildren(children), location2);
-  }
-  function createRoutesFromChildren(children, parentPath = []) {
-    let routes = [];
-    reactExports.Children.forEach(children, (element, index) => {
-      if (!reactExports.isValidElement(element)) {
-        return;
-      }
-      let treePath = [...parentPath, index];
-      if (element.type === reactExports.Fragment) {
-        routes.push.apply(
-          routes,
-          createRoutesFromChildren(element.props.children, treePath)
-        );
-        return;
-      }
-      invariant(
-        element.type === Route,
-        `[${typeof element.type === "string" ? element.type : element.type.name}] is not a <Route> component. All component children of <Routes> must be a <Route> or <React.Fragment>`
-      );
-      invariant(
-        !element.props.index || !element.props.children,
-        "An index route cannot have child routes."
-      );
-      let route = {
-        id: element.props.id || treePath.join("-"),
-        caseSensitive: element.props.caseSensitive,
-        element: element.props.element,
-        Component: element.props.Component,
-        index: element.props.index,
-        path: element.props.path,
-        loader: element.props.loader,
-        action: element.props.action,
-        hydrateFallbackElement: element.props.hydrateFallbackElement,
-        HydrateFallback: element.props.HydrateFallback,
-        errorElement: element.props.errorElement,
-        ErrorBoundary: element.props.ErrorBoundary,
-        hasErrorBoundary: element.props.hasErrorBoundary === true || element.props.ErrorBoundary != null || element.props.errorElement != null,
-        shouldRevalidate: element.props.shouldRevalidate,
-        handle: element.props.handle,
-        lazy: element.props.lazy
-      };
-      if (element.props.children) {
-        route.children = createRoutesFromChildren(
-          element.props.children,
-          treePath
-        );
-      }
-      routes.push(route);
-    });
-    return routes;
-  }
-  var defaultMethod = "get";
-  var defaultEncType = "application/x-www-form-urlencoded";
-  function isHtmlElement(object) {
-    return object != null && typeof object.tagName === "string";
-  }
-  function isButtonElement(object) {
-    return isHtmlElement(object) && object.tagName.toLowerCase() === "button";
-  }
-  function isFormElement(object) {
-    return isHtmlElement(object) && object.tagName.toLowerCase() === "form";
-  }
-  function isInputElement(object) {
-    return isHtmlElement(object) && object.tagName.toLowerCase() === "input";
-  }
-  function isModifiedEvent(event) {
-    return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
-  }
-  function shouldProcessLinkClick(event, target) {
-    return event.button === 0 && // Ignore everything but left clicks
-    (!target || target === "_self") && // Let browser handle "target=_blank" etc.
-    !isModifiedEvent(event);
-  }
-  var _formDataSupportsSubmitter = null;
-  function isFormDataSubmitterSupported() {
-    if (_formDataSupportsSubmitter === null) {
-      try {
-        new FormData(
-          document.createElement("form"),
-          // @ts-expect-error if FormData supports the submitter parameter, this will throw
-          0
-        );
-        _formDataSupportsSubmitter = false;
-      } catch (e) {
-        _formDataSupportsSubmitter = true;
-      }
-    }
-    return _formDataSupportsSubmitter;
-  }
-  var supportedFormEncTypes = /* @__PURE__ */ new Set([
-    "application/x-www-form-urlencoded",
-    "multipart/form-data",
-    "text/plain"
-  ]);
-  function getFormEncType(encType) {
-    if (encType != null && !supportedFormEncTypes.has(encType)) {
-      warning(
-        false,
-        `"${encType}" is not a valid \`encType\` for \`<Form>\`/\`<fetcher.Form>\` and will default to "${defaultEncType}"`
-      );
-      return null;
-    }
-    return encType;
-  }
-  function getFormSubmissionInfo(target, basename) {
-    let method;
-    let action;
-    let encType;
-    let formData;
-    let body;
-    if (isFormElement(target)) {
-      let attr = target.getAttribute("action");
-      action = attr ? stripBasename(attr, basename) : null;
-      method = target.getAttribute("method") || defaultMethod;
-      encType = getFormEncType(target.getAttribute("enctype")) || defaultEncType;
-      formData = new FormData(target);
-    } else if (isButtonElement(target) || isInputElement(target) && (target.type === "submit" || target.type === "image")) {
-      let form = target.form;
-      if (form == null) {
-        throw new Error(
-          `Cannot submit a <button> or <input type="submit"> without a <form>`
-        );
-      }
-      let attr = target.getAttribute("formaction") || form.getAttribute("action");
-      action = attr ? stripBasename(attr, basename) : null;
-      method = target.getAttribute("formmethod") || form.getAttribute("method") || defaultMethod;
-      encType = getFormEncType(target.getAttribute("formenctype")) || getFormEncType(form.getAttribute("enctype")) || defaultEncType;
-      formData = new FormData(form, target);
-      if (!isFormDataSubmitterSupported()) {
-        let { name: name2, type, value } = target;
-        if (type === "image") {
-          let prefix = name2 ? `${name2}.` : "";
-          formData.append(`${prefix}x`, "0");
-          formData.append(`${prefix}y`, "0");
-        } else if (name2) {
-          formData.append(name2, value);
-        }
-      }
-    } else if (isHtmlElement(target)) {
-      throw new Error(
-        `Cannot submit element that is not <form>, <button>, or <input type="submit|image">`
-      );
-    } else {
-      method = defaultMethod;
-      action = null;
-      encType = defaultEncType;
-      body = target;
-    }
-    if (formData && encType === "text/plain") {
-      body = formData;
-      formData = void 0;
-    }
-    return { action, method: method.toLowerCase(), encType, formData, body };
-  }
-  Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
-  function invariant2(value, message) {
-    if (value === false || value === null || typeof value === "undefined") {
-      throw new Error(message);
-    }
-  }
-  function singleFetchUrl(reqUrl, basename, extension) {
-    let url = typeof reqUrl === "string" ? new URL(
-      reqUrl,
-      // This can be called during the SSR flow via PrefetchPageLinksImpl so
-      // don't assume window is available
-      typeof window === "undefined" ? "server://singlefetch/" : window.location.origin
-    ) : reqUrl;
-    if (url.pathname === "/") {
-      url.pathname = `_root.${extension}`;
-    } else if (basename && stripBasename(url.pathname, basename) === "/") {
-      url.pathname = `${basename.replace(/\/$/, "")}/_root.${extension}`;
-    } else {
-      url.pathname = `${url.pathname.replace(/\/$/, "")}.${extension}`;
-    }
-    return url;
-  }
-  async function loadRouteModule(route, routeModulesCache) {
-    if (route.id in routeModulesCache) {
-      return routeModulesCache[route.id];
-    }
-    try {
-      let routeModule = await import(
-        /* @vite-ignore */
-        /* webpackIgnore: true */
-        route.module
-      );
-      routeModulesCache[route.id] = routeModule;
-      return routeModule;
-    } catch (error) {
-      console.error(
-        `Error loading route module \`${route.module}\`, reloading page...`
-      );
-      console.error(error);
-      if (window.__reactRouterContext && window.__reactRouterContext.isSpaMode && // @ts-expect-error
-      void 0) {
-        throw error;
-      }
-      window.location.reload();
-      return new Promise(() => {
-      });
-    }
-  }
-  function isHtmlLinkDescriptor(object) {
-    if (object == null) {
-      return false;
-    }
-    if (object.href == null) {
-      return object.rel === "preload" && typeof object.imageSrcSet === "string" && typeof object.imageSizes === "string";
-    }
-    return typeof object.rel === "string" && typeof object.href === "string";
-  }
-  async function getKeyedPrefetchLinks(matches, manifest, routeModules) {
-    let links = await Promise.all(
-      matches.map(async (match) => {
-        let route = manifest.routes[match.route.id];
-        if (route) {
-          let mod = await loadRouteModule(route, routeModules);
-          return mod.links ? mod.links() : [];
-        }
-        return [];
-      })
-    );
-    return dedupeLinkDescriptors(
-      links.flat(1).filter(isHtmlLinkDescriptor).filter((link) => link.rel === "stylesheet" || link.rel === "preload").map(
-        (link) => link.rel === "stylesheet" ? { ...link, rel: "prefetch", as: "style" } : { ...link, rel: "prefetch" }
-      )
-    );
-  }
-  function getNewMatchesForLinks(page, nextMatches, currentMatches, manifest, location2, mode) {
-    let isNew = (match, index) => {
-      if (!currentMatches[index])
-        return true;
-      return match.route.id !== currentMatches[index].route.id;
-    };
-    let matchPathChanged = (match, index) => {
-      var _a;
-      return (
-        // param change, /users/123 -> /users/456
-        currentMatches[index].pathname !== match.pathname || // splat param changed, which is not present in match.path
-        // e.g. /files/images/avatar.jpg -> files/finances.xls
-        ((_a = currentMatches[index].route.path) == null ? void 0 : _a.endsWith("*")) && currentMatches[index].params["*"] !== match.params["*"]
-      );
-    };
-    if (mode === "assets") {
-      return nextMatches.filter(
-        (match, index) => isNew(match, index) || matchPathChanged(match, index)
-      );
-    }
-    if (mode === "data") {
-      return nextMatches.filter((match, index) => {
-        var _a;
-        let manifestRoute = manifest.routes[match.route.id];
-        if (!manifestRoute || !manifestRoute.hasLoader) {
-          return false;
-        }
-        if (isNew(match, index) || matchPathChanged(match, index)) {
-          return true;
-        }
-        if (match.route.shouldRevalidate) {
-          let routeChoice = match.route.shouldRevalidate({
-            currentUrl: new URL(
-              location2.pathname + location2.search + location2.hash,
-              window.origin
-            ),
-            currentParams: ((_a = currentMatches[0]) == null ? void 0 : _a.params) || {},
-            nextUrl: new URL(page, window.origin),
-            nextParams: match.params,
-            defaultShouldRevalidate: true
-          });
-          if (typeof routeChoice === "boolean") {
-            return routeChoice;
-          }
-        }
-        return true;
-      });
-    }
-    return [];
-  }
-  function getModuleLinkHrefs(matches, manifest, { includeHydrateFallback } = {}) {
-    return dedupeHrefs(
-      matches.map((match) => {
-        let route = manifest.routes[match.route.id];
-        if (!route)
-          return [];
-        let hrefs = [route.module];
-        if (route.clientActionModule) {
-          hrefs = hrefs.concat(route.clientActionModule);
-        }
-        if (route.clientLoaderModule) {
-          hrefs = hrefs.concat(route.clientLoaderModule);
-        }
-        if (includeHydrateFallback && route.hydrateFallbackModule) {
-          hrefs = hrefs.concat(route.hydrateFallbackModule);
-        }
-        if (route.imports) {
-          hrefs = hrefs.concat(route.imports);
-        }
-        return hrefs;
-      }).flat(1)
-    );
-  }
-  function dedupeHrefs(hrefs) {
-    return [...new Set(hrefs)];
-  }
-  function sortKeys(obj) {
-    let sorted = {};
-    let keys = Object.keys(obj).sort();
-    for (let key of keys) {
-      sorted[key] = obj[key];
-    }
-    return sorted;
-  }
-  function dedupeLinkDescriptors(descriptors, preloads) {
-    let set = /* @__PURE__ */ new Set();
-    new Set(preloads);
-    return descriptors.reduce((deduped, descriptor) => {
-      let key = JSON.stringify(sortKeys(descriptor));
-      if (!set.has(key)) {
-        set.add(key);
-        deduped.push({ key, link: descriptor });
-      }
-      return deduped;
-    }, []);
-  }
-  function useDataRouterContext2() {
-    let context = reactExports.useContext(DataRouterContext);
-    invariant2(
-      context,
-      "You must render this element inside a <DataRouterContext.Provider> element"
-    );
-    return context;
-  }
-  function useDataRouterStateContext() {
-    let context = reactExports.useContext(DataRouterStateContext);
-    invariant2(
-      context,
-      "You must render this element inside a <DataRouterStateContext.Provider> element"
-    );
-    return context;
-  }
-  var FrameworkContext = reactExports.createContext(void 0);
-  FrameworkContext.displayName = "FrameworkContext";
-  function useFrameworkContext() {
-    let context = reactExports.useContext(FrameworkContext);
-    invariant2(
-      context,
-      "You must render this element inside a <HydratedRouter> element"
-    );
-    return context;
-  }
-  function usePrefetchBehavior(prefetch, theirElementProps) {
-    let frameworkContext = reactExports.useContext(FrameworkContext);
-    let [maybePrefetch, setMaybePrefetch] = reactExports.useState(false);
-    let [shouldPrefetch, setShouldPrefetch] = reactExports.useState(false);
-    let { onFocus, onBlur, onMouseEnter, onMouseLeave, onTouchStart } = theirElementProps;
-    let ref = reactExports.useRef(null);
-    reactExports.useEffect(() => {
-      if (prefetch === "render") {
-        setShouldPrefetch(true);
-      }
-      if (prefetch === "viewport") {
-        let callback = (entries) => {
-          entries.forEach((entry) => {
-            setShouldPrefetch(entry.isIntersecting);
-          });
-        };
-        let observer = new IntersectionObserver(callback, { threshold: 0.5 });
-        if (ref.current)
-          observer.observe(ref.current);
-        return () => {
-          observer.disconnect();
-        };
-      }
-    }, [prefetch]);
-    reactExports.useEffect(() => {
-      if (maybePrefetch) {
-        let id2 = setTimeout(() => {
-          setShouldPrefetch(true);
-        }, 100);
-        return () => {
-          clearTimeout(id2);
-        };
-      }
-    }, [maybePrefetch]);
-    let setIntent = () => {
-      setMaybePrefetch(true);
-    };
-    let cancelIntent = () => {
-      setMaybePrefetch(false);
-      setShouldPrefetch(false);
-    };
-    if (!frameworkContext) {
-      return [false, ref, {}];
-    }
-    if (prefetch !== "intent") {
-      return [shouldPrefetch, ref, {}];
-    }
-    return [
-      shouldPrefetch,
-      ref,
-      {
-        onFocus: composeEventHandlers(onFocus, setIntent),
-        onBlur: composeEventHandlers(onBlur, cancelIntent),
-        onMouseEnter: composeEventHandlers(onMouseEnter, setIntent),
-        onMouseLeave: composeEventHandlers(onMouseLeave, cancelIntent),
-        onTouchStart: composeEventHandlers(onTouchStart, setIntent)
-      }
-    ];
-  }
-  function composeEventHandlers(theirHandler, ourHandler) {
-    return (event) => {
-      theirHandler && theirHandler(event);
-      if (!event.defaultPrevented) {
-        ourHandler(event);
-      }
-    };
-  }
-  function PrefetchPageLinks({ page, ...linkProps }) {
-    let { router } = useDataRouterContext2();
-    let matches = reactExports.useMemo(
-      () => matchRoutes(router.routes, page, router.basename),
-      [router.routes, page, router.basename]
-    );
-    if (!matches) {
-      return null;
-    }
-    return /* @__PURE__ */ reactExports.createElement(PrefetchPageLinksImpl, { page, matches, ...linkProps });
-  }
-  function useKeyedPrefetchLinks(matches) {
-    let { manifest, routeModules } = useFrameworkContext();
-    let [keyedPrefetchLinks, setKeyedPrefetchLinks] = reactExports.useState([]);
-    reactExports.useEffect(() => {
-      let interrupted = false;
-      void getKeyedPrefetchLinks(matches, manifest, routeModules).then(
-        (links) => {
-          if (!interrupted) {
-            setKeyedPrefetchLinks(links);
-          }
-        }
-      );
-      return () => {
-        interrupted = true;
-      };
-    }, [matches, manifest, routeModules]);
-    return keyedPrefetchLinks;
-  }
-  function PrefetchPageLinksImpl({
-    page,
-    matches: nextMatches,
-    ...linkProps
-  }) {
-    let location2 = useLocation();
-    let { manifest, routeModules } = useFrameworkContext();
-    let { basename } = useDataRouterContext2();
-    let { loaderData, matches } = useDataRouterStateContext();
-    let newMatchesForData = reactExports.useMemo(
-      () => getNewMatchesForLinks(
-        page,
-        nextMatches,
-        matches,
-        manifest,
-        location2,
-        "data"
-      ),
-      [page, nextMatches, matches, manifest, location2]
-    );
-    let newMatchesForAssets = reactExports.useMemo(
-      () => getNewMatchesForLinks(
-        page,
-        nextMatches,
-        matches,
-        manifest,
-        location2,
-        "assets"
-      ),
-      [page, nextMatches, matches, manifest, location2]
-    );
-    let dataHrefs = reactExports.useMemo(() => {
-      if (page === location2.pathname + location2.search + location2.hash) {
-        return [];
-      }
-      let routesParams = /* @__PURE__ */ new Set();
-      let foundOptOutRoute = false;
-      nextMatches.forEach((m2) => {
-        var _a;
-        let manifestRoute = manifest.routes[m2.route.id];
-        if (!manifestRoute || !manifestRoute.hasLoader) {
-          return;
-        }
-        if (!newMatchesForData.some((m22) => m22.route.id === m2.route.id) && m2.route.id in loaderData && ((_a = routeModules[m2.route.id]) == null ? void 0 : _a.shouldRevalidate)) {
-          foundOptOutRoute = true;
-        } else if (manifestRoute.hasClientLoader) {
-          foundOptOutRoute = true;
-        } else {
-          routesParams.add(m2.route.id);
-        }
-      });
-      if (routesParams.size === 0) {
-        return [];
-      }
-      let url = singleFetchUrl(page, basename, "data");
-      if (foundOptOutRoute && routesParams.size > 0) {
-        url.searchParams.set(
-          "_routes",
-          nextMatches.filter((m2) => routesParams.has(m2.route.id)).map((m2) => m2.route.id).join(",")
-        );
-      }
-      return [url.pathname + url.search];
-    }, [
-      basename,
-      loaderData,
-      location2,
-      manifest,
-      newMatchesForData,
-      nextMatches,
-      page,
-      routeModules
-    ]);
-    let moduleHrefs = reactExports.useMemo(
-      () => getModuleLinkHrefs(newMatchesForAssets, manifest),
-      [newMatchesForAssets, manifest]
-    );
-    let keyedPrefetchLinks = useKeyedPrefetchLinks(newMatchesForAssets);
-    return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, dataHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "prefetch", as: "fetch", href, ...linkProps })), moduleHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "modulepreload", href, ...linkProps })), keyedPrefetchLinks.map(({ key, link }) => (
-      // these don't spread `linkProps` because they are full link descriptors
-      // already with their own props
-      /* @__PURE__ */ reactExports.createElement("link", { key, ...link })
-    )));
-  }
-  function mergeRefs(...refs) {
-    return (value) => {
-      refs.forEach((ref) => {
-        if (typeof ref === "function") {
-          ref(value);
-        } else if (ref != null) {
-          ref.current = value;
-        }
-      });
-    };
-  }
-  var isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
-  try {
-    if (isBrowser) {
-      window.__reactRouterVersion = // @ts-expect-error
-      "7.7.1";
-    }
-  } catch (e) {
-  }
-  var ABSOLUTE_URL_REGEX2 = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
-  var Link = reactExports.forwardRef(
-    function LinkWithRef({
-      onClick,
-      discover = "render",
-      prefetch = "none",
-      relative,
-      reloadDocument,
-      replace: replace2,
-      state,
-      target,
-      to,
-      preventScrollReset,
-      viewTransition,
-      ...rest
-    }, forwardedRef) {
-      let { basename } = reactExports.useContext(NavigationContext);
-      let isAbsolute = typeof to === "string" && ABSOLUTE_URL_REGEX2.test(to);
-      let absoluteHref;
-      let isExternal = false;
-      if (typeof to === "string" && isAbsolute) {
-        absoluteHref = to;
-        if (isBrowser) {
-          try {
-            let currentUrl = new URL(window.location.href);
-            let targetUrl = to.startsWith("//") ? new URL(currentUrl.protocol + to) : new URL(to);
-            let path = stripBasename(targetUrl.pathname, basename);
-            if (targetUrl.origin === currentUrl.origin && path != null) {
-              to = path + targetUrl.search + targetUrl.hash;
-            } else {
-              isExternal = true;
-            }
-          } catch (e) {
-            warning(
-              false,
-              `<Link to="${to}"> contains an invalid URL which will probably break when clicked - please update to a valid URL path.`
-            );
-          }
-        }
-      }
-      let href = useHref(to, { relative });
-      let [shouldPrefetch, prefetchRef, prefetchHandlers] = usePrefetchBehavior(
-        prefetch,
-        rest
-      );
-      let internalOnClick = useLinkClickHandler(to, {
-        replace: replace2,
-        state,
-        target,
-        preventScrollReset,
-        relative,
-        viewTransition
-      });
-      function handleClick(event) {
-        if (onClick)
-          onClick(event);
-        if (!event.defaultPrevented) {
-          internalOnClick(event);
-        }
-      }
-      let link = (
-        // eslint-disable-next-line jsx-a11y/anchor-has-content
-        /* @__PURE__ */ reactExports.createElement(
-          "a",
-          {
-            ...rest,
-            ...prefetchHandlers,
-            href: absoluteHref || href,
-            onClick: isExternal || reloadDocument ? onClick : handleClick,
-            ref: mergeRefs(forwardedRef, prefetchRef),
-            target,
-            "data-discover": !isAbsolute && discover === "render" ? "true" : void 0
-          }
-        )
-      );
-      return shouldPrefetch && !isAbsolute ? /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, link, /* @__PURE__ */ reactExports.createElement(PrefetchPageLinks, { page: href })) : link;
-    }
-  );
-  Link.displayName = "Link";
-  var NavLink = reactExports.forwardRef(
-    function NavLinkWithRef({
-      "aria-current": ariaCurrentProp = "page",
-      caseSensitive = false,
-      className: classNameProp = "",
-      end = false,
-      style: styleProp,
-      to,
-      viewTransition,
-      children,
-      ...rest
-    }, ref) {
-      let path = useResolvedPath(to, { relative: rest.relative });
-      let location2 = useLocation();
-      let routerState = reactExports.useContext(DataRouterStateContext);
-      let { navigator: navigator2, basename } = reactExports.useContext(NavigationContext);
-      let isTransitioning = routerState != null && // Conditional usage is OK here because the usage of a data router is static
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useViewTransitionState(path) && viewTransition === true;
-      let toPathname = navigator2.encodeLocation ? navigator2.encodeLocation(path).pathname : path.pathname;
-      let locationPathname = location2.pathname;
-      let nextLocationPathname = routerState && routerState.navigation && routerState.navigation.location ? routerState.navigation.location.pathname : null;
-      if (!caseSensitive) {
-        locationPathname = locationPathname.toLowerCase();
-        nextLocationPathname = nextLocationPathname ? nextLocationPathname.toLowerCase() : null;
-        toPathname = toPathname.toLowerCase();
-      }
-      if (nextLocationPathname && basename) {
-        nextLocationPathname = stripBasename(nextLocationPathname, basename) || nextLocationPathname;
-      }
-      const endSlashPosition = toPathname !== "/" && toPathname.endsWith("/") ? toPathname.length - 1 : toPathname.length;
-      let isActive = locationPathname === toPathname || !end && locationPathname.startsWith(toPathname) && locationPathname.charAt(endSlashPosition) === "/";
-      let isPending = nextLocationPathname != null && (nextLocationPathname === toPathname || !end && nextLocationPathname.startsWith(toPathname) && nextLocationPathname.charAt(toPathname.length) === "/");
-      let renderProps = {
-        isActive,
-        isPending,
-        isTransitioning
-      };
-      let ariaCurrent = isActive ? ariaCurrentProp : void 0;
-      let className;
-      if (typeof classNameProp === "function") {
-        className = classNameProp(renderProps);
-      } else {
-        className = [
-          classNameProp,
-          isActive ? "active" : null,
-          isPending ? "pending" : null,
-          isTransitioning ? "transitioning" : null
-        ].filter(Boolean).join(" ");
-      }
-      let style = typeof styleProp === "function" ? styleProp(renderProps) : styleProp;
-      return /* @__PURE__ */ reactExports.createElement(
-        Link,
-        {
-          ...rest,
-          "aria-current": ariaCurrent,
-          className,
-          ref,
-          style,
-          to,
-          viewTransition
-        },
-        typeof children === "function" ? children(renderProps) : children
-      );
-    }
-  );
-  NavLink.displayName = "NavLink";
-  var Form = reactExports.forwardRef(
-    ({
-      discover = "render",
-      fetcherKey,
-      navigate,
-      reloadDocument,
-      replace: replace2,
-      state,
-      method = defaultMethod,
-      action,
-      onSubmit,
-      relative,
-      preventScrollReset,
-      viewTransition,
-      ...props
-    }, forwardedRef) => {
-      let submit = useSubmit();
-      let formAction = useFormAction(action, { relative });
-      let formMethod = method.toLowerCase() === "get" ? "get" : "post";
-      let isAbsolute = typeof action === "string" && ABSOLUTE_URL_REGEX2.test(action);
-      let submitHandler = (event) => {
-        onSubmit && onSubmit(event);
-        if (event.defaultPrevented)
-          return;
-        event.preventDefault();
-        let submitter = event.nativeEvent.submitter;
-        let submitMethod = (submitter == null ? void 0 : submitter.getAttribute("formmethod")) || method;
-        submit(submitter || event.currentTarget, {
-          fetcherKey,
-          method: submitMethod,
-          navigate,
-          replace: replace2,
-          state,
-          relative,
-          preventScrollReset,
-          viewTransition
-        });
-      };
-      return /* @__PURE__ */ reactExports.createElement(
-        "form",
-        {
-          ref: forwardedRef,
-          method: formMethod,
-          action: formAction,
-          onSubmit: reloadDocument ? onSubmit : submitHandler,
-          ...props,
-          "data-discover": !isAbsolute && discover === "render" ? "true" : void 0
-        }
-      );
-    }
-  );
-  Form.displayName = "Form";
-  function getDataRouterConsoleError2(hookName) {
-    return `${hookName} must be used within a data router.  See https://reactrouter.com/en/main/routers/picking-a-router.`;
-  }
-  function useDataRouterContext3(hookName) {
-    let ctx = reactExports.useContext(DataRouterContext);
-    invariant(ctx, getDataRouterConsoleError2(hookName));
-    return ctx;
-  }
-  function useLinkClickHandler(to, {
-    target,
-    replace: replaceProp,
-    state,
-    preventScrollReset,
-    relative,
-    viewTransition
-  } = {}) {
-    let navigate = useNavigate();
-    let location2 = useLocation();
-    let path = useResolvedPath(to, { relative });
-    return reactExports.useCallback(
-      (event) => {
-        if (shouldProcessLinkClick(event, target)) {
-          event.preventDefault();
-          let replace2 = replaceProp !== void 0 ? replaceProp : createPath(location2) === createPath(path);
-          navigate(to, {
-            replace: replace2,
-            state,
-            preventScrollReset,
-            relative,
-            viewTransition
-          });
-        }
-      },
-      [
-        location2,
-        navigate,
-        path,
-        replaceProp,
-        state,
-        target,
-        to,
-        preventScrollReset,
-        relative,
-        viewTransition
-      ]
-    );
-  }
-  var fetcherId = 0;
-  var getUniqueFetcherId = () => `__${String(++fetcherId)}__`;
-  function useSubmit() {
-    let { router } = useDataRouterContext3(
-      "useSubmit"
-      /* UseSubmit */
-    );
-    let { basename } = reactExports.useContext(NavigationContext);
-    let currentRouteId = useRouteId();
-    return reactExports.useCallback(
-      async (target, options = {}) => {
-        let { action, method, encType, formData, body } = getFormSubmissionInfo(
-          target,
-          basename
-        );
-        if (options.navigate === false) {
-          let key = options.fetcherKey || getUniqueFetcherId();
-          await router.fetch(key, currentRouteId, options.action || action, {
-            preventScrollReset: options.preventScrollReset,
-            formData,
-            body,
-            formMethod: options.method || method,
-            formEncType: options.encType || encType,
-            flushSync: options.flushSync
-          });
-        } else {
-          await router.navigate(options.action || action, {
-            preventScrollReset: options.preventScrollReset,
-            formData,
-            body,
-            formMethod: options.method || method,
-            formEncType: options.encType || encType,
-            replace: options.replace,
-            state: options.state,
-            fromRouteId: currentRouteId,
-            flushSync: options.flushSync,
-            viewTransition: options.viewTransition
-          });
-        }
-      },
-      [router, basename, currentRouteId]
-    );
-  }
-  function useFormAction(action, { relative } = {}) {
-    let { basename } = reactExports.useContext(NavigationContext);
-    let routeContext = reactExports.useContext(RouteContext);
-    invariant(routeContext, "useFormAction must be used inside a RouteContext");
-    let [match] = routeContext.matches.slice(-1);
-    let path = { ...useResolvedPath(action ? action : ".", { relative }) };
-    let location2 = useLocation();
-    if (action == null) {
-      path.search = location2.search;
-      let params = new URLSearchParams(path.search);
-      let indexValues = params.getAll("index");
-      let hasNakedIndexParam = indexValues.some((v2) => v2 === "");
-      if (hasNakedIndexParam) {
-        params.delete("index");
-        indexValues.filter((v2) => v2).forEach((v2) => params.append("index", v2));
-        let qs = params.toString();
-        path.search = qs ? `?${qs}` : "";
-      }
-    }
-    if ((!action || action === ".") && match.route.index) {
-      path.search = path.search ? path.search.replace(/^\?/, "?index&") : "?index";
-    }
-    if (basename !== "/") {
-      path.pathname = path.pathname === "/" ? basename : joinPaths([basename, path.pathname]);
-    }
-    return createPath(path);
-  }
-  function useViewTransitionState(to, { relative } = {}) {
-    let vtContext = reactExports.useContext(ViewTransitionContext);
-    invariant(
-      vtContext != null,
-      "`useViewTransitionState` must be used within `react-router-dom`'s `RouterProvider`.  Did you accidentally import `RouterProvider` from `react-router`?"
-    );
-    let { basename } = useDataRouterContext3(
-      "useViewTransitionState"
-      /* useViewTransitionState */
-    );
-    let path = useResolvedPath(to, { relative });
-    if (!vtContext.isTransitioning) {
-      return false;
-    }
-    let currentPath = stripBasename(vtContext.currentLocation.pathname, basename) || vtContext.currentLocation.pathname;
-    let nextPath = stripBasename(vtContext.nextLocation.pathname, basename) || vtContext.nextLocation.pathname;
-    return matchPath(path.pathname, nextPath) != null || matchPath(path.pathname, currentPath) != null;
-  }
-  function CardHeader({ className, ...props }) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "div",
-      {
-        "data-slot": "card-header",
-        className: cn(
-          "ppm:@container/card-header ppm:grid ppm:auto-rows-min ppm:grid-rows-[auto_auto] ppm:items-start ppm:gap-1.5 ppm:px-6 ppm:has-data-[slot=card-action]:grid-cols-[1fr_auto] ppm:[.border-b]:pb-6",
-          className
-        ),
-        ...props
-      }
-    );
-  }
-  function CardTitle({ className, ...props }) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "div",
-      {
-        "data-slot": "card-title",
-        className: cn("ppm:leading-none ppm:font-semibold", className),
-        ...props
-      }
-    );
-  }
-  function CardContent({ className, ...props }) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "div",
-      {
-        "data-slot": "card-content",
-        className: cn("ppm:px-6", className),
-        ...props
-      }
-    );
-  }
-  function Input({ className, type, ...props }) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "input",
-      {
-        type,
-        "data-slot": "input",
-        className: cn(
-          "ppm:file:text-foreground ppm:placeholder:text-muted-foreground ppm:selection:bg-primary ppm:selection:text-primary-foreground ppm:dark:bg-input/30 ppm:border-input ppm:flex ppm:h-9 ppm:w-full ppm:min-w-0 ppm:rounded-md ppm:border ppm:bg-transparent ppm:px-3 ppm:py-1 ppm:text-base ppm:shadow-xs ppm:transition-[color,box-shadow] ppm:outline-none ppm:file:inline-flex ppm:file:h-7 ppm:file:border-0 ppm:file:bg-transparent ppm:file:text-sm ppm:file:font-medium ppm:disabled:pointer-events-none ppm:disabled:cursor-not-allowed ppm:disabled:opacity-50 ppm:md:text-sm",
-          "ppm:focus-visible:border-ring ppm:focus-visible:ring-ring/50 ppm:focus-visible:ring-[3px]",
-          "ppm:aria-invalid:ring-destructive/20 ppm:dark:aria-invalid:ring-destructive/40 ppm:aria-invalid:border-destructive",
-          className
-        ),
-        ...props
-      }
-    );
-  }
-  var NODES = [
-    "a",
-    "button",
-    "div",
-    "form",
-    "h2",
-    "h3",
-    "img",
-    "input",
-    "label",
-    "li",
-    "nav",
-    "ol",
-    "p",
-    "select",
-    "span",
-    "svg",
-    "ul"
-  ];
-  var Primitive = NODES.reduce((primitive, node) => {
-    const Slot2 = /* @__PURE__ */ createSlot(`Primitive.${node}`);
-    const Node = reactExports.forwardRef((props, forwardedRef) => {
-      const { asChild, ...primitiveProps } = props;
-      const Comp = asChild ? Slot2 : node;
-      if (typeof window !== "undefined") {
-        window[Symbol.for("radix-ui")] = true;
-      }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(Comp, { ...primitiveProps, ref: forwardedRef });
-    });
-    Node.displayName = `Primitive.${node}`;
-    return { ...primitive, [node]: Node };
-  }, {});
-  var NAME = "Label";
-  var Label$1 = reactExports.forwardRef((props, forwardedRef) => {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Primitive.label,
-      {
-        ...props,
-        ref: forwardedRef,
-        onMouseDown: (event) => {
-          var _a;
-          const target = event.target;
-          if (target.closest("button, input, select, textarea"))
-            return;
-          (_a = props.onMouseDown) == null ? void 0 : _a.call(props, event);
-          if (!event.defaultPrevented && event.detail > 1)
-            event.preventDefault();
-        }
-      }
-    );
-  });
-  Label$1.displayName = NAME;
-  var Root = Label$1;
-  function Label({
-    className,
-    ...props
-  }) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Root,
-      {
-        "data-slot": "label",
-        className: cn(
-          "ppm:flex ppm:items-center ppm:gap-2 ppm:text-sm ppm:leading-none ppm:font-medium ppm:select-none ppm:group-data-[disabled=true]:pointer-events-none ppm:group-data-[disabled=true]:opacity-50 ppm:peer-disabled:cursor-not-allowed ppm:peer-disabled:opacity-50",
-          className
-        ),
-        ...props
-      }
-    );
-  }
   function LoginScreen() {
-    const { login, loading, error, clearError, user } = useAuth();
+    const { login, loading, error, clearError } = useAuth();
     const [email, setEmail] = reactExports.useState("");
     const [password, setPassword] = reactExports.useState("");
     const navigate = useNavigate();
@@ -21974,9 +21994,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       e.preventDefault();
       clearError();
       await login(email, password);
-      if (user) {
-        navigate("/profile");
-      }
       if (!error) {
         setEmail("");
         setPassword("");
@@ -22140,7 +22157,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return null;
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { className: "ppm:text-center ppm:pb-6", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:flex ppm:justify-center ppm:mb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:w-16 ppm:h-16 ppm:bg-blue-500 ppm:rounded-full ppm:flex ppm:items-center ppm:justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(User, { className: "ppm:w-8 ppm:h-8 ppm:text-white" }) }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:flex ppm:justify-center ppm:mb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:w-16 ppm:h-16 ppm:bg-blue-500 ppm:rounded-full ppm:flex ppm:items-center ppm:justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(User$1, { className: "ppm:w-8 ppm:h-8 ppm:text-white" }) }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "ppm:text-xl ppm:font-bold ppm:text-gray-900", children: "Bem-vindo!" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ppm:text-gray-600 ppm:text-sm ppm:break-all", children: user.email })
       ] }),
@@ -22172,33 +22189,612 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       ] }) })
     ] });
   }
-  function MainScreen() {
-    const { user } = useAuth();
-    const location2 = useLocation();
-    if (user) {
-      if (location2.pathname !== "/profile") {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(Navigate, { to: "/profile", replace: true });
-      }
-    } else {
-      if (location2.pathname !== "/login" && location2.pathname !== "/register") {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(Navigate, { to: "/login", replace: true });
-      }
-    }
-    return null;
-  }
-  function ConfigScreen() {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ppm:space-y-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "ppm:text-lg ppm:font-bold", children: "Configurações" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ppm:text-sm", children: "Aqui vão as configurações do app." }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "outline", size: "sm", onClick: () => window.history.back(), children: "Voltar" })
-    ] });
-  }
   function AjudaScreen() {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ppm:space-y-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "ppm:text-lg ppm:font-bold", children: "Ajuda" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ppm:text-sm", children: "Aqui vão informações de ajuda." }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "outline", size: "sm", onClick: () => window.history.back(), children: "Voltar" })
     ] });
+  }
+  function ProtectedRoute({ children }) {
+    const { user, loading } = useAuth();
+    if (loading)
+      return null;
+    if (!user)
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(Navigate, { to: "/login", replace: true });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children });
+  }
+  var IconContext = /* @__PURE__ */ reactExports.createContext({
+    color: "currentColor",
+    size: "1em",
+    weight: "regular",
+    mirrored: false
+  });
+  var renderPathForWeight = function renderPathForWeight2(weight, color, pathsByWeight2) {
+    var path = pathsByWeight2.get(weight);
+    if (!!path)
+      return path(color);
+    console.error('Unsupported icon weight. Choose from "thin", "light", "regular", "bold", "fill", or "duotone".');
+    return null;
+  };
+  function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null)
+      return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for (i = 0; i < sourceKeys.length; i++) {
+      key = sourceKeys[i];
+      if (excluded.indexOf(key) >= 0)
+        continue;
+      target[key] = source[key];
+    }
+    return target;
+  }
+  var IconBase = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+    var alt = props.alt, color = props.color, size = props.size, weight = props.weight, mirrored = props.mirrored, children = props.children, renderPath2 = props.renderPath, restProps = _objectWithoutPropertiesLoose(props, ["alt", "color", "size", "weight", "mirrored", "children", "renderPath"]);
+    var _useContext = reactExports.useContext(IconContext), _useContext$color = _useContext.color, contextColor = _useContext$color === void 0 ? "currentColor" : _useContext$color, contextSize = _useContext.size, _useContext$weight = _useContext.weight, contextWeight = _useContext$weight === void 0 ? "regular" : _useContext$weight, _useContext$mirrored = _useContext.mirrored, contextMirrored = _useContext$mirrored === void 0 ? false : _useContext$mirrored, restContext = _objectWithoutPropertiesLoose(_useContext, ["color", "size", "weight", "mirrored"]);
+    return React.createElement("svg", Object.assign({
+      ref,
+      xmlns: "http://www.w3.org/2000/svg",
+      width: size != null ? size : contextSize,
+      height: size != null ? size : contextSize,
+      fill: color != null ? color : contextColor,
+      viewBox: "0 0 256 256",
+      transform: mirrored || contextMirrored ? "scale(-1, 1)" : void 0
+    }, restContext, restProps), !!alt && React.createElement("title", null, alt), children, React.createElement("rect", {
+      width: "256",
+      height: "256",
+      fill: "none"
+    }), renderPath2(weight != null ? weight : contextWeight, color != null ? color : contextColor));
+  });
+  IconBase.displayName = "IconBase";
+  var pathsByWeight$4 = /* @__PURE__ */ new Map();
+  pathsByWeight$4.set("bold", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M128,216S28,160,28,92A52,52,0,0,1,128,72h0A52,52,0,0,1,228,92C228,160,128,216,128,216Z",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "24"
+    }));
+  });
+  pathsByWeight$4.set("duotone", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M128,216S28,160,28,92A52,52,0,0,1,128,72h0A52,52,0,0,1,228,92C228,160,128,216,128,216Z",
+      opacity: "0.2"
+    }), React.createElement("path", {
+      d: "M128,216S28,160,28,92A52,52,0,0,1,128,72h0A52,52,0,0,1,228,92C228,160,128,216,128,216Z",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }));
+  });
+  pathsByWeight$4.set("fill", function() {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M176,32a60,60,0,0,0-48,24A60,60,0,0,0,20,92c0,71.9,99.9,128.6,104.1,131a7.8,7.8,0,0,0,3.9,1,7.6,7.6,0,0,0,3.9-1,314.3,314.3,0,0,0,51.5-37.6C218.3,154,236,122.6,236,92A60,60,0,0,0,176,32Z"
+    }));
+  });
+  pathsByWeight$4.set("light", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M128,216S28,160,28,92A52,52,0,0,1,128,72h0A52,52,0,0,1,228,92C228,160,128,216,128,216Z",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "12"
+    }));
+  });
+  pathsByWeight$4.set("thin", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M128,216S28,160,28,92A52,52,0,0,1,128,72h0A52,52,0,0,1,228,92C228,160,128,216,128,216Z",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "8"
+    }));
+  });
+  pathsByWeight$4.set("regular", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M128,216S28,160,28,92A52,52,0,0,1,128,72h0A52,52,0,0,1,228,92C228,160,128,216,128,216Z",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }));
+  });
+  var renderPath$4 = function renderPath2(weight, color) {
+    return renderPathForWeight(weight, color, pathsByWeight$4);
+  };
+  var Heart = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+    return React.createElement(IconBase, Object.assign({
+      ref
+    }, props, {
+      renderPath: renderPath$4
+    }));
+  });
+  Heart.displayName = "Heart";
+  var pathsByWeight$3 = /* @__PURE__ */ new Map();
+  pathsByWeight$3.set("bold", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M152,208V160a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v48a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V115.5a8.3,8.3,0,0,1,2.6-5.9l80-72.7a8,8,0,0,1,10.8,0l80,72.7a8.3,8.3,0,0,1,2.6,5.9V208a8,8,0,0,1-8,8H160A8,8,0,0,1,152,208Z",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "24"
+    }));
+  });
+  pathsByWeight$3.set("duotone", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M152,208V160a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v48a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V115.5a8.3,8.3,0,0,1,2.6-5.9l80-72.7a8,8,0,0,1,10.8,0l80,72.7a8.3,8.3,0,0,1,2.6,5.9V208a8,8,0,0,1-8,8H160A8,8,0,0,1,152,208Z",
+      opacity: "0.2"
+    }), React.createElement("path", {
+      d: "M152,208V160a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v48a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V115.5a8.3,8.3,0,0,1,2.6-5.9l80-72.7a8,8,0,0,1,10.8,0l80,72.7a8.3,8.3,0,0,1,2.6,5.9V208a8,8,0,0,1-8,8H160A8,8,0,0,1,152,208Z",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }));
+  });
+  pathsByWeight$3.set("fill", function() {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M218.8,103.7,138.8,31a16,16,0,0,0-21.6,0l-80,72.7A16,16,0,0,0,32,115.5v92.1a16.4,16.4,0,0,0,4,11A15.9,15.9,0,0,0,48,224H96a8,8,0,0,0,8-8V168a8,8,0,0,1,8-8h32a8,8,0,0,1,8,8v48a8,8,0,0,0,8,8h48a15.6,15.6,0,0,0,7.6-1.9A16.1,16.1,0,0,0,224,208V115.5A16,16,0,0,0,218.8,103.7Z"
+    }));
+  });
+  pathsByWeight$3.set("light", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M152,208V160a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v48a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V115.5a8.3,8.3,0,0,1,2.6-5.9l80-72.7a8,8,0,0,1,10.8,0l80,72.7a8.3,8.3,0,0,1,2.6,5.9V208a8,8,0,0,1-8,8H160A8,8,0,0,1,152,208Z",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "12"
+    }));
+  });
+  pathsByWeight$3.set("thin", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M152,208V160a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v48a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V115.5a8.3,8.3,0,0,1,2.6-5.9l80-72.7a8,8,0,0,1,10.8,0l80,72.7a8.3,8.3,0,0,1,2.6,5.9V208a8,8,0,0,1-8,8H160A8,8,0,0,1,152,208Z",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "8"
+    }));
+  });
+  pathsByWeight$3.set("regular", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M152,208V160a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v48a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V115.5a8.3,8.3,0,0,1,2.6-5.9l80-72.7a8,8,0,0,1,10.8,0l80,72.7a8.3,8.3,0,0,1,2.6,5.9V208a8,8,0,0,1-8,8H160A8,8,0,0,1,152,208Z",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }));
+  });
+  var renderPath$3 = function renderPath2(weight, color) {
+    return renderPathForWeight(weight, color, pathsByWeight$3);
+  };
+  var House = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+    return React.createElement(IconBase, Object.assign({
+      ref
+    }, props, {
+      renderPath: renderPath$3
+    }));
+  });
+  House.displayName = "House";
+  var pathsByWeight$2 = /* @__PURE__ */ new Map();
+  pathsByWeight$2.set("bold", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("circle", {
+      cx: "116",
+      cy: "116",
+      r: "84",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "24"
+    }), React.createElement("line", {
+      x1: "175.4",
+      y1: "175.4",
+      x2: "224",
+      y2: "224",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "24"
+    }));
+  });
+  pathsByWeight$2.set("duotone", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("circle", {
+      cx: "116",
+      cy: "116",
+      r: "84",
+      opacity: "0.2"
+    }), React.createElement("circle", {
+      cx: "116",
+      cy: "116",
+      r: "84",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }), React.createElement("line", {
+      x1: "175.4",
+      y1: "175.4",
+      x2: "224",
+      y2: "224",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }));
+  });
+  pathsByWeight$2.set("fill", function() {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M176,116a60,60,0,1,1-60-60A60,60,0,0,1,176,116Zm53.6,113.7A8,8,0,0,1,224,232a8.3,8.3,0,0,1-5.7-2.3l-43.2-43.3a92.2,92.2,0,1,1,11.3-11.3l43.2,43.2A8,8,0,0,1,229.6,229.7ZM116,192a76,76,0,1,0-76-76A76.1,76.1,0,0,0,116,192Z"
+    }));
+  });
+  pathsByWeight$2.set("light", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("circle", {
+      cx: "116",
+      cy: "116",
+      r: "84",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "12"
+    }), React.createElement("line", {
+      x1: "175.4",
+      y1: "175.4",
+      x2: "224",
+      y2: "224",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "12"
+    }));
+  });
+  pathsByWeight$2.set("thin", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("circle", {
+      cx: "116",
+      cy: "116",
+      r: "84",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "8"
+    }), React.createElement("line", {
+      x1: "175.4",
+      y1: "175.4",
+      x2: "224",
+      y2: "224",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "8"
+    }));
+  });
+  pathsByWeight$2.set("regular", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("circle", {
+      cx: "116",
+      cy: "116",
+      r: "84",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }), React.createElement("line", {
+      x1: "175.4",
+      y1: "175.4",
+      x2: "224",
+      y2: "224",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }));
+  });
+  var renderPath$2 = function renderPath2(weight, color) {
+    return renderPathForWeight(weight, color, pathsByWeight$2);
+  };
+  var MagnifyingGlass = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+    return React.createElement(IconBase, Object.assign({
+      ref
+    }, props, {
+      renderPath: renderPath$2
+    }));
+  });
+  MagnifyingGlass.displayName = "MagnifyingGlass";
+  var pathsByWeight$1 = /* @__PURE__ */ new Map();
+  pathsByWeight$1.set("bold", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("line", {
+      x1: "40",
+      y1: "128",
+      x2: "216",
+      y2: "128",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "24"
+    }), React.createElement("line", {
+      x1: "128",
+      y1: "40",
+      x2: "128",
+      y2: "216",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "24"
+    }));
+  });
+  pathsByWeight$1.set("duotone", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("line", {
+      x1: "40",
+      y1: "128",
+      x2: "216",
+      y2: "128",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }), React.createElement("line", {
+      x1: "128",
+      y1: "40",
+      x2: "128",
+      y2: "216",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }));
+  });
+  pathsByWeight$1.set("fill", function() {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M216,120H136V40a8,8,0,0,0-16,0v80H40a8,8,0,0,0,0,16h80v80a8,8,0,0,0,16,0V136h80a8,8,0,0,0,0-16Z"
+    }));
+  });
+  pathsByWeight$1.set("light", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("line", {
+      x1: "40",
+      y1: "128",
+      x2: "216",
+      y2: "128",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "12"
+    }), React.createElement("line", {
+      x1: "128",
+      y1: "40",
+      x2: "128",
+      y2: "216",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "12"
+    }));
+  });
+  pathsByWeight$1.set("thin", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("line", {
+      x1: "40",
+      y1: "128",
+      x2: "216",
+      y2: "128",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "8"
+    }), React.createElement("line", {
+      x1: "128",
+      y1: "40",
+      x2: "128",
+      y2: "216",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "8"
+    }));
+  });
+  pathsByWeight$1.set("regular", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("line", {
+      x1: "40",
+      y1: "128",
+      x2: "216",
+      y2: "128",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }), React.createElement("line", {
+      x1: "128",
+      y1: "40",
+      x2: "128",
+      y2: "216",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }));
+  });
+  var renderPath$1 = function renderPath2(weight, color) {
+    return renderPathForWeight(weight, color, pathsByWeight$1);
+  };
+  var Plus = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+    return React.createElement(IconBase, Object.assign({
+      ref
+    }, props, {
+      renderPath: renderPath$1
+    }));
+  });
+  Plus.displayName = "Plus";
+  var pathsByWeight = /* @__PURE__ */ new Map();
+  pathsByWeight.set("bold", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("circle", {
+      cx: "128",
+      cy: "96",
+      r: "64",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "24"
+    }), React.createElement("path", {
+      d: "M31,216a112,112,0,0,1,194,0",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "24"
+    }));
+  });
+  pathsByWeight.set("duotone", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("circle", {
+      cx: "128",
+      cy: "96",
+      r: "64",
+      opacity: "0.2"
+    }), React.createElement("circle", {
+      cx: "128",
+      cy: "96",
+      r: "64",
+      fill: "none",
+      stroke: color,
+      strokeMiterlimit: "10",
+      strokeWidth: "16"
+    }), React.createElement("path", {
+      d: "M31,216a112,112,0,0,1,194,0",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }));
+  });
+  pathsByWeight.set("fill", function() {
+    return React.createElement(React.Fragment, null, React.createElement("path", {
+      d: "M231.9,212a120.7,120.7,0,0,0-67.1-54.2,72,72,0,1,0-73.6,0A120.7,120.7,0,0,0,24.1,212a7.7,7.7,0,0,0,0,8,7.8,7.8,0,0,0,6.9,4H225a7.8,7.8,0,0,0,6.9-4A7.7,7.7,0,0,0,231.9,212Z"
+    }));
+  });
+  pathsByWeight.set("light", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("circle", {
+      cx: "128",
+      cy: "96",
+      r: "64",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "12"
+    }), React.createElement("path", {
+      d: "M31,216a112,112,0,0,1,194,0",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "12"
+    }));
+  });
+  pathsByWeight.set("thin", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("circle", {
+      cx: "128",
+      cy: "96",
+      r: "64",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "8"
+    }), React.createElement("path", {
+      d: "M31,216a112,112,0,0,1,194,0",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "8"
+    }));
+  });
+  pathsByWeight.set("regular", function(color) {
+    return React.createElement(React.Fragment, null, React.createElement("circle", {
+      cx: "128",
+      cy: "96",
+      r: "64",
+      fill: "none",
+      stroke: color,
+      strokeMiterlimit: "10",
+      strokeWidth: "16"
+    }), React.createElement("path", {
+      d: "M31,216a112,112,0,0,1,194,0",
+      fill: "none",
+      stroke: color,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "16"
+    }));
+  });
+  var renderPath = function renderPath2(weight, color) {
+    return renderPathForWeight(weight, color, pathsByWeight);
+  };
+  var User = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+    return React.createElement(IconBase, Object.assign({
+      ref
+    }, props, {
+      renderPath
+    }));
+  });
+  User.displayName = "User";
+  function NavigationMenuBar() {
+    const iconProps = { size: 16 };
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("nav", { className: "ppm:absolute ppm:bottom-0 ppm:left-0 ppm:w-full ppm:bg-white ppm:border-t ppm:flex ppm:justify-between ppm:items-center ppm:px-4 ppm:py-5 ppm:z-50", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(NavLink, { to: "/home", className: "ppm:flex-1 ppm:flex ppm:justify-center", title: "Home", children: ({ isActive }) => /* @__PURE__ */ jsxRuntimeExports.jsx(House, { ...iconProps, color: isActive ? "#000" : "#888", weight: isActive ? "fill" : "regular" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(NavLink, { to: "/find", className: "ppm:flex-1 ppm:flex ppm:justify-center", title: "Buscar", children: ({ isActive }) => /* @__PURE__ */ jsxRuntimeExports.jsx(MagnifyingGlass, { ...iconProps, color: isActive ? "#000" : "#888", weight: isActive ? "fill" : "regular" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(NavLink, { to: "/plus", className: "ppm:flex-1 ppm:flex ppm:justify-center", title: "Adicionar", children: ({ isActive }) => /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { ...iconProps, color: isActive ? "#000" : "#888", weight: isActive ? "fill" : "regular" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(NavLink, { to: "/favorites", className: "ppm:flex-1 ppm:flex ppm:justify-center", title: "Favoritos", children: ({ isActive }) => /* @__PURE__ */ jsxRuntimeExports.jsx(Heart, { ...iconProps, color: isActive ? "#000" : "#888", weight: isActive ? "fill" : "regular" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(NavLink, { to: "/profile", className: "ppm:flex-1 ppm:flex ppm:justify-center", title: "Perfil", children: ({ isActive }) => /* @__PURE__ */ jsxRuntimeExports.jsx(User, { ...iconProps, color: isActive ? "#000" : "#888", weight: isActive ? "fill" : "regular" }) })
+    ] });
+  }
+  function AuthenticatedLayout() {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ppm:pb-16", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(NavigationMenuBar, {})
+    ] });
+  }
+  function HomeScreen() {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:text-center ppm:mt-10 ppm:text-xl", children: "Home (Mock)" });
+  }
+  function FindScreen() {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:text-center ppm:mt-10 ppm:text-xl", children: "Buscar (Mock)" });
+  }
+  function PlusScreen() {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:text-center ppm:mt-10 ppm:text-xl", children: "Adicionar (Mock)" });
+  }
+  function FavoritesScreen() {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:text-center ppm:mt-10 ppm:text-xl", children: "Favoritos (Mock)" });
   }
   function Cellphone({ isOpen, onClose }) {
     if (!isOpen)
@@ -22209,13 +22805,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:absolute ppm:top-0 ppm:left-1/2 ppm:transform ppm:-translate-x-1/2 ppm:w-32 ppm:h-6 ppm:bg-black ppm:rounded-b-2xl ppm:z-10" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(StatusBar, {}),
         /* @__PURE__ */ jsxRuntimeExports.jsx(MemoryRouter, { initialEntries: ["/login"], children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:flex-1 ppm:p-6 ppm:pt-8", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Routes, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/", element: /* @__PURE__ */ jsxRuntimeExports.jsx(MainScreen, {}) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/login", element: /* @__PURE__ */ jsxRuntimeExports.jsx(LoginScreen, {}) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/register", element: /* @__PURE__ */ jsxRuntimeExports.jsx(RegisterScreen, {}) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/profile", element: /* @__PURE__ */ jsxRuntimeExports.jsx(UserProfileScreen, {}) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/config", element: /* @__PURE__ */ jsxRuntimeExports.jsx(ConfigScreen, {}) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/ajuda", element: /* @__PURE__ */ jsxRuntimeExports.jsx(AjudaScreen, {}) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "*", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Navigate, { to: "/", replace: true }) })
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(Route, { element: /* @__PURE__ */ jsxRuntimeExports.jsx(ProtectedRoute, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(AuthenticatedLayout, {}) }), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/home", element: /* @__PURE__ */ jsxRuntimeExports.jsx(HomeScreen, {}) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/find", element: /* @__PURE__ */ jsxRuntimeExports.jsx(FindScreen, {}) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/plus", element: /* @__PURE__ */ jsxRuntimeExports.jsx(PlusScreen, {}) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/favorites", element: /* @__PURE__ */ jsxRuntimeExports.jsx(FavoritesScreen, {}) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/profile", element: /* @__PURE__ */ jsxRuntimeExports.jsx(UserProfileScreen, {}) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "*", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Navigate, { to: "/home", replace: true }) })
         ] }) }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ppm:absolute ppm:bottom-2 ppm:left-1/2 ppm:transform ppm:-translate-x-1/2 ppm:w-32 ppm:h-1 ppm:bg-gray-400 ppm:rounded-full" })
       ] })
@@ -22318,7 +22918,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 ;
 (function(){
                     const el = document.createElement("style");
-                    el.innerText = "body {\r\n  margin: 0;\r\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\",\r\n    \"Ubuntu\", \"Cantarell\", \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\",\r\n    sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, \"Courier New\",\r\n    monospace;\r\n}\r\n/*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */\n@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0;--tw-rotate-x:initial;--tw-rotate-y:initial;--tw-rotate-z:initial;--tw-skew-x:initial;--tw-skew-y:initial;--tw-space-y-reverse:0;--tw-border-style:solid;--tw-leading:initial;--tw-font-weight:initial;--tw-shadow:0 0 #0000;--tw-shadow-color:initial;--tw-shadow-alpha:100%;--tw-inset-shadow:0 0 #0000;--tw-inset-shadow-color:initial;--tw-inset-shadow-alpha:100%;--tw-ring-color:initial;--tw-ring-shadow:0 0 #0000;--tw-inset-ring-color:initial;--tw-inset-ring-shadow:0 0 #0000;--tw-ring-inset:initial;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-offset-shadow:0 0 #0000;--tw-animation-delay:0s;--tw-animation-direction:normal;--tw-animation-duration:initial;--tw-animation-fill-mode:none;--tw-animation-iteration-count:1;--tw-enter-opacity:1;--tw-enter-rotate:0;--tw-enter-scale:1;--tw-enter-translate-x:0;--tw-enter-translate-y:0;--tw-exit-opacity:1;--tw-exit-rotate:0;--tw-exit-scale:1;--tw-exit-translate-x:0;--tw-exit-translate-y:0}}}@layer theme{:root,:host{--ppm-font-sans:ui-sans-serif,system-ui,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\";--ppm-font-mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace;--ppm-color-red-50:oklch(97.1% .013 17.38);--ppm-color-red-200:oklch(88.5% .062 18.334);--ppm-color-red-300:oklch(80.8% .114 19.571);--ppm-color-red-500:oklch(63.7% .237 25.331);--ppm-color-red-600:oklch(57.7% .245 27.325);--ppm-color-red-700:oklch(50.5% .213 27.518);--ppm-color-green-500:oklch(72.3% .219 149.579);--ppm-color-blue-100:oklch(93.2% .032 255.585);--ppm-color-blue-500:oklch(62.3% .214 259.815);--ppm-color-blue-600:oklch(54.6% .245 262.881);--ppm-color-blue-700:oklch(48.8% .243 264.376);--ppm-color-blue-800:oklch(42.4% .199 265.638);--ppm-color-gray-50:oklch(98.5% .002 247.839);--ppm-color-gray-300:oklch(87.2% .01 258.338);--ppm-color-gray-400:oklch(70.7% .022 261.325);--ppm-color-gray-500:oklch(55.1% .027 264.364);--ppm-color-gray-600:oklch(44.6% .03 256.802);--ppm-color-gray-700:oklch(37.3% .034 259.733);--ppm-color-gray-800:oklch(27.8% .033 256.848);--ppm-color-gray-900:oklch(21% .034 264.665);--ppm-color-black:#000;--ppm-color-white:#fff;--ppm-spacing:.25rem;--ppm-container-sm:24rem;--ppm-container-md:28rem;--ppm-text-xs:.75rem;--ppm-text-xs--line-height:calc(1/.75);--ppm-text-sm:.875rem;--ppm-text-sm--line-height:calc(1.25/.875);--ppm-text-base:1rem;--ppm-text-base--line-height:calc(1.5/1);--ppm-text-lg:1.125rem;--ppm-text-lg--line-height:calc(1.75/1.125);--ppm-text-xl:1.25rem;--ppm-text-xl--line-height:calc(1.75/1.25);--ppm-text-2xl:1.5rem;--ppm-text-2xl--line-height:calc(2/1.5);--ppm-text-4xl:2.25rem;--ppm-text-4xl--line-height:calc(2.5/2.25);--ppm-font-weight-medium:500;--ppm-font-weight-semibold:600;--ppm-font-weight-bold:700;--ppm-radius-2xl:1rem;--ppm-default-transition-duration:.15s;--ppm-default-transition-timing-function:cubic-bezier(.4,0,.2,1);--ppm-default-font-family:var(--ppm-font-sans);--ppm-default-mono-font-family:var(--ppm-font-mono)}}@layer base{*,:after,:before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}::file-selector-button{box-sizing:border-box;border:0 solid;margin:0;padding:0}html,:host{-webkit-text-size-adjust:100%;tab-size:4;line-height:1.5;font-family:var(--ppm-default-font-family,ui-sans-serif,system-ui,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\");font-feature-settings:var(--ppm-default-font-feature-settings,normal);font-variation-settings:var(--ppm-default-font-variation-settings,normal);-webkit-tap-highlight-color:transparent}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;-webkit-text-decoration:inherit;-webkit-text-decoration:inherit;-webkit-text-decoration:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,samp,pre{font-family:var(--ppm-default-mono-font-family,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace);font-feature-settings:var(--ppm-default-mono-font-feature-settings,normal);font-variation-settings:var(--ppm-default-mono-font-variation-settings,normal);font-size:1em}small{font-size:80%}sub,sup{vertical-align:baseline;font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}:-moz-focusring{outline:auto}progress{vertical-align:baseline}summary{display:list-item}ol,ul,menu{list-style:none}img,svg,video,canvas,audio,iframe,embed,object{vertical-align:middle;display:block}img,video{max-width:100%;height:auto}button,input,select,optgroup,textarea{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}::file-selector-button{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}:where(select:is([multiple],[size])) optgroup{font-weight:bolder}:where(select:is([multiple],[size])) optgroup option{padding-inline-start:20px}::file-selector-button{margin-inline-end:4px}::placeholder{opacity:1}@supports (not ((-webkit-appearance:-apple-pay-button))) or (contain-intrinsic-size:1px){::placeholder{color:currentColor}@supports (color:color-mix(in lab, red, red)){::placeholder{color:color-mix(in oklab,currentcolor 50%,transparent)}}}textarea{resize:vertical}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-date-and-time-value{min-height:1lh;text-align:inherit}::-webkit-datetime-edit{display:inline-flex}::-webkit-datetime-edit-fields-wrapper{padding:0}::-webkit-datetime-edit{padding-block:0}::-webkit-datetime-edit-year-field{padding-block:0}::-webkit-datetime-edit-month-field{padding-block:0}::-webkit-datetime-edit-day-field{padding-block:0}::-webkit-datetime-edit-hour-field{padding-block:0}::-webkit-datetime-edit-minute-field{padding-block:0}::-webkit-datetime-edit-second-field{padding-block:0}::-webkit-datetime-edit-millisecond-field{padding-block:0}::-webkit-datetime-edit-meridiem-field{padding-block:0}:-moz-ui-invalid{box-shadow:none}button,input:where([type=button],[type=reset],[type=submit]){appearance:button}::file-selector-button{appearance:button}::-webkit-inner-spin-button{height:auto}::-webkit-outer-spin-button{height:auto}[hidden]:where(:not([hidden=until-found])){display:none!important}*{border-color:var(--border);outline-color:var(--ring)}@supports (color:color-mix(in lab, red, red)){*{outline-color:color-mix(in oklab,var(--ring)50%,transparent)}}body{background-color:var(--background);color:var(--foreground)}}@layer components;@layer utilities{.ppm\\:\\@container\\/card-header{container:card-header/inline-size}.ppm\\:absolute{position:absolute}.ppm\\:fixed{position:fixed}.ppm\\:relative{position:relative}.ppm\\:inset-0{inset:calc(var(--ppm-spacing)*0)}.ppm\\:-top-2{top:calc(var(--ppm-spacing)*-2)}.ppm\\:top-0{top:calc(var(--ppm-spacing)*0)}.ppm\\:top-4{top:calc(var(--ppm-spacing)*4)}.ppm\\:-right-2{right:calc(var(--ppm-spacing)*-2)}.ppm\\:bottom-2{bottom:calc(var(--ppm-spacing)*2)}.ppm\\:left-1\\/2{left:50%}.ppm\\:left-4{left:calc(var(--ppm-spacing)*4)}.ppm\\:z-10{z-index:10}.ppm\\:z-50{z-index:50}.ppm\\:col-start-2{grid-column-start:2}.ppm\\:row-span-2{grid-row:span 2/span 2}.ppm\\:row-start-1{grid-row-start:1}.ppm\\:mt-6{margin-top:calc(var(--ppm-spacing)*6)}.ppm\\:mr-2{margin-right:calc(var(--ppm-spacing)*2)}.ppm\\:mb-2{margin-bottom:calc(var(--ppm-spacing)*2)}.ppm\\:mb-4{margin-bottom:calc(var(--ppm-spacing)*4)}.ppm\\:flex{display:flex}.ppm\\:grid{display:grid}.ppm\\:inline-flex{display:inline-flex}.ppm\\:size-9{width:calc(var(--ppm-spacing)*9);height:calc(var(--ppm-spacing)*9)}.ppm\\:h-1{height:calc(var(--ppm-spacing)*1)}.ppm\\:h-2{height:calc(var(--ppm-spacing)*2)}.ppm\\:h-4{height:calc(var(--ppm-spacing)*4)}.ppm\\:h-6{height:calc(var(--ppm-spacing)*6)}.ppm\\:h-8{height:calc(var(--ppm-spacing)*8)}.ppm\\:h-9{height:calc(var(--ppm-spacing)*9)}.ppm\\:h-10{height:calc(var(--ppm-spacing)*10)}.ppm\\:h-12{height:calc(var(--ppm-spacing)*12)}.ppm\\:h-16{height:calc(var(--ppm-spacing)*16)}.ppm\\:h-\\[600px\\]{height:600px}.ppm\\:h-full{height:100%}.ppm\\:w-4{width:calc(var(--ppm-spacing)*4)}.ppm\\:w-8{width:calc(var(--ppm-spacing)*8)}.ppm\\:w-16{width:calc(var(--ppm-spacing)*16)}.ppm\\:w-32{width:calc(var(--ppm-spacing)*32)}.ppm\\:w-\\[300px\\]{width:300px}.ppm\\:w-full{width:100%}.ppm\\:min-w-0{min-width:calc(var(--ppm-spacing)*0)}.ppm\\:flex-1{flex:1}.ppm\\:shrink-0{flex-shrink:0}.ppm\\:-translate-x-1\\/2{--tw-translate-x:calc(calc(1/2*100%)*-1);translate:var(--tw-translate-x)var(--tw-translate-y)}.ppm\\:transform{transform:var(--tw-rotate-x,)var(--tw-rotate-y,)var(--tw-rotate-z,)var(--tw-skew-x,)var(--tw-skew-y,)}.ppm\\:cursor-pointer{cursor:pointer}.ppm\\:auto-rows-min{grid-auto-rows:min-content}.ppm\\:grid-rows-\\[auto_auto\\]{grid-template-rows:auto auto}.ppm\\:flex-col{flex-direction:column}.ppm\\:items-center{align-items:center}.ppm\\:items-start{align-items:flex-start}.ppm\\:justify-between{justify-content:space-between}.ppm\\:justify-center{justify-content:center}.ppm\\:gap-1{gap:calc(var(--ppm-spacing)*1)}.ppm\\:gap-1\\.5{gap:calc(var(--ppm-spacing)*1.5)}.ppm\\:gap-2{gap:calc(var(--ppm-spacing)*2)}.ppm\\:gap-6{gap:calc(var(--ppm-spacing)*6)}:where(.ppm\\:space-y-2>:not(:last-child)){--tw-space-y-reverse:0;margin-block-start:calc(calc(var(--ppm-spacing)*2)*var(--tw-space-y-reverse));margin-block-end:calc(calc(var(--ppm-spacing)*2)*calc(1 - var(--tw-space-y-reverse)))}:where(.ppm\\:space-y-4>:not(:last-child)){--tw-space-y-reverse:0;margin-block-start:calc(calc(var(--ppm-spacing)*4)*var(--tw-space-y-reverse));margin-block-end:calc(calc(var(--ppm-spacing)*4)*calc(1 - var(--tw-space-y-reverse)))}.ppm\\:self-start{align-self:flex-start}.ppm\\:justify-self-end{justify-self:flex-end}.ppm\\:overflow-hidden{overflow:hidden}.ppm\\:rounded{border-radius:.25rem}.ppm\\:rounded-\\[2\\.5rem\\]{border-radius:2.5rem}.ppm\\:rounded-\\[3rem\\]{border-radius:3rem}.ppm\\:rounded-full{border-radius:3.40282e38px}.ppm\\:rounded-lg{border-radius:var(--radius)}.ppm\\:rounded-md{border-radius:calc(var(--radius) - 2px)}.ppm\\:rounded-sm{border-radius:calc(var(--radius) - 4px)}.ppm\\:rounded-xl{border-radius:calc(var(--radius) + 4px)}.ppm\\:rounded-b-2xl{border-bottom-right-radius:var(--ppm-radius-2xl);border-bottom-left-radius:var(--ppm-radius-2xl)}.ppm\\:border{border-style:var(--tw-border-style);border-width:1px}.ppm\\:border-none{--tw-border-style:none;border-style:none}.ppm\\:border-input{border-color:var(--input)}.ppm\\:border-red-200{border-color:var(--ppm-color-red-200)}.ppm\\:bg-background{background-color:var(--background)}.ppm\\:bg-black,.ppm\\:bg-black\\/50{background-color:var(--ppm-color-black)}@supports (color:color-mix(in lab, red, red)){.ppm\\:bg-black\\/50{background-color:color-mix(in oklab,var(--ppm-color-black)50%,transparent)}}.ppm\\:bg-blue-500{background-color:var(--ppm-color-blue-500)}.ppm\\:bg-card{background-color:var(--card)}.ppm\\:bg-destructive{background-color:var(--destructive)}.ppm\\:bg-gray-50{background-color:var(--ppm-color-gray-50)}.ppm\\:bg-gray-400{background-color:var(--ppm-color-gray-400)}.ppm\\:bg-gray-900{background-color:var(--ppm-color-gray-900)}.ppm\\:bg-green-500{background-color:var(--ppm-color-green-500)}.ppm\\:bg-primary{background-color:var(--primary)}.ppm\\:bg-red-50{background-color:var(--ppm-color-red-50)}.ppm\\:bg-red-500{background-color:var(--ppm-color-red-500)}.ppm\\:bg-secondary{background-color:var(--secondary)}.ppm\\:bg-transparent{background-color:#0000}.ppm\\:bg-white{background-color:var(--ppm-color-white)}.ppm\\:p-0{padding:calc(var(--ppm-spacing)*0)}.ppm\\:p-2{padding:calc(var(--ppm-spacing)*2)}.ppm\\:p-4{padding:calc(var(--ppm-spacing)*4)}.ppm\\:p-6{padding:calc(var(--ppm-spacing)*6)}.ppm\\:px-3{padding-inline:calc(var(--ppm-spacing)*3)}.ppm\\:px-4{padding-inline:calc(var(--ppm-spacing)*4)}.ppm\\:px-6{padding-inline:calc(var(--ppm-spacing)*6)}.ppm\\:py-1{padding-block:calc(var(--ppm-spacing)*1)}.ppm\\:py-2{padding-block:calc(var(--ppm-spacing)*2)}.ppm\\:py-3{padding-block:calc(var(--ppm-spacing)*3)}.ppm\\:py-6{padding-block:calc(var(--ppm-spacing)*6)}.ppm\\:pt-6{padding-top:calc(var(--ppm-spacing)*6)}.ppm\\:pt-8{padding-top:calc(var(--ppm-spacing)*8)}.ppm\\:pb-6{padding-bottom:calc(var(--ppm-spacing)*6)}.ppm\\:text-center{text-align:center}.ppm\\:text-2xl{font-size:var(--ppm-text-2xl);line-height:var(--tw-leading,var(--ppm-text-2xl--line-height))}.ppm\\:text-base{font-size:var(--ppm-text-base);line-height:var(--tw-leading,var(--ppm-text-base--line-height))}.ppm\\:text-lg{font-size:var(--ppm-text-lg);line-height:var(--tw-leading,var(--ppm-text-lg--line-height))}.ppm\\:text-sm{font-size:var(--ppm-text-sm);line-height:var(--tw-leading,var(--ppm-text-sm--line-height))}.ppm\\:text-xl{font-size:var(--ppm-text-xl);line-height:var(--tw-leading,var(--ppm-text-xl--line-height))}.ppm\\:text-xs{font-size:var(--ppm-text-xs);line-height:var(--tw-leading,var(--ppm-text-xs--line-height))}.ppm\\:leading-none{--tw-leading:1;line-height:1}.ppm\\:font-bold{--tw-font-weight:var(--ppm-font-weight-bold);font-weight:var(--ppm-font-weight-bold)}.ppm\\:font-medium{--tw-font-weight:var(--ppm-font-weight-medium);font-weight:var(--ppm-font-weight-medium)}.ppm\\:font-semibold{--tw-font-weight:var(--ppm-font-weight-semibold);font-weight:var(--ppm-font-weight-semibold)}.ppm\\:break-all{word-break:break-all}.ppm\\:whitespace-nowrap{white-space:nowrap}.ppm\\:text-blue-600{color:var(--ppm-color-blue-600)}.ppm\\:text-card-foreground{color:var(--card-foreground)}.ppm\\:text-gray-500{color:var(--ppm-color-gray-500)}.ppm\\:text-gray-600{color:var(--ppm-color-gray-600)}.ppm\\:text-gray-900{color:var(--ppm-color-gray-900)}.ppm\\:text-muted-foreground{color:var(--muted-foreground)}.ppm\\:text-primary{color:var(--primary)}.ppm\\:text-primary-foreground{color:var(--primary-foreground)}.ppm\\:text-red-700{color:var(--ppm-color-red-700)}.ppm\\:text-secondary-foreground{color:var(--secondary-foreground)}.ppm\\:text-white{color:var(--ppm-color-white)}.ppm\\:underline-offset-4{text-underline-offset:4px}.ppm\\:shadow-2xl{--tw-shadow:0 25px 50px -12px var(--tw-shadow-color,#00000040);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.ppm\\:shadow-sm{--tw-shadow:0 1px 3px 0 var(--tw-shadow-color,#0000001a),0 1px 2px -1px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.ppm\\:shadow-xs{--tw-shadow:0 1px 2px 0 var(--tw-shadow-color,#0000000d);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.ppm\\:transition-\\[color\\,box-shadow\\]{transition-property:color,box-shadow;transition-timing-function:var(--tw-ease,var(--ppm-default-transition-timing-function));transition-duration:var(--tw-duration,var(--ppm-default-transition-duration))}.ppm\\:transition-all{transition-property:all;transition-timing-function:var(--tw-ease,var(--ppm-default-transition-timing-function));transition-duration:var(--tw-duration,var(--ppm-default-transition-duration))}.ppm\\:outline-none{--tw-outline-style:none;outline-style:none}.ppm\\:select-none{-webkit-user-select:none;user-select:none}.ppm\\:group-data-\\[disabled\\=true\\]\\:pointer-events-none:is(:where(.ppm\\:group)[data-disabled=true] *){pointer-events:none}.ppm\\:group-data-\\[disabled\\=true\\]\\:opacity-50:is(:where(.ppm\\:group)[data-disabled=true] *){opacity:.5}.ppm\\:peer-disabled\\:cursor-not-allowed:is(:where(.ppm\\:peer):disabled~*){cursor:not-allowed}.ppm\\:peer-disabled\\:opacity-50:is(:where(.ppm\\:peer):disabled~*){opacity:.5}.ppm\\:selection\\:bg-primary ::selection{background-color:var(--primary)}.ppm\\:selection\\:bg-primary::selection{background-color:var(--primary)}.ppm\\:selection\\:text-primary-foreground ::selection{color:var(--primary-foreground)}.ppm\\:selection\\:text-primary-foreground::selection{color:var(--primary-foreground)}.ppm\\:file\\:inline-flex::file-selector-button{display:inline-flex}.ppm\\:file\\:h-7::file-selector-button{height:calc(var(--ppm-spacing)*7)}.ppm\\:file\\:border-0::file-selector-button{border-style:var(--tw-border-style);border-width:0}.ppm\\:file\\:bg-transparent::file-selector-button{background-color:#0000}.ppm\\:file\\:text-sm::file-selector-button{font-size:var(--ppm-text-sm);line-height:var(--tw-leading,var(--ppm-text-sm--line-height))}.ppm\\:file\\:font-medium::file-selector-button{--tw-font-weight:var(--ppm-font-weight-medium);font-weight:var(--ppm-font-weight-medium)}.ppm\\:file\\:text-foreground::file-selector-button{color:var(--foreground)}.ppm\\:placeholder\\:text-muted-foreground::placeholder{color:var(--muted-foreground)}@media (hover:hover){.ppm\\:hover\\:bg-accent:hover{background-color:var(--accent)}.ppm\\:hover\\:bg-destructive\\/90:hover{background-color:var(--destructive)}@supports (color:color-mix(in lab, red, red)){.ppm\\:hover\\:bg-destructive\\/90:hover{background-color:color-mix(in oklab,var(--destructive)90%,transparent)}}.ppm\\:hover\\:bg-primary\\/90:hover{background-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.ppm\\:hover\\:bg-primary\\/90:hover{background-color:color-mix(in oklab,var(--primary)90%,transparent)}}.ppm\\:hover\\:bg-red-600:hover{background-color:var(--ppm-color-red-600)}.ppm\\:hover\\:bg-secondary\\/80:hover{background-color:var(--secondary)}@supports (color:color-mix(in lab, red, red)){.ppm\\:hover\\:bg-secondary\\/80:hover{background-color:color-mix(in oklab,var(--secondary)80%,transparent)}}.ppm\\:hover\\:text-accent-foreground:hover{color:var(--accent-foreground)}.ppm\\:hover\\:underline:hover{text-decoration-line:underline}}.ppm\\:focus-visible\\:border-ring:focus-visible{border-color:var(--ring)}.ppm\\:focus-visible\\:ring-\\[3px\\]:focus-visible{--tw-ring-shadow:var(--tw-ring-inset,)0 0 0 calc(3px + var(--tw-ring-offset-width))var(--tw-ring-color,currentcolor);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.ppm\\:focus-visible\\:ring-destructive\\/20:focus-visible{--tw-ring-color:var(--destructive)}@supports (color:color-mix(in lab, red, red)){.ppm\\:focus-visible\\:ring-destructive\\/20:focus-visible{--tw-ring-color:color-mix(in oklab,var(--destructive)20%,transparent)}}.ppm\\:focus-visible\\:ring-ring\\/50:focus-visible{--tw-ring-color:var(--ring)}@supports (color:color-mix(in lab, red, red)){.ppm\\:focus-visible\\:ring-ring\\/50:focus-visible{--tw-ring-color:color-mix(in oklab,var(--ring)50%,transparent)}}.ppm\\:disabled\\:pointer-events-none:disabled{pointer-events:none}.ppm\\:disabled\\:cursor-not-allowed:disabled{cursor:not-allowed}.ppm\\:disabled\\:opacity-50:disabled{opacity:.5}.ppm\\:has-data-\\[slot\\=card-action\\]\\:grid-cols-\\[1fr_auto\\]:has([data-slot=card-action]){grid-template-columns:1fr auto}.ppm\\:has-\\[\\>svg\\]\\:px-2\\.5:has(>svg){padding-inline:calc(var(--ppm-spacing)*2.5)}.ppm\\:has-\\[\\>svg\\]\\:px-3:has(>svg){padding-inline:calc(var(--ppm-spacing)*3)}.ppm\\:has-\\[\\>svg\\]\\:px-4:has(>svg){padding-inline:calc(var(--ppm-spacing)*4)}.ppm\\:aria-invalid\\:border-destructive[aria-invalid=true]{border-color:var(--destructive)}.ppm\\:aria-invalid\\:ring-destructive\\/20[aria-invalid=true]{--tw-ring-color:var(--destructive)}@supports (color:color-mix(in lab, red, red)){.ppm\\:aria-invalid\\:ring-destructive\\/20[aria-invalid=true]{--tw-ring-color:color-mix(in oklab,var(--destructive)20%,transparent)}}@media (min-width:48rem){.ppm\\:md\\:text-sm{font-size:var(--ppm-text-sm);line-height:var(--tw-leading,var(--ppm-text-sm--line-height))}}.ppm\\:dark\\:border-input:is(.dark *){border-color:var(--input)}.ppm\\:dark\\:bg-destructive\\/60:is(.dark *){background-color:var(--destructive)}@supports (color:color-mix(in lab, red, red)){.ppm\\:dark\\:bg-destructive\\/60:is(.dark *){background-color:color-mix(in oklab,var(--destructive)60%,transparent)}}.ppm\\:dark\\:bg-input\\/30:is(.dark *){background-color:var(--input)}@supports (color:color-mix(in lab, red, red)){.ppm\\:dark\\:bg-input\\/30:is(.dark *){background-color:color-mix(in oklab,var(--input)30%,transparent)}}@media (hover:hover){.ppm\\:dark\\:hover\\:bg-accent\\/50:is(.dark *):hover{background-color:var(--accent)}@supports (color:color-mix(in lab, red, red)){.ppm\\:dark\\:hover\\:bg-accent\\/50:is(.dark *):hover{background-color:color-mix(in oklab,var(--accent)50%,transparent)}}.ppm\\:dark\\:hover\\:bg-input\\/50:is(.dark *):hover{background-color:var(--input)}@supports (color:color-mix(in lab, red, red)){.ppm\\:dark\\:hover\\:bg-input\\/50:is(.dark *):hover{background-color:color-mix(in oklab,var(--input)50%,transparent)}}}.ppm\\:dark\\:focus-visible\\:ring-destructive\\/40:is(.dark *):focus-visible{--tw-ring-color:var(--destructive)}@supports (color:color-mix(in lab, red, red)){.ppm\\:dark\\:focus-visible\\:ring-destructive\\/40:is(.dark *):focus-visible{--tw-ring-color:color-mix(in oklab,var(--destructive)40%,transparent)}}.ppm\\:dark\\:aria-invalid\\:ring-destructive\\/40:is(.dark *)[aria-invalid=true]{--tw-ring-color:var(--destructive)}@supports (color:color-mix(in lab, red, red)){.ppm\\:dark\\:aria-invalid\\:ring-destructive\\/40:is(.dark *)[aria-invalid=true]{--tw-ring-color:color-mix(in oklab,var(--destructive)40%,transparent)}}.ppm\\:\\[\\&_svg\\]\\:pointer-events-none svg{pointer-events:none}.ppm\\:\\[\\&_svg\\]\\:shrink-0 svg{flex-shrink:0}.ppm\\:\\[\\&_svg\\:not\\(\\[class\\*\\=size-\\]\\)\\]\\:size-4 svg:not([class*=size-]){width:calc(var(--ppm-spacing)*4);height:calc(var(--ppm-spacing)*4)}.ppm\\:\\[\\.border-b\\]\\:pb-6.border-b{padding-bottom:calc(var(--ppm-spacing)*6)}.ppm\\:\\[\\.border-t\\]\\:pt-6.border-t{padding-top:calc(var(--ppm-spacing)*6)}}@property --tw-animation-delay{syntax:\"*\";inherits:false;initial-value:0s}@property --tw-animation-direction{syntax:\"*\";inherits:false;initial-value:normal}@property --tw-animation-duration{syntax:\"*\";inherits:false}@property --tw-animation-fill-mode{syntax:\"*\";inherits:false;initial-value:none}@property --tw-animation-iteration-count{syntax:\"*\";inherits:false;initial-value:1}@property --tw-enter-opacity{syntax:\"*\";inherits:false;initial-value:1}@property --tw-enter-rotate{syntax:\"*\";inherits:false;initial-value:0}@property --tw-enter-scale{syntax:\"*\";inherits:false;initial-value:1}@property --tw-enter-translate-x{syntax:\"*\";inherits:false;initial-value:0}@property --tw-enter-translate-y{syntax:\"*\";inherits:false;initial-value:0}@property --tw-exit-opacity{syntax:\"*\";inherits:false;initial-value:1}@property --tw-exit-rotate{syntax:\"*\";inherits:false;initial-value:0}@property --tw-exit-scale{syntax:\"*\";inherits:false;initial-value:1}@property --tw-exit-translate-x{syntax:\"*\";inherits:false;initial-value:0}@property --tw-exit-translate-y{syntax:\"*\";inherits:false;initial-value:0}:root{--background:oklch(100% 0 0);--foreground:oklch(14.5% 0 0);--card:oklch(100% 0 0);--card-foreground:oklch(14.5% 0 0);--popover:oklch(100% 0 0);--popover-foreground:oklch(14.5% 0 0);--primary:oklch(20.5% 0 0);--primary-foreground:oklch(98.5% 0 0);--secondary:oklch(97% 0 0);--secondary-foreground:oklch(20.5% 0 0);--muted:oklch(97% 0 0);--muted-foreground:oklch(55.6% 0 0);--accent:oklch(97% 0 0);--accent-foreground:oklch(20.5% 0 0);--destructive:oklch(57.7% .245 27.325);--destructive-foreground:oklch(57.7% .245 27.325);--border:oklch(92.2% 0 0);--input:oklch(92.2% 0 0);--ring:oklch(70.8% 0 0);--chart-1:oklch(64.6% .222 41.116);--chart-2:oklch(60% .118 184.704);--chart-3:oklch(39.8% .07 227.392);--chart-4:oklch(82.8% .189 84.429);--chart-5:oklch(76.9% .188 70.08);--radius:.625rem;--sidebar:oklch(98.5% 0 0);--sidebar-foreground:oklch(14.5% 0 0);--sidebar-primary:oklch(20.5% 0 0);--sidebar-primary-foreground:oklch(98.5% 0 0);--sidebar-accent:oklch(97% 0 0);--sidebar-accent-foreground:oklch(20.5% 0 0);--sidebar-border:oklch(92.2% 0 0);--sidebar-ring:oklch(70.8% 0 0)}.dark{--background:oklch(14.5% 0 0);--foreground:oklch(98.5% 0 0);--card:oklch(14.5% 0 0);--card-foreground:oklch(98.5% 0 0);--popover:oklch(14.5% 0 0);--popover-foreground:oklch(98.5% 0 0);--primary:oklch(98.5% 0 0);--primary-foreground:oklch(20.5% 0 0);--secondary:oklch(26.9% 0 0);--secondary-foreground:oklch(98.5% 0 0);--muted:oklch(26.9% 0 0);--muted-foreground:oklch(70.8% 0 0);--accent:oklch(26.9% 0 0);--accent-foreground:oklch(98.5% 0 0);--destructive:oklch(39.6% .141 25.723);--destructive-foreground:oklch(63.7% .237 25.331);--border:oklch(26.9% 0 0);--input:oklch(26.9% 0 0);--ring:oklch(43.9% 0 0);--chart-1:oklch(48.8% .243 264.376);--chart-2:oklch(69.6% .17 162.48);--chart-3:oklch(76.9% .188 70.08);--chart-4:oklch(62.7% .265 303.9);--chart-5:oklch(64.5% .246 16.439);--sidebar:oklch(20.5% 0 0);--sidebar-foreground:oklch(98.5% 0 0);--sidebar-primary:oklch(48.8% .243 264.376);--sidebar-primary-foreground:oklch(98.5% 0 0);--sidebar-accent:oklch(26.9% 0 0);--sidebar-accent-foreground:oklch(98.5% 0 0);--sidebar-border:oklch(26.9% 0 0);--sidebar-ring:oklch(43.9% 0 0)}@property --tw-translate-x{syntax:\"*\";inherits:false;initial-value:0}@property --tw-translate-y{syntax:\"*\";inherits:false;initial-value:0}@property --tw-translate-z{syntax:\"*\";inherits:false;initial-value:0}@property --tw-rotate-x{syntax:\"*\";inherits:false}@property --tw-rotate-y{syntax:\"*\";inherits:false}@property --tw-rotate-z{syntax:\"*\";inherits:false}@property --tw-skew-x{syntax:\"*\";inherits:false}@property --tw-skew-y{syntax:\"*\";inherits:false}@property --tw-space-y-reverse{syntax:\"*\";inherits:false;initial-value:0}@property --tw-border-style{syntax:\"*\";inherits:false;initial-value:solid}@property --tw-leading{syntax:\"*\";inherits:false}@property --tw-font-weight{syntax:\"*\";inherits:false}@property --tw-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}@property --tw-shadow-color{syntax:\"*\";inherits:false}@property --tw-shadow-alpha{syntax:\"<percentage>\";inherits:false;initial-value:100%}@property --tw-inset-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}@property --tw-inset-shadow-color{syntax:\"*\";inherits:false}@property --tw-inset-shadow-alpha{syntax:\"<percentage>\";inherits:false;initial-value:100%}@property --tw-ring-color{syntax:\"*\";inherits:false}@property --tw-ring-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}@property --tw-inset-ring-color{syntax:\"*\";inherits:false}@property --tw-inset-ring-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}@property --tw-ring-inset{syntax:\"*\";inherits:false}@property --tw-ring-offset-width{syntax:\"<length>\";inherits:false;initial-value:0}@property --tw-ring-offset-color{syntax:\"*\";inherits:false;initial-value:#fff}@property --tw-ring-offset-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}";
+                    el.innerText = "body {\r\n  margin: 0;\r\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\",\r\n    \"Ubuntu\", \"Cantarell\", \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\",\r\n    sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, \"Courier New\",\r\n    monospace;\r\n}\r\n/*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */\n@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0;--tw-rotate-x:initial;--tw-rotate-y:initial;--tw-rotate-z:initial;--tw-skew-x:initial;--tw-skew-y:initial;--tw-space-y-reverse:0;--tw-border-style:solid;--tw-leading:initial;--tw-font-weight:initial;--tw-shadow:0 0 #0000;--tw-shadow-color:initial;--tw-shadow-alpha:100%;--tw-inset-shadow:0 0 #0000;--tw-inset-shadow-color:initial;--tw-inset-shadow-alpha:100%;--tw-ring-color:initial;--tw-ring-shadow:0 0 #0000;--tw-inset-ring-color:initial;--tw-inset-ring-shadow:0 0 #0000;--tw-ring-inset:initial;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-offset-shadow:0 0 #0000;--tw-animation-delay:0s;--tw-animation-direction:normal;--tw-animation-duration:initial;--tw-animation-fill-mode:none;--tw-animation-iteration-count:1;--tw-enter-opacity:1;--tw-enter-rotate:0;--tw-enter-scale:1;--tw-enter-translate-x:0;--tw-enter-translate-y:0;--tw-exit-opacity:1;--tw-exit-rotate:0;--tw-exit-scale:1;--tw-exit-translate-x:0;--tw-exit-translate-y:0}}}@layer theme{:root,:host{--ppm-font-sans:ui-sans-serif,system-ui,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\";--ppm-font-mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace;--ppm-color-red-50:oklch(97.1% .013 17.38);--ppm-color-red-200:oklch(88.5% .062 18.334);--ppm-color-red-300:oklch(80.8% .114 19.571);--ppm-color-red-500:oklch(63.7% .237 25.331);--ppm-color-red-600:oklch(57.7% .245 27.325);--ppm-color-red-700:oklch(50.5% .213 27.518);--ppm-color-green-500:oklch(72.3% .219 149.579);--ppm-color-blue-100:oklch(93.2% .032 255.585);--ppm-color-blue-500:oklch(62.3% .214 259.815);--ppm-color-blue-600:oklch(54.6% .245 262.881);--ppm-color-blue-700:oklch(48.8% .243 264.376);--ppm-color-blue-800:oklch(42.4% .199 265.638);--ppm-color-gray-50:oklch(98.5% .002 247.839);--ppm-color-gray-300:oklch(87.2% .01 258.338);--ppm-color-gray-400:oklch(70.7% .022 261.325);--ppm-color-gray-500:oklch(55.1% .027 264.364);--ppm-color-gray-600:oklch(44.6% .03 256.802);--ppm-color-gray-700:oklch(37.3% .034 259.733);--ppm-color-gray-800:oklch(27.8% .033 256.848);--ppm-color-gray-900:oklch(21% .034 264.665);--ppm-color-black:#000;--ppm-color-white:#fff;--ppm-spacing:.25rem;--ppm-container-sm:24rem;--ppm-container-md:28rem;--ppm-text-xs:.75rem;--ppm-text-xs--line-height:calc(1/.75);--ppm-text-sm:.875rem;--ppm-text-sm--line-height:calc(1.25/.875);--ppm-text-base:1rem;--ppm-text-base--line-height:calc(1.5/1);--ppm-text-lg:1.125rem;--ppm-text-lg--line-height:calc(1.75/1.125);--ppm-text-xl:1.25rem;--ppm-text-xl--line-height:calc(1.75/1.25);--ppm-text-2xl:1.5rem;--ppm-text-2xl--line-height:calc(2/1.5);--ppm-text-4xl:2.25rem;--ppm-text-4xl--line-height:calc(2.5/2.25);--ppm-font-weight-medium:500;--ppm-font-weight-semibold:600;--ppm-font-weight-bold:700;--ppm-radius-2xl:1rem;--ppm-default-transition-duration:.15s;--ppm-default-transition-timing-function:cubic-bezier(.4,0,.2,1);--ppm-default-font-family:var(--ppm-font-sans);--ppm-default-mono-font-family:var(--ppm-font-mono)}}@layer base{*,:after,:before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}::file-selector-button{box-sizing:border-box;border:0 solid;margin:0;padding:0}html,:host{-webkit-text-size-adjust:100%;tab-size:4;line-height:1.5;font-family:var(--ppm-default-font-family,ui-sans-serif,system-ui,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\");font-feature-settings:var(--ppm-default-font-feature-settings,normal);font-variation-settings:var(--ppm-default-font-variation-settings,normal);-webkit-tap-highlight-color:transparent}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;-webkit-text-decoration:inherit;-webkit-text-decoration:inherit;-webkit-text-decoration:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,samp,pre{font-family:var(--ppm-default-mono-font-family,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace);font-feature-settings:var(--ppm-default-mono-font-feature-settings,normal);font-variation-settings:var(--ppm-default-mono-font-variation-settings,normal);font-size:1em}small{font-size:80%}sub,sup{vertical-align:baseline;font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}:-moz-focusring{outline:auto}progress{vertical-align:baseline}summary{display:list-item}ol,ul,menu{list-style:none}img,svg,video,canvas,audio,iframe,embed,object{vertical-align:middle;display:block}img,video{max-width:100%;height:auto}button,input,select,optgroup,textarea{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}::file-selector-button{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}:where(select:is([multiple],[size])) optgroup{font-weight:bolder}:where(select:is([multiple],[size])) optgroup option{padding-inline-start:20px}::file-selector-button{margin-inline-end:4px}::placeholder{opacity:1}@supports (not ((-webkit-appearance:-apple-pay-button))) or (contain-intrinsic-size:1px){::placeholder{color:currentColor}@supports (color:color-mix(in lab, red, red)){::placeholder{color:color-mix(in oklab,currentcolor 50%,transparent)}}}textarea{resize:vertical}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-date-and-time-value{min-height:1lh;text-align:inherit}::-webkit-datetime-edit{display:inline-flex}::-webkit-datetime-edit-fields-wrapper{padding:0}::-webkit-datetime-edit{padding-block:0}::-webkit-datetime-edit-year-field{padding-block:0}::-webkit-datetime-edit-month-field{padding-block:0}::-webkit-datetime-edit-day-field{padding-block:0}::-webkit-datetime-edit-hour-field{padding-block:0}::-webkit-datetime-edit-minute-field{padding-block:0}::-webkit-datetime-edit-second-field{padding-block:0}::-webkit-datetime-edit-millisecond-field{padding-block:0}::-webkit-datetime-edit-meridiem-field{padding-block:0}:-moz-ui-invalid{box-shadow:none}button,input:where([type=button],[type=reset],[type=submit]){appearance:button}::file-selector-button{appearance:button}::-webkit-inner-spin-button{height:auto}::-webkit-outer-spin-button{height:auto}[hidden]:where(:not([hidden=until-found])){display:none!important}*{border-color:var(--border);outline-color:var(--ring)}@supports (color:color-mix(in lab, red, red)){*{outline-color:color-mix(in oklab,var(--ring)50%,transparent)}}body{background-color:var(--background);color:var(--foreground)}}@layer components;@layer utilities{.ppm\\:\\@container\\/card-header{container:card-header/inline-size}.ppm\\:absolute{position:absolute}.ppm\\:fixed{position:fixed}.ppm\\:relative{position:relative}.ppm\\:inset-0{inset:calc(var(--ppm-spacing)*0)}.ppm\\:-top-2{top:calc(var(--ppm-spacing)*-2)}.ppm\\:top-0{top:calc(var(--ppm-spacing)*0)}.ppm\\:top-4{top:calc(var(--ppm-spacing)*4)}.ppm\\:-right-2{right:calc(var(--ppm-spacing)*-2)}.ppm\\:bottom-0{bottom:calc(var(--ppm-spacing)*0)}.ppm\\:bottom-2{bottom:calc(var(--ppm-spacing)*2)}.ppm\\:left-0{left:calc(var(--ppm-spacing)*0)}.ppm\\:left-1\\/2{left:50%}.ppm\\:left-4{left:calc(var(--ppm-spacing)*4)}.ppm\\:z-10{z-index:10}.ppm\\:z-50{z-index:50}.ppm\\:col-start-2{grid-column-start:2}.ppm\\:row-span-2{grid-row:span 2/span 2}.ppm\\:row-start-1{grid-row-start:1}.ppm\\:mt-6{margin-top:calc(var(--ppm-spacing)*6)}.ppm\\:mt-10{margin-top:calc(var(--ppm-spacing)*10)}.ppm\\:mr-2{margin-right:calc(var(--ppm-spacing)*2)}.ppm\\:mb-2{margin-bottom:calc(var(--ppm-spacing)*2)}.ppm\\:mb-4{margin-bottom:calc(var(--ppm-spacing)*4)}.ppm\\:flex{display:flex}.ppm\\:grid{display:grid}.ppm\\:inline-flex{display:inline-flex}.ppm\\:size-9{width:calc(var(--ppm-spacing)*9);height:calc(var(--ppm-spacing)*9)}.ppm\\:h-1{height:calc(var(--ppm-spacing)*1)}.ppm\\:h-2{height:calc(var(--ppm-spacing)*2)}.ppm\\:h-4{height:calc(var(--ppm-spacing)*4)}.ppm\\:h-6{height:calc(var(--ppm-spacing)*6)}.ppm\\:h-8{height:calc(var(--ppm-spacing)*8)}.ppm\\:h-9{height:calc(var(--ppm-spacing)*9)}.ppm\\:h-10{height:calc(var(--ppm-spacing)*10)}.ppm\\:h-12{height:calc(var(--ppm-spacing)*12)}.ppm\\:h-16{height:calc(var(--ppm-spacing)*16)}.ppm\\:h-\\[600px\\]{height:600px}.ppm\\:h-full{height:100%}.ppm\\:w-4{width:calc(var(--ppm-spacing)*4)}.ppm\\:w-8{width:calc(var(--ppm-spacing)*8)}.ppm\\:w-16{width:calc(var(--ppm-spacing)*16)}.ppm\\:w-32{width:calc(var(--ppm-spacing)*32)}.ppm\\:w-\\[300px\\]{width:300px}.ppm\\:w-full{width:100%}.ppm\\:min-w-0{min-width:calc(var(--ppm-spacing)*0)}.ppm\\:flex-1{flex:1}.ppm\\:shrink-0{flex-shrink:0}.ppm\\:-translate-x-1\\/2{--tw-translate-x:calc(calc(1/2*100%)*-1);translate:var(--tw-translate-x)var(--tw-translate-y)}.ppm\\:transform{transform:var(--tw-rotate-x,)var(--tw-rotate-y,)var(--tw-rotate-z,)var(--tw-skew-x,)var(--tw-skew-y,)}.ppm\\:cursor-pointer{cursor:pointer}.ppm\\:auto-rows-min{grid-auto-rows:min-content}.ppm\\:grid-rows-\\[auto_auto\\]{grid-template-rows:auto auto}.ppm\\:flex-col{flex-direction:column}.ppm\\:items-center{align-items:center}.ppm\\:items-start{align-items:flex-start}.ppm\\:justify-between{justify-content:space-between}.ppm\\:justify-center{justify-content:center}.ppm\\:gap-1{gap:calc(var(--ppm-spacing)*1)}.ppm\\:gap-1\\.5{gap:calc(var(--ppm-spacing)*1.5)}.ppm\\:gap-2{gap:calc(var(--ppm-spacing)*2)}.ppm\\:gap-6{gap:calc(var(--ppm-spacing)*6)}:where(.ppm\\:space-y-2>:not(:last-child)){--tw-space-y-reverse:0;margin-block-start:calc(calc(var(--ppm-spacing)*2)*var(--tw-space-y-reverse));margin-block-end:calc(calc(var(--ppm-spacing)*2)*calc(1 - var(--tw-space-y-reverse)))}:where(.ppm\\:space-y-4>:not(:last-child)){--tw-space-y-reverse:0;margin-block-start:calc(calc(var(--ppm-spacing)*4)*var(--tw-space-y-reverse));margin-block-end:calc(calc(var(--ppm-spacing)*4)*calc(1 - var(--tw-space-y-reverse)))}.ppm\\:self-start{align-self:flex-start}.ppm\\:justify-self-end{justify-self:flex-end}.ppm\\:overflow-hidden{overflow:hidden}.ppm\\:rounded{border-radius:.25rem}.ppm\\:rounded-\\[2\\.5rem\\]{border-radius:2.5rem}.ppm\\:rounded-\\[3rem\\]{border-radius:3rem}.ppm\\:rounded-full{border-radius:3.40282e38px}.ppm\\:rounded-lg{border-radius:var(--radius)}.ppm\\:rounded-md{border-radius:calc(var(--radius) - 2px)}.ppm\\:rounded-sm{border-radius:calc(var(--radius) - 4px)}.ppm\\:rounded-xl{border-radius:calc(var(--radius) + 4px)}.ppm\\:rounded-b-2xl{border-bottom-right-radius:var(--ppm-radius-2xl);border-bottom-left-radius:var(--ppm-radius-2xl)}.ppm\\:border{border-style:var(--tw-border-style);border-width:1px}.ppm\\:border-t{border-top-style:var(--tw-border-style);border-top-width:1px}.ppm\\:border-none{--tw-border-style:none;border-style:none}.ppm\\:border-input{border-color:var(--input)}.ppm\\:border-red-200{border-color:var(--ppm-color-red-200)}.ppm\\:bg-background{background-color:var(--background)}.ppm\\:bg-black,.ppm\\:bg-black\\/50{background-color:var(--ppm-color-black)}@supports (color:color-mix(in lab, red, red)){.ppm\\:bg-black\\/50{background-color:color-mix(in oklab,var(--ppm-color-black)50%,transparent)}}.ppm\\:bg-blue-500{background-color:var(--ppm-color-blue-500)}.ppm\\:bg-card{background-color:var(--card)}.ppm\\:bg-destructive{background-color:var(--destructive)}.ppm\\:bg-gray-50{background-color:var(--ppm-color-gray-50)}.ppm\\:bg-gray-400{background-color:var(--ppm-color-gray-400)}.ppm\\:bg-gray-900{background-color:var(--ppm-color-gray-900)}.ppm\\:bg-green-500{background-color:var(--ppm-color-green-500)}.ppm\\:bg-primary{background-color:var(--primary)}.ppm\\:bg-red-50{background-color:var(--ppm-color-red-50)}.ppm\\:bg-red-500{background-color:var(--ppm-color-red-500)}.ppm\\:bg-secondary{background-color:var(--secondary)}.ppm\\:bg-transparent{background-color:#0000}.ppm\\:bg-white{background-color:var(--ppm-color-white)}.ppm\\:p-0{padding:calc(var(--ppm-spacing)*0)}.ppm\\:p-2{padding:calc(var(--ppm-spacing)*2)}.ppm\\:p-4{padding:calc(var(--ppm-spacing)*4)}.ppm\\:p-6{padding:calc(var(--ppm-spacing)*6)}.ppm\\:px-3{padding-inline:calc(var(--ppm-spacing)*3)}.ppm\\:px-4{padding-inline:calc(var(--ppm-spacing)*4)}.ppm\\:px-6{padding-inline:calc(var(--ppm-spacing)*6)}.ppm\\:py-1{padding-block:calc(var(--ppm-spacing)*1)}.ppm\\:py-2{padding-block:calc(var(--ppm-spacing)*2)}.ppm\\:py-3{padding-block:calc(var(--ppm-spacing)*3)}.ppm\\:py-5{padding-block:calc(var(--ppm-spacing)*5)}.ppm\\:py-6{padding-block:calc(var(--ppm-spacing)*6)}.ppm\\:pt-6{padding-top:calc(var(--ppm-spacing)*6)}.ppm\\:pt-8{padding-top:calc(var(--ppm-spacing)*8)}.ppm\\:pb-6{padding-bottom:calc(var(--ppm-spacing)*6)}.ppm\\:pb-16{padding-bottom:calc(var(--ppm-spacing)*16)}.ppm\\:text-center{text-align:center}.ppm\\:text-2xl{font-size:var(--ppm-text-2xl);line-height:var(--tw-leading,var(--ppm-text-2xl--line-height))}.ppm\\:text-base{font-size:var(--ppm-text-base);line-height:var(--tw-leading,var(--ppm-text-base--line-height))}.ppm\\:text-lg{font-size:var(--ppm-text-lg);line-height:var(--tw-leading,var(--ppm-text-lg--line-height))}.ppm\\:text-sm{font-size:var(--ppm-text-sm);line-height:var(--tw-leading,var(--ppm-text-sm--line-height))}.ppm\\:text-xl{font-size:var(--ppm-text-xl);line-height:var(--tw-leading,var(--ppm-text-xl--line-height))}.ppm\\:text-xs{font-size:var(--ppm-text-xs);line-height:var(--tw-leading,var(--ppm-text-xs--line-height))}.ppm\\:leading-none{--tw-leading:1;line-height:1}.ppm\\:font-bold{--tw-font-weight:var(--ppm-font-weight-bold);font-weight:var(--ppm-font-weight-bold)}.ppm\\:font-medium{--tw-font-weight:var(--ppm-font-weight-medium);font-weight:var(--ppm-font-weight-medium)}.ppm\\:font-semibold{--tw-font-weight:var(--ppm-font-weight-semibold);font-weight:var(--ppm-font-weight-semibold)}.ppm\\:break-all{word-break:break-all}.ppm\\:whitespace-nowrap{white-space:nowrap}.ppm\\:text-blue-600{color:var(--ppm-color-blue-600)}.ppm\\:text-card-foreground{color:var(--card-foreground)}.ppm\\:text-gray-500{color:var(--ppm-color-gray-500)}.ppm\\:text-gray-600{color:var(--ppm-color-gray-600)}.ppm\\:text-gray-900{color:var(--ppm-color-gray-900)}.ppm\\:text-muted-foreground{color:var(--muted-foreground)}.ppm\\:text-primary{color:var(--primary)}.ppm\\:text-primary-foreground{color:var(--primary-foreground)}.ppm\\:text-red-700{color:var(--ppm-color-red-700)}.ppm\\:text-secondary-foreground{color:var(--secondary-foreground)}.ppm\\:text-white{color:var(--ppm-color-white)}.ppm\\:underline-offset-4{text-underline-offset:4px}.ppm\\:shadow-2xl{--tw-shadow:0 25px 50px -12px var(--tw-shadow-color,#00000040);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.ppm\\:shadow-sm{--tw-shadow:0 1px 3px 0 var(--tw-shadow-color,#0000001a),0 1px 2px -1px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.ppm\\:shadow-xs{--tw-shadow:0 1px 2px 0 var(--tw-shadow-color,#0000000d);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.ppm\\:transition-\\[color\\,box-shadow\\]{transition-property:color,box-shadow;transition-timing-function:var(--tw-ease,var(--ppm-default-transition-timing-function));transition-duration:var(--tw-duration,var(--ppm-default-transition-duration))}.ppm\\:transition-all{transition-property:all;transition-timing-function:var(--tw-ease,var(--ppm-default-transition-timing-function));transition-duration:var(--tw-duration,var(--ppm-default-transition-duration))}.ppm\\:outline-none{--tw-outline-style:none;outline-style:none}.ppm\\:select-none{-webkit-user-select:none;user-select:none}.ppm\\:group-data-\\[disabled\\=true\\]\\:pointer-events-none:is(:where(.ppm\\:group)[data-disabled=true] *){pointer-events:none}.ppm\\:group-data-\\[disabled\\=true\\]\\:opacity-50:is(:where(.ppm\\:group)[data-disabled=true] *){opacity:.5}.ppm\\:peer-disabled\\:cursor-not-allowed:is(:where(.ppm\\:peer):disabled~*){cursor:not-allowed}.ppm\\:peer-disabled\\:opacity-50:is(:where(.ppm\\:peer):disabled~*){opacity:.5}.ppm\\:selection\\:bg-primary ::selection{background-color:var(--primary)}.ppm\\:selection\\:bg-primary::selection{background-color:var(--primary)}.ppm\\:selection\\:text-primary-foreground ::selection{color:var(--primary-foreground)}.ppm\\:selection\\:text-primary-foreground::selection{color:var(--primary-foreground)}.ppm\\:file\\:inline-flex::file-selector-button{display:inline-flex}.ppm\\:file\\:h-7::file-selector-button{height:calc(var(--ppm-spacing)*7)}.ppm\\:file\\:border-0::file-selector-button{border-style:var(--tw-border-style);border-width:0}.ppm\\:file\\:bg-transparent::file-selector-button{background-color:#0000}.ppm\\:file\\:text-sm::file-selector-button{font-size:var(--ppm-text-sm);line-height:var(--tw-leading,var(--ppm-text-sm--line-height))}.ppm\\:file\\:font-medium::file-selector-button{--tw-font-weight:var(--ppm-font-weight-medium);font-weight:var(--ppm-font-weight-medium)}.ppm\\:file\\:text-foreground::file-selector-button{color:var(--foreground)}.ppm\\:placeholder\\:text-muted-foreground::placeholder{color:var(--muted-foreground)}@media (hover:hover){.ppm\\:hover\\:bg-accent:hover{background-color:var(--accent)}.ppm\\:hover\\:bg-destructive\\/90:hover{background-color:var(--destructive)}@supports (color:color-mix(in lab, red, red)){.ppm\\:hover\\:bg-destructive\\/90:hover{background-color:color-mix(in oklab,var(--destructive)90%,transparent)}}.ppm\\:hover\\:bg-primary\\/90:hover{background-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.ppm\\:hover\\:bg-primary\\/90:hover{background-color:color-mix(in oklab,var(--primary)90%,transparent)}}.ppm\\:hover\\:bg-red-600:hover{background-color:var(--ppm-color-red-600)}.ppm\\:hover\\:bg-secondary\\/80:hover{background-color:var(--secondary)}@supports (color:color-mix(in lab, red, red)){.ppm\\:hover\\:bg-secondary\\/80:hover{background-color:color-mix(in oklab,var(--secondary)80%,transparent)}}.ppm\\:hover\\:text-accent-foreground:hover{color:var(--accent-foreground)}.ppm\\:hover\\:underline:hover{text-decoration-line:underline}}.ppm\\:focus-visible\\:border-ring:focus-visible{border-color:var(--ring)}.ppm\\:focus-visible\\:ring-\\[3px\\]:focus-visible{--tw-ring-shadow:var(--tw-ring-inset,)0 0 0 calc(3px + var(--tw-ring-offset-width))var(--tw-ring-color,currentcolor);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.ppm\\:focus-visible\\:ring-destructive\\/20:focus-visible{--tw-ring-color:var(--destructive)}@supports (color:color-mix(in lab, red, red)){.ppm\\:focus-visible\\:ring-destructive\\/20:focus-visible{--tw-ring-color:color-mix(in oklab,var(--destructive)20%,transparent)}}.ppm\\:focus-visible\\:ring-ring\\/50:focus-visible{--tw-ring-color:var(--ring)}@supports (color:color-mix(in lab, red, red)){.ppm\\:focus-visible\\:ring-ring\\/50:focus-visible{--tw-ring-color:color-mix(in oklab,var(--ring)50%,transparent)}}.ppm\\:disabled\\:pointer-events-none:disabled{pointer-events:none}.ppm\\:disabled\\:cursor-not-allowed:disabled{cursor:not-allowed}.ppm\\:disabled\\:opacity-50:disabled{opacity:.5}.ppm\\:has-data-\\[slot\\=card-action\\]\\:grid-cols-\\[1fr_auto\\]:has([data-slot=card-action]){grid-template-columns:1fr auto}.ppm\\:has-\\[\\>svg\\]\\:px-2\\.5:has(>svg){padding-inline:calc(var(--ppm-spacing)*2.5)}.ppm\\:has-\\[\\>svg\\]\\:px-3:has(>svg){padding-inline:calc(var(--ppm-spacing)*3)}.ppm\\:has-\\[\\>svg\\]\\:px-4:has(>svg){padding-inline:calc(var(--ppm-spacing)*4)}.ppm\\:aria-invalid\\:border-destructive[aria-invalid=true]{border-color:var(--destructive)}.ppm\\:aria-invalid\\:ring-destructive\\/20[aria-invalid=true]{--tw-ring-color:var(--destructive)}@supports (color:color-mix(in lab, red, red)){.ppm\\:aria-invalid\\:ring-destructive\\/20[aria-invalid=true]{--tw-ring-color:color-mix(in oklab,var(--destructive)20%,transparent)}}@media (min-width:48rem){.ppm\\:md\\:text-sm{font-size:var(--ppm-text-sm);line-height:var(--tw-leading,var(--ppm-text-sm--line-height))}}.ppm\\:dark\\:border-input:is(.dark *){border-color:var(--input)}.ppm\\:dark\\:bg-destructive\\/60:is(.dark *){background-color:var(--destructive)}@supports (color:color-mix(in lab, red, red)){.ppm\\:dark\\:bg-destructive\\/60:is(.dark *){background-color:color-mix(in oklab,var(--destructive)60%,transparent)}}.ppm\\:dark\\:bg-input\\/30:is(.dark *){background-color:var(--input)}@supports (color:color-mix(in lab, red, red)){.ppm\\:dark\\:bg-input\\/30:is(.dark *){background-color:color-mix(in oklab,var(--input)30%,transparent)}}@media (hover:hover){.ppm\\:dark\\:hover\\:bg-accent\\/50:is(.dark *):hover{background-color:var(--accent)}@supports (color:color-mix(in lab, red, red)){.ppm\\:dark\\:hover\\:bg-accent\\/50:is(.dark *):hover{background-color:color-mix(in oklab,var(--accent)50%,transparent)}}.ppm\\:dark\\:hover\\:bg-input\\/50:is(.dark *):hover{background-color:var(--input)}@supports (color:color-mix(in lab, red, red)){.ppm\\:dark\\:hover\\:bg-input\\/50:is(.dark *):hover{background-color:color-mix(in oklab,var(--input)50%,transparent)}}}.ppm\\:dark\\:focus-visible\\:ring-destructive\\/40:is(.dark *):focus-visible{--tw-ring-color:var(--destructive)}@supports (color:color-mix(in lab, red, red)){.ppm\\:dark\\:focus-visible\\:ring-destructive\\/40:is(.dark *):focus-visible{--tw-ring-color:color-mix(in oklab,var(--destructive)40%,transparent)}}.ppm\\:dark\\:aria-invalid\\:ring-destructive\\/40:is(.dark *)[aria-invalid=true]{--tw-ring-color:var(--destructive)}@supports (color:color-mix(in lab, red, red)){.ppm\\:dark\\:aria-invalid\\:ring-destructive\\/40:is(.dark *)[aria-invalid=true]{--tw-ring-color:color-mix(in oklab,var(--destructive)40%,transparent)}}.ppm\\:\\[\\&_svg\\]\\:pointer-events-none svg{pointer-events:none}.ppm\\:\\[\\&_svg\\]\\:shrink-0 svg{flex-shrink:0}.ppm\\:\\[\\&_svg\\:not\\(\\[class\\*\\=size-\\]\\)\\]\\:size-4 svg:not([class*=size-]){width:calc(var(--ppm-spacing)*4);height:calc(var(--ppm-spacing)*4)}.ppm\\:\\[\\.border-b\\]\\:pb-6.border-b{padding-bottom:calc(var(--ppm-spacing)*6)}.ppm\\:\\[\\.border-t\\]\\:pt-6.border-t{padding-top:calc(var(--ppm-spacing)*6)}}@property --tw-animation-delay{syntax:\"*\";inherits:false;initial-value:0s}@property --tw-animation-direction{syntax:\"*\";inherits:false;initial-value:normal}@property --tw-animation-duration{syntax:\"*\";inherits:false}@property --tw-animation-fill-mode{syntax:\"*\";inherits:false;initial-value:none}@property --tw-animation-iteration-count{syntax:\"*\";inherits:false;initial-value:1}@property --tw-enter-opacity{syntax:\"*\";inherits:false;initial-value:1}@property --tw-enter-rotate{syntax:\"*\";inherits:false;initial-value:0}@property --tw-enter-scale{syntax:\"*\";inherits:false;initial-value:1}@property --tw-enter-translate-x{syntax:\"*\";inherits:false;initial-value:0}@property --tw-enter-translate-y{syntax:\"*\";inherits:false;initial-value:0}@property --tw-exit-opacity{syntax:\"*\";inherits:false;initial-value:1}@property --tw-exit-rotate{syntax:\"*\";inherits:false;initial-value:0}@property --tw-exit-scale{syntax:\"*\";inherits:false;initial-value:1}@property --tw-exit-translate-x{syntax:\"*\";inherits:false;initial-value:0}@property --tw-exit-translate-y{syntax:\"*\";inherits:false;initial-value:0}:root{--background:oklch(100% 0 0);--foreground:oklch(14.5% 0 0);--card:oklch(100% 0 0);--card-foreground:oklch(14.5% 0 0);--popover:oklch(100% 0 0);--popover-foreground:oklch(14.5% 0 0);--primary:oklch(20.5% 0 0);--primary-foreground:oklch(98.5% 0 0);--secondary:oklch(97% 0 0);--secondary-foreground:oklch(20.5% 0 0);--muted:oklch(97% 0 0);--muted-foreground:oklch(55.6% 0 0);--accent:oklch(97% 0 0);--accent-foreground:oklch(20.5% 0 0);--destructive:oklch(57.7% .245 27.325);--destructive-foreground:oklch(57.7% .245 27.325);--border:oklch(92.2% 0 0);--input:oklch(92.2% 0 0);--ring:oklch(70.8% 0 0);--chart-1:oklch(64.6% .222 41.116);--chart-2:oklch(60% .118 184.704);--chart-3:oklch(39.8% .07 227.392);--chart-4:oklch(82.8% .189 84.429);--chart-5:oklch(76.9% .188 70.08);--radius:.625rem;--sidebar:oklch(98.5% 0 0);--sidebar-foreground:oklch(14.5% 0 0);--sidebar-primary:oklch(20.5% 0 0);--sidebar-primary-foreground:oklch(98.5% 0 0);--sidebar-accent:oklch(97% 0 0);--sidebar-accent-foreground:oklch(20.5% 0 0);--sidebar-border:oklch(92.2% 0 0);--sidebar-ring:oklch(70.8% 0 0)}.dark{--background:oklch(14.5% 0 0);--foreground:oklch(98.5% 0 0);--card:oklch(14.5% 0 0);--card-foreground:oklch(98.5% 0 0);--popover:oklch(14.5% 0 0);--popover-foreground:oklch(98.5% 0 0);--primary:oklch(98.5% 0 0);--primary-foreground:oklch(20.5% 0 0);--secondary:oklch(26.9% 0 0);--secondary-foreground:oklch(98.5% 0 0);--muted:oklch(26.9% 0 0);--muted-foreground:oklch(70.8% 0 0);--accent:oklch(26.9% 0 0);--accent-foreground:oklch(98.5% 0 0);--destructive:oklch(39.6% .141 25.723);--destructive-foreground:oklch(63.7% .237 25.331);--border:oklch(26.9% 0 0);--input:oklch(26.9% 0 0);--ring:oklch(43.9% 0 0);--chart-1:oklch(48.8% .243 264.376);--chart-2:oklch(69.6% .17 162.48);--chart-3:oklch(76.9% .188 70.08);--chart-4:oklch(62.7% .265 303.9);--chart-5:oklch(64.5% .246 16.439);--sidebar:oklch(20.5% 0 0);--sidebar-foreground:oklch(98.5% 0 0);--sidebar-primary:oklch(48.8% .243 264.376);--sidebar-primary-foreground:oklch(98.5% 0 0);--sidebar-accent:oklch(26.9% 0 0);--sidebar-accent-foreground:oklch(98.5% 0 0);--sidebar-border:oklch(26.9% 0 0);--sidebar-ring:oklch(43.9% 0 0)}@property --tw-translate-x{syntax:\"*\";inherits:false;initial-value:0}@property --tw-translate-y{syntax:\"*\";inherits:false;initial-value:0}@property --tw-translate-z{syntax:\"*\";inherits:false;initial-value:0}@property --tw-rotate-x{syntax:\"*\";inherits:false}@property --tw-rotate-y{syntax:\"*\";inherits:false}@property --tw-rotate-z{syntax:\"*\";inherits:false}@property --tw-skew-x{syntax:\"*\";inherits:false}@property --tw-skew-y{syntax:\"*\";inherits:false}@property --tw-space-y-reverse{syntax:\"*\";inherits:false;initial-value:0}@property --tw-border-style{syntax:\"*\";inherits:false;initial-value:solid}@property --tw-leading{syntax:\"*\";inherits:false}@property --tw-font-weight{syntax:\"*\";inherits:false}@property --tw-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}@property --tw-shadow-color{syntax:\"*\";inherits:false}@property --tw-shadow-alpha{syntax:\"<percentage>\";inherits:false;initial-value:100%}@property --tw-inset-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}@property --tw-inset-shadow-color{syntax:\"*\";inherits:false}@property --tw-inset-shadow-alpha{syntax:\"<percentage>\";inherits:false;initial-value:100%}@property --tw-ring-color{syntax:\"*\";inherits:false}@property --tw-ring-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}@property --tw-inset-ring-color{syntax:\"*\";inherits:false}@property --tw-inset-ring-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}@property --tw-ring-inset{syntax:\"*\";inherits:false}@property --tw-ring-offset-width{syntax:\"<length>\";inherits:false;initial-value:0}@property --tw-ring-offset-color{syntax:\"*\";inherits:false;initial-value:#fff}@property --tw-ring-offset-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}";
                     el.type = "text/css";
                     document.head.appendChild(el);
                 })();

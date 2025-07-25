@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export function StatusBar() {
     const [currentTime, setCurrentTime] = useState("9:41");

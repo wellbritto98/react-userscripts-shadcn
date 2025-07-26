@@ -11,7 +11,7 @@ export function NavigationMenuBar() {
       <NavLink to="/find" className="ppm:flex-1 ppm:flex ppm:justify-center" title="Buscar">
         {({ isActive }) => <MagnifyingGlass {...iconProps} color={isActive ? '#000' : '#888'} weight={isActive ? 'fill' : 'regular'} />}
       </NavLink>
-      <NavLink to="/plus" className="ppm:flex-1 ppm:flex ppm:justify-center" title="Adicionar">
+      <NavLink to="/add-post" className="ppm:flex-1 ppm:flex ppm:justify-center" title="Adicionar">
         {({ isActive }) => <Plus {...iconProps} color={isActive ? '#000' : '#888'} weight={isActive ? 'fill' : 'regular'} />}
       </NavLink>
       <NavLink to="/favorites" className="ppm:flex-1 ppm:flex ppm:justify-center" title="Favoritos">

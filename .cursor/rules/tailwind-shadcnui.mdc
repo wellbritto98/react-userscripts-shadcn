@@ -1,0 +1,6 @@
+---
+globs: .tsx
+alwaysApply: false
+---
+
+1. Always use "ppm" prefix when using tailwind.

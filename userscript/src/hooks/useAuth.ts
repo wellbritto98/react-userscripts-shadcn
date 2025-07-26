@@ -10,6 +10,7 @@ import {
 } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import { useNavigate } from 'react-router-dom';
+import { userRepository } from '../lib/repositories';
 
 export interface AuthState {
   user: User | null;
@@ -19,9 +20,15 @@ export interface AuthState {
 
 export interface AuthActions {
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string) => Promise<void>;
+  register: (email: string, password: string, userData?: {
+    username: string;
+    displayName: string;
+    bio?: string;
+    avatarUrl?: string;
+  }) => Promise<void>;
   logout: () => Promise<void>;
   clearError: () => void;
+  setError: (error: string) => void;
 }
 
 /**
@@ -72,13 +79,54 @@ export function useAuth(): AuthState & AuthActions {
    * Função para registrar novo usuário
    * @param email - Email do usuário
    * @param password - Senha do usuário
+   * @param userData - Dados adicionais do usuário
    */
-  const register = async (email: string, password: string): Promise<void> => {
+  const register = async (
+    email: string, 
+    password: string, 
+    userData?: {
+      username: string;
+      displayName: string;
+      bio?: string;
+      avatarUrl?: string;
+    }
+  ): Promise<void> => {
     try {
       setLoading(true);
       setError(null);
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/login")
+      
+      // Criar usuário no Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      // Se temos dados adicionais, criar perfil no Firestore
+      if (userData && user) {
+        // Verificar se o username já existe
+        const existingUser = await userRepository.findByUsername(userData.username);
+        if (existingUser) {
+          // Se o username já existe, deletar o usuário criado e mostrar erro
+          await user.delete();
+          setError('Este nome de usuário já está em uso.');
+          return;
+        }
+        
+        // Criar perfil no Firestore
+        await userRepository.create({
+          username: userData.username,
+          email: email,
+          displayName: userData.displayName,
+          bio: userData.bio || '',
+          avatarUrl: userData.avatarUrl || '',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          followersCount: 0,
+          followingCount: 0,
+          postsCount: 0,
+          isPrivate: false
+        });
+      }
+      
+      navigate("/login");
     } catch (err) {
       const authError = err as AuthError;
       setError(getErrorMessage(authError.code));
@@ -119,7 +167,8 @@ export function useAuth(): AuthState & AuthActions {
     login,
     register,
     logout,
-    clearError
+    clearError,
+    setError
   };
 }
 

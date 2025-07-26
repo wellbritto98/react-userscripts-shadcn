@@ -80,6 +80,7 @@ export function LoginScreen() {
                 </form>
                 <div className="ppm:mt-6 ppm:text-center">
                     <button 
+                        type="button"
                         onClick={() => { clearError(); navigate("/register"); }}
                         className="ppm:text-sm ppm:text-blue-600 ppm:hover:underline ppm:bg-transparent ppm:border-none ppm:cursor-pointer"
                         disabled={loading}

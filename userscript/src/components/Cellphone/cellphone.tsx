@@ -11,7 +11,7 @@ import { ProtectedRoute } from "../Screens/ProtectedRoute";
 import { AuthenticatedLayout } from "../Screens/AuthenticatedLayout";
 import { HomeScreen } from "../Screens/HomeScreen";
 import { FindScreen } from "../Screens/FindScreen";
-import { PlusScreen } from "../Screens/PlusScreen";
+import { AddPostScreen } from "../Screens/AddPostScreen";
 import { FavoritesScreen } from "../Screens/FavoritesScreen";
 
 interface CellphoneProps {
@@ -34,7 +34,7 @@ export function Cellphone({ isOpen, onClose }: CellphoneProps) {
                     <div className="ppm:absolute ppm:top-0 ppm:left-1/2 ppm:transform ppm:-translate-x-1/2 ppm:w-32 ppm:h-6 ppm:bg-black ppm:rounded-b-2xl ppm:z-10"></div>
                     <StatusBar />
                     <MemoryRouter initialEntries={["/login"]}>
-                        <div className="ppm:flex-1 ppm:p-6 ppm:pt-8">
+                        <div className="ppm:flex-1">
                             <Routes>
                                 {/* Rotas públicas */}
                                 <Route path="/login" element={<LoginScreen />} />
@@ -45,7 +45,7 @@ export function Cellphone({ isOpen, onClose }: CellphoneProps) {
                                 <Route element={<ProtectedRoute><AuthenticatedLayout /></ProtectedRoute>}>
                                     <Route path="/home" element={<HomeScreen />} />
                                     <Route path="/find" element={<FindScreen />} />
-                                    <Route path="/plus" element={<PlusScreen />} />
+                                    <Route path="/add-post" element={<AddPostScreen />} />
                                     <Route path="/favorites" element={<FavoritesScreen />} />
                                     <Route path="/profile" element={<UserProfileScreen />} />
                                 </Route>

@@ -63,8 +63,31 @@ export function useAuth(): AuthState & AuthActions {
       setLoading(true);
       setError(null);
       await signInWithEmailAndPassword(auth, email, password);
-      setUser(auth.currentUser);
-      console.log(auth.currentUser);
+      const currentUser = auth.currentUser;
+      setUser(currentUser);
+      console.log(currentUser);
+
+      // Verificar se o usuário precisa ser migrado
+      if (currentUser && email && email.trim() !== '') {
+        try {
+          // Tentar buscar por email (usuário antigo)
+          const userByEmail = await userRepository.findByEmail(email);
+          if (userByEmail && userByEmail.id !== currentUser.uid) {
+            console.log('Migrando usuário existente...');
+            // Migrar usuário para usar UID como ID
+            if (userByEmail.id && currentUser.uid) {
+              await userRepository.migrateUserToUid(userByEmail.id, currentUser.uid);
+              console.log('Usuário migrado com sucesso!');
+            } else {
+              console.warn('IDs inválidos para migração:', userByEmail.id, currentUser.uid);
+            }
+          } 
+        } catch (migrationError) {
+          console.error('Erro na migração:', migrationError);
+          // Não falhar o login por causa da migração
+        }
+      }
+
       navigate("/profile");
 
     } catch (err) {
@@ -110,8 +133,9 @@ export function useAuth(): AuthState & AuthActions {
           return;
         }
         
-        // Criar perfil no Firestore
+        // Criar perfil no Firestore usando o UID do Firebase Auth
         await userRepository.create({
+          uid: user.uid, // Usar o UID do Firebase Auth como ID do documento
           username: userData.username,
           email: email,
           displayName: userData.displayName,

@@ -1,0 +1,2 @@
+[debug] [2025-07-26T14:18:44.431Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"apiKey"}
+[debug] [2025-07-26T14:18:44.442Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"apiKey"}

@@ -1,5 +1,7 @@
+
 import { House, MagnifyingGlass, Plus, Heart, User } from "phosphor-react";
 import { NavLink } from "react-router-dom";
+
 
 export function NavigationMenuBar() {
   const iconProps = { size: 16 };

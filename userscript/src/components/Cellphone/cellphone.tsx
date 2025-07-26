@@ -5,6 +5,7 @@ import { MemoryRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LoginScreen } from "@/components/Screens/LoginScreen";
 import { RegisterScreen } from "@/components/Screens/RegisterScreen";
 import { UserProfileScreen } from "@/components/Screens/UserProfileScreen";
+import { EditProfileScreen } from "@/components/Screens/EditProfileScreen";
 import { MainScreen } from "../Screens/MainScreen";
 import { AjudaScreen } from "../Screens/AjudaScreen";
 import { ProtectedRoute } from "../Screens/ProtectedRoute";
@@ -48,6 +49,8 @@ export function Cellphone({ isOpen, onClose }: CellphoneProps) {
                                     <Route path="/add-post" element={<AddPostScreen />} />
                                     <Route path="/favorites" element={<FavoritesScreen />} />
                                     <Route path="/profile" element={<UserProfileScreen />} />
+                                    <Route path="/profile/:username" element={<UserProfileScreen />} />
+                                    <Route path="/edit-profile" element={<EditProfileScreen />} />
                                 </Route>
 
                                 <Route path="*" element={<Navigate to="/home" replace />} />

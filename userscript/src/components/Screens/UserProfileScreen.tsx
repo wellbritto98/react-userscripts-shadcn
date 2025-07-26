@@ -71,9 +71,33 @@ export function UserProfileScreen() {
             if (isFollowing) {
                 await userRepository.unfollowUser(authUser.uid, profileUser.id);
                 setIsFollowing(false);
+                // Atualizar contadores após deixar de seguir
+                setProfileUser(prev => {
+                    const newCount = Math.max(0, (prev?.followersCount || 0) - 1);
+                    return prev ? {
+                        ...prev,
+                        followersCount: newCount
+                    } : null;
+                });
             } else {
                 await userRepository.followUser(authUser.uid, profileUser.id);
                 setIsFollowing(true);
+                // Atualizar contadores após seguir
+                setProfileUser(prev => {
+                    const newCount = (prev?.followersCount || 0) + 1;
+                    return prev ? {
+                        ...prev,
+                        followersCount: newCount
+                    } : null;
+                });
+            }
+            
+            // Recarregar perfil para garantir sincronização
+            if (username) {
+                const updatedUser = await userRepository.findByUsername(username);
+                if (updatedUser) {
+                    setProfileUser(updatedUser);
+                }
             }
         } catch (error) {
             console.error('Erro ao seguir/deixar de seguir:', error);
@@ -112,43 +136,56 @@ export function UserProfileScreen() {
     return (
         <div className="ppm:p-4 ppm:space-y-6">
             {/* Header do Perfil */}
-            <div className="ppm:flex ppm:items-start ppm:space-x-8">
+            <div className="ppm:flex ppm:flex-col ppm:gap-4 ppm:items-start ppm:space-x-8">
                 {/* Avatar */}
-                <Avatar className="ppm:w-24 ppm:h-24">
-                    <AvatarImage src={user.avatarUrl || ''} alt={user.displayName || ''} />
-                    <AvatarFallback className="ppm:text-2xl ppm:bg-blue-500">
-                        {getInitials(user.displayName || '')}
-                    </AvatarFallback>
-                </Avatar>
+                <div className="ppm:flex ppm:flex-row ppm:items-start ppm:space-x-8">
+                    <Avatar className="ppm:w-24 ppm:h-24">
+                        <AvatarImage src={user.avatarUrl || ''} alt={user.displayName || ''} />
+                        <AvatarFallback className="ppm:text-2xl ppm:bg-blue-500">
+                            {getInitials(user.displayName || '')}
+                        </AvatarFallback>
+                    </Avatar>
 
-                {/* Informações do Perfil */}
-                <div className="ppm:flex-1 ppm:space-y-4">
-                    {/* Username */}
-                    <div className="ppm:flex ppm:items-center ppm:space-x-4">
-                        <h1 className="ppm:text-xl ppm:font-semibold ppm:text-gray-900">
-                            {user.username}
-                        </h1>
+                    {/* Informações do Perfil */}
+                    <div className="ppm:flex-1 ppm:space-y-4">
+                        {/* Username */}
+                        <div className="ppm:flex ppm:items-center ppm:space-x-4">
+                            <h1 className="ppm:text-xl ppm:font-semibold ppm:text-gray-900">
+                                {user.username}
+                            </h1>
+                        </div>
+
+                        {/* Estatísticas */}
+                        <div className="ppm:flex ppm:space-x-8 ppm:text-sm">
+                            <div className="ppm:flex ppm:flex-col ppm:items-center ppm:space-x-1">
+                                <span className="ppm:font-semibold">{user.postsCount || 0}</span>
+                                <span className="ppm:text-gray-600">Posts</span>
+                            </div>
+                            <div className="ppm:flex ppm:flex-col ppm:items-center ppm:space-x-1">
+                                <span className="ppm:font-semibold">{user.followersCount || 0}</span>
+                                <span className="ppm:text-gray-600">Seguidores</span>
+                            </div>
+                            <div className="ppm:flex ppm:flex-col ppm:items-center ppm:space-x-1">
+                                <span className="ppm:font-semibold">{user.followingCount || 0}</span>
+                                <span className="ppm:text-gray-600">Seguindo</span>
+                            </div>
+                        </div>
+
+                        {/* Botão de Ação */}
+
+                    </div>
+                </div>
+                <div className="ppm:flex ppm:flex-col ppm:items-start ppm:gap-4 ppm:w-full">
+                    {/* Nome e Bio */}
+                    <div className="ppm:space-y-1 ppm:w-full">
+                        <h2 className="ppm:font-semibold ppm:text-gray-900">{user.displayName}</h2>
+                        {user.bio && (
+                            <p className="ppm:text-gray-600 ppm:text-sm">{user.bio}</p>
+                        )}
                     </div>
 
-                    {/* Estatísticas */}
-                    <div className="ppm:flex ppm:space-x-8 ppm:text-sm">
-                        <div className="ppm:flex ppm:items-center ppm:space-x-1">
-                            <span className="ppm:font-semibold">{user.postsCount || 0}</span>
-                            <span className="ppm:text-gray-600">Posts</span>
-                        </div>
-                        <div className="ppm:flex ppm:items-center ppm:space-x-1">
-                            <span className="ppm:font-semibold">{user.followersCount || 0}</span>
-                            <span className="ppm:text-gray-600">Seguidores</span>
-                        </div>
-                        <div className="ppm:flex ppm:items-center ppm:space-x-1">
-                            <span className="ppm:font-semibold">{user.followingCount || 0}</span>
-                            <span className="ppm:text-gray-600">Seguindo</span>
-                        </div>
-                    </div>
-
-                    {/* Botão de Ação */}
-                    <div className="ppm:flex ppm:items-center ppm:space-x-4">
-                        {isOwnProfile ? (
+                    {isOwnProfile ? (
+                        <div className="ppm:flex ppm:flex-row ppm:gap-2 ppm:w-full">
                             <Button
                                 variant="outline"
                                 size="sm"
@@ -158,27 +195,32 @@ export function UserProfileScreen() {
                                 <Edit className="ppm:w-4 ppm:h-4" />
                                 <span>Editar Perfil</span>
                             </Button>
-                        ) : (
                             <Button
-                                variant={isFollowing ? "outline" : "default"}
+                                onClick={handleLogout}
+                                variant="outline"
                                 size="sm"
-                                onClick={handleFollow}
-                                className="ppm:flex ppm:items-center ppm:space-x-2"
+                                className="ppm:bg-red-50 ppm:text-red-600 ppm:border-red-200 ppm:hover:bg-red-100 ppm:space-x-2"
+                                disabled={authLoading}
                             >
-                                <UserCheck className="ppm:w-4 ppm:h-4" />
-                                <span>{isFollowing ? 'Seguindo' : 'Seguir'}</span>
+                                <LogOut className="ppm:w-4 ppm:h-4" />
+                                {authLoading ? 'Saindo...' : 'Sair da Conta'}
                             </Button>
-                        )}
-                    </div>
+                        </div>
 
-                    {/* Nome e Bio */}
-                    <div className="ppm:space-y-1">
-                        <h2 className="ppm:font-semibold ppm:text-gray-900">{user.displayName}</h2>
-                        {user.bio && (
-                            <p className="ppm:text-gray-600 ppm:text-sm">{user.bio}</p>
-                        )}
-                    </div>
+                    ) : (
+                        <Button
+                            variant={isFollowing ? "outline" : "default"}
+                            size="sm"
+                            onClick={handleFollow}
+                            className="ppm:flex ppm:items-center ppm:space-x-2 ppm:w-full"
+                        >
+                            <UserCheck className="ppm:w-4 ppm:h-4" />
+                            <span>{isFollowing ? 'Seguindo' : 'Seguir'}</span>
+                        </Button>
+                    )}
                 </div>
+
+
             </div>
 
             <Separator />
@@ -245,21 +287,6 @@ export function UserProfileScreen() {
                     </div>
                 </TabsContent>
             </Tabs>
-
-            {/* Botão de Logout (apenas para perfil próprio) */}
-            {isOwnProfile && (
-                <div className="ppm:pt-6 ppm:border-t ppm:border-gray-200">
-                    <Button
-                        onClick={handleLogout}
-                        variant="outline"
-                        className="ppm:w-full ppm:bg-red-50 ppm:text-red-600 ppm:border-red-200 ppm:hover:bg-red-100"
-                        disabled={authLoading}
-                    >
-                        <LogOut className="ppm:w-4 ppm:h-4 ppm:mr-2" />
-                        {authLoading ? 'Saindo...' : 'Sair da Conta'}
-                    </Button>
-                </div>
-            )}
         </div>
     );
 } 

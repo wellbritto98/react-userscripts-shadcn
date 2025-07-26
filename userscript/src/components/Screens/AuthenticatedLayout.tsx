@@ -4,7 +4,7 @@ import { NavigationMenuBar } from "@/components/ui/NavigationMenuBar";
 
 export function AuthenticatedLayout() {
   return (
-    <div className="ppm:pb-16">
+    <div>
       <Outlet />
       <NavigationMenuBar />
     </div>

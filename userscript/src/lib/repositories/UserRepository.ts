@@ -1,11 +1,29 @@
 import { GenericRepository } from './GenericRepository';
 import { User, UserProfile, FollowRelationship } from '../firestore-models';
-import { collection, doc, getDocs, addDoc, deleteDoc, query, where, orderBy, limit } from 'firebase/firestore';
+import { collection, doc, getDocs, addDoc, deleteDoc, query, where, orderBy, limit, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 export class UserRepository extends GenericRepository<User> {
   constructor() {
     super('users');
+  }
+
+  // Sobrescrever o método create para usar o UID do Firebase Auth como ID do documento
+  async create(data: Omit<User, 'id'> & { uid?: string }): Promise<string> {
+    if (data.uid) {
+      // Se temos o UID, usar como ID do documento
+      const docRef = doc(db, 'users', data.uid);
+      await setDoc(docRef, {
+        ...data,
+        id: data.uid, // Garantir que o campo id também seja o UID
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
+      return data.uid;
+    } else {
+      // Fallback para o método original se não tiver UID
+      return super.create(data);
+    }
   }
 
   // Buscar usuário por email
@@ -34,6 +52,30 @@ export class UserRepository extends GenericRepository<User> {
       limit: limitCount
     });
 
+    return users.map(user => ({
+      id: user.id,
+      username: user.username,
+      avatarUrl: user.avatarUrl,
+      bio: user.bio,
+      displayName: user.displayName,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      followersCount: user.followersCount,
+      followingCount: user.followingCount,
+      postsCount: user.postsCount,
+      isPrivate: user.isPrivate
+    }));
+  }
+
+  // Buscar usuários por displayName (prefixo)
+  async searchUsersByDisplayName(searchTerm: string, limitCount: number = 10): Promise<UserProfile[]> {
+    const users = await this.find({
+      where: [
+        { field: 'displayName', operator: '>=', value: searchTerm },
+        { field: 'displayName', operator: '<=', value: searchTerm + '\uf8ff' }
+      ],
+      limit: limitCount
+    });
     return users.map(user => ({
       id: user.id,
       username: user.username,
@@ -194,5 +236,37 @@ export class UserRepository extends GenericRepository<User> {
       const newCount = (user.postsCount || 0) + increment;
       await this.update(userId, { postsCount: Math.max(0, newCount) });
     }
+  }
+
+  // Migrar usuário existente para usar UID como ID do documento
+  async migrateUserToUid(userId: string, uid: string): Promise<void> {
+    try {
+      // Buscar usuário atual
+      const user = await this.getById(userId);
+      if (!user) {
+        throw new Error('Usuário não encontrado');
+      }
+
+      // Criar novo documento com UID como ID
+      const docRef = doc(db, 'users', uid);
+      await setDoc(docRef, {
+        ...user,
+        id: uid, // Atualizar o campo id para o UID
+        updatedAt: new Date()
+      });
+
+      // Deletar documento antigo
+      await this.delete(userId);
+
+      console.log(`Usuário migrado: ${userId} -> ${uid}`);
+    } catch (error) {
+      console.error('Erro ao migrar usuário:', error);
+      throw error;
+    }
+  }
+
+  // Buscar usuário por UID (para usuários migrados)
+  async findByUid(uid: string): Promise<User | null> {
+    return this.getById(uid);
   }
 } 

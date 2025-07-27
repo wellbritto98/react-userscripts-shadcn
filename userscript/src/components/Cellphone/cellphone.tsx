@@ -6,6 +6,8 @@ import { LoginScreen } from "@/components/Screens/LoginScreen";
 import { RegisterScreen } from "@/components/Screens/RegisterScreen";
 import { UserProfileScreen } from "@/components/Screens/UserProfileScreen";
 import { EditProfileScreen } from "@/components/Screens/EditProfileScreen";
+import { FollowersScreen } from "@/components/Screens/FollowersScreen";
+import { FollowingScreen } from "@/components/Screens/FollowingScreen";
 import { MainScreen } from "../Screens/MainScreen";
 import { AjudaScreen } from "../Screens/AjudaScreen";
 import { ProtectedRoute } from "../Screens/ProtectedRoute";
@@ -51,6 +53,10 @@ export function Cellphone({ isOpen, onClose }: CellphoneProps) {
                                     <Route path="/profile" element={<UserProfileScreen />} />
                                     <Route path="/profile/:username" element={<UserProfileScreen />} />
                                     <Route path="/edit-profile" element={<EditProfileScreen />} />
+                                    <Route path="/followers" element={<FollowersScreen />} />
+                                    <Route path="/followers/:username" element={<FollowersScreen />} />
+                                    <Route path="/following" element={<FollowingScreen />} />
+                                    <Route path="/following/:username" element={<FollowingScreen />} />
                                 </Route>
 
                                 <Route path="*" element={<Navigate to="/home" replace />} />

@@ -161,14 +161,22 @@ export function UserProfileScreen() {
                                 <span className="ppm:font-semibold">{user.postsCount || 0}</span>
                                 <span className="ppm:text-gray-600">Posts</span>
                             </div>
-                            <div className="ppm:flex ppm:flex-col ppm:items-center ppm:space-x-1">
+                            <button 
+                                type="button"
+                                onClick={() => navigate(`/followers/${user.username}`)}
+                                className="ppm:flex ppm:flex-col ppm:items-center ppm:space-x-1 ppm:cursor-pointer ppm:hover:opacity-80"
+                            >
                                 <span className="ppm:font-semibold">{user.followersCount || 0}</span>
                                 <span className="ppm:text-gray-600">Seguidores</span>
-                            </div>
-                            <div className="ppm:flex ppm:flex-col ppm:items-center ppm:space-x-1">
+                            </button>
+                            <button 
+                                type="button"
+                                onClick={() => navigate(`/following/${user.username}`)}
+                                className="ppm:flex ppm:flex-col ppm:items-center ppm:space-x-1 ppm:cursor-pointer ppm:hover:opacity-80"
+                            >
                                 <span className="ppm:font-semibold">{user.followingCount || 0}</span>
                                 <span className="ppm:text-gray-600">Seguindo</span>
-                            </div>
+                            </button>
                         </div>
 
                         {/* Botão de Ação */}

@@ -28,6 +28,18 @@ export class PostRepository extends GenericRepository<Post> {
     });
   }
 
+  // Buscar posts onde um usuário foi marcado
+  async getPostsByTaggedUser(username: string, limitCount: number = 20): Promise<Post[]> {
+    return this.find({
+      where: [
+        { field: 'tags', operator: 'array-contains', value: username },
+        { field: 'isPublic', operator: '==', value: true }
+      ],
+      orderBy: [{ field: 'createdAt', direction: 'desc' }],
+      limit: limitCount
+    });
+  }
+
   // Buscar posts de usuários que o usuário segue (feed personalizado)
   async getFeedPosts(userId: string, followingIds: string[], limitCount: number = 20): Promise<PostWithUser[]> {
     if (followingIds.length === 0) {

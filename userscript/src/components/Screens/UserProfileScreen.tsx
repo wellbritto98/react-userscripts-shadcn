@@ -12,7 +12,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { useNavigate, useParams } from "react-router-dom";
 import { userRepository } from "@/lib/repositories";
-import { User as UserModel } from "@/lib/firestore-models";
+import { postRepository } from "@/lib/repositories";
+import { User as UserModel, Post } from "@/lib/firestore-models";
 import { useAppBar } from "@/components/ui/AppBarContext";
 
 export function UserProfileScreen() {
@@ -26,8 +27,10 @@ export function UserProfileScreen() {
     const [loadingProfile, setLoadingProfile] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
     const [activeTab, setActiveTab] = useState('posts');
-    const [posts, setPosts] = useState<any[]>([]);
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [taggedPosts, setTaggedPosts] = useState<Post[]>([]);
     const [loadingPosts, setLoadingPosts] = useState(false);
+    const [loadingTaggedPosts, setLoadingTaggedPosts] = useState(false);
 
     // Determinar se é o perfil do usuário logado ou de outro usuário
     const isOwnProfile = !username || (userProfile && userProfile.username === username);
@@ -60,6 +63,51 @@ export function UserProfileScreen() {
 
         loadProfile();
     }, [username, userProfile, authUser, isOwnProfile]);
+
+    // Carregar posts do usuário
+    useEffect(() => {
+        const loadPosts = async () => {
+            if (!profileUser?.id) return;
+
+            setLoadingPosts(true);
+            try {
+                const userPosts = await postRepository.getPostsByUser(profileUser.id, 50);
+                setPosts(userPosts);
+            } catch (error) {
+                console.error('Erro ao carregar posts:', error);
+                setPosts([]);
+            } finally {
+                setLoadingPosts(false);
+            }
+        };
+
+        if (activeTab === 'posts') {
+            loadPosts();
+        }
+    }, [profileUser?.id, activeTab]);
+
+    // Carregar posts marcados
+    useEffect(() => {
+        const loadTaggedPosts = async () => {
+            if (!profileUser?.id) return;
+
+            setLoadingTaggedPosts(true);
+            try {
+                // Usar o método otimizado para buscar posts onde o usuário foi marcado
+                const tagged = await postRepository.getPostsByTaggedUser(profileUser.username, 50);
+                setTaggedPosts(tagged);
+            } catch (error) {
+                console.error('Erro ao carregar posts marcados:', error);
+                setTaggedPosts([]);
+            } finally {
+                setLoadingTaggedPosts(false);
+            }
+        };
+
+        if (activeTab === 'tagged') {
+            loadTaggedPosts();
+        }
+    }, [profileUser?.id, profileUser?.username, activeTab]);
 
     // Configurar AppBar com o username
     useEffect(() => {
@@ -268,45 +316,109 @@ export function UserProfileScreen() {
                 </TabsList>
 
                 <TabsContent value="posts" className="ppm:mt-6">
-                    <div className="ppm:grid ppm:grid-cols-3 ppm:gap-4">
-                        {posts.length > 0 ? (
-                            posts.map((post, index) => (
-                                <div key={index} className="ppm:aspect-square ppm:bg-gray-100 ppm:rounded">
-                                    {/* Placeholder para post */}
+                    {loadingPosts ? (
+                        <div className="ppm:grid ppm:grid-cols-3 ppm:gap-4">
+                            {[...Array(6)].map((_, i) => (
+                                <div key={i} className="ppm:aspect-square ppm:bg-gray-200 ppm:rounded ppm:animate-pulse" />
+                            ))}
+                        </div>
+                    ) : posts.length > 0 ? (
+                        <div className="ppm:grid ppm:grid-cols-3 ppm:gap-4">
+                            {posts.map((post) => (
+                                <div 
+                                    key={post.id} 
+                                    className="ppm:aspect-square ppm:bg-gray-100 ppm:rounded ppm:overflow-hidden ppm:relative ppm:group ppm:cursor-pointer"
+                                    onClick={() => navigate(`/post/${post.id}`)}
+                                >
+                                    <img
+                                        src={post.imageUrl}
+                                        alt="Post"
+                                        className="ppm:w-full ppm:h-full ppm:object-cover ppm:group-hover:scale-105 ppm:transition-transform"
+                                    />
+                                    {/* Overlay com informações do post */}
+                                    <div className="ppm:absolute ppm:inset-0 ppm:bg-black/0 ppm:group-hover:bg-black/20 ppm:transition-colors ppm:flex ppm:items-center ppm:justify-center">
+                                        <div className="ppm:opacity-0 ppm:group-hover:opacity-100 ppm:transition-opacity ppm:flex ppm:items-center ppm:gap-4 ppm:text-white">
+                                            <div className="ppm:flex ppm:items-center ppm:gap-1">
+                                                <Heart className="ppm:w-4 ppm:h-4" />
+                                                <span className="ppm:text-sm">{post.likeCount}</span>
+                                            </div>
+                                            <div className="ppm:flex ppm:items-center ppm:gap-1">
+                                                <MessageCircle className="ppm:w-4 ppm:h-4" />
+                                                <span className="ppm:text-sm">{post.commentCount}</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            ))
-                        ) : (
-                            <div className="ppm:col-span-3 ppm:flex ppm:flex-col ppm:items-center ppm:justify-center ppm:py-12 ppm:space-y-4">
-                                <div className="ppm:w-16 ppm:h-16 ppm:border-2 ppm:border-gray-300 ppm:border-dashed ppm:rounded-full ppm:flex ppm:items-center ppm:justify-center">
-                                    <Camera className="ppm:w-8 ppm:h-8 ppm:text-gray-400" />
-                                </div>
-                                <div className="ppm:text-center">
-                                    <h3 className="ppm:text-lg ppm:font-semibold ppm:text-gray-900">
-                                        Nenhum Post Ainda
-                                    </h3>
-                                    <p className="ppm:text-gray-600 ppm:text-sm">
-                                        Quando você compartilhar fotos e vídeos, eles aparecerão aqui.
-                                    </p>
-                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="ppm:col-span-3 ppm:flex ppm:flex-col ppm:items-center ppm:justify-center ppm:py-12 ppm:space-y-4">
+                            <div className="ppm:w-16 ppm:h-16 ppm:border-2 ppm:border-gray-300 ppm:border-dashed ppm:rounded-full ppm:flex ppm:items-center ppm:justify-center">
+                                <Camera className="ppm:w-8 ppm:h-8 ppm:text-gray-400" />
                             </div>
-                        )}
-                    </div>
+                            <div className="ppm:text-center">
+                                <h3 className="ppm:text-lg ppm:font-semibold ppm:text-gray-900">
+                                    Nenhum Post Ainda
+                                </h3>
+                                <p className="ppm:text-gray-600 ppm:text-sm">
+                                    Quando você compartilhar fotos e vídeos, eles aparecerão aqui.
+                                </p>
+                            </div>
+                        </div>
+                    )}
                 </TabsContent>
 
                 <TabsContent value="tagged" className="ppm:mt-6">
-                    <div className="ppm:flex ppm:flex-col ppm:items-center ppm:justify-center ppm:py-12 ppm:space-y-4">
-                        <div className="ppm:w-16 ppm:h-16 ppm:border-2 ppm:border-gray-300 ppm:border-dashed ppm:rounded-full ppm:flex ppm:items-center ppm:justify-center">
-                            <UserCheck className="ppm:w-8 ppm:h-8 ppm:text-gray-400" />
+                    {loadingTaggedPosts ? (
+                        <div className="ppm:grid ppm:grid-cols-3 ppm:gap-4">
+                            {[...Array(6)].map((_, i) => (
+                                <div key={i} className="ppm:aspect-square ppm:bg-gray-200 ppm:rounded ppm:animate-pulse" />
+                            ))}
                         </div>
-                        <div className="ppm:text-center">
-                            <h3 className="ppm:text-lg ppm:font-semibold ppm:text-gray-900">
-                                Nenhuma Foto Marcada
-                            </h3>
-                            <p className="ppm:text-gray-600 ppm:text-sm">
-                                Fotos em que você foi marcado aparecerão aqui.
-                            </p>
+                    ) : taggedPosts.length > 0 ? (
+                        <div className="ppm:grid ppm:grid-cols-3 ppm:gap-4">
+                            {taggedPosts.map((post) => (
+                                <div 
+                                    key={post.id} 
+                                    className="ppm:aspect-square ppm:bg-gray-100 ppm:rounded ppm:overflow-hidden ppm:relative ppm:group ppm:cursor-pointer"
+                                    onClick={() => navigate(`/post/${post.id}`)}
+                                >
+                                    <img
+                                        src={post.imageUrl}
+                                        alt="Post marcado"
+                                        className="ppm:w-full ppm:h-full ppm:object-cover ppm:group-hover:scale-105 ppm:transition-transform"
+                                    />
+                                    {/* Overlay com informações do post */}
+                                    <div className="ppm:absolute ppm:inset-0 ppm:bg-black/0 ppm:group-hover:bg-black/20 ppm:transition-colors ppm:flex ppm:items-center ppm:justify-center">
+                                        <div className="ppm:opacity-0 ppm:group-hover:opacity-100 ppm:transition-opacity ppm:flex ppm:items-center ppm:gap-4 ppm:text-white">
+                                            <div className="ppm:flex ppm:items-center ppm:gap-1">
+                                                <Heart className="ppm:w-4 ppm:h-4" />
+                                                <span className="ppm:text-sm">{post.likeCount}</span>
+                                            </div>
+                                            <div className="ppm:flex ppm:items-center ppm:gap-1">
+                                                <MessageCircle className="ppm:w-4 ppm:h-4" />
+                                                <span className="ppm:text-sm">{post.commentCount}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                    </div>
+                    ) : (
+                        <div className="ppm:flex ppm:flex-col ppm:items-center ppm:justify-center ppm:py-12 ppm:space-y-4">
+                            <div className="ppm:w-16 ppm:h-16 ppm:border-2 ppm:border-gray-300 ppm:border-dashed ppm:rounded-full ppm:flex ppm:items-center ppm:justify-center">
+                                <UserCheck className="ppm:w-8 ppm:h-8 ppm:text-gray-400" />
+                            </div>
+                            <div className="ppm:text-center">
+                                <h3 className="ppm:text-lg ppm:font-semibold ppm:text-gray-900">
+                                    Nenhuma Foto Marcada
+                                </h3>
+                                <p className="ppm:text-gray-600 ppm:text-sm">
+                                    Fotos em que você foi marcado aparecerão aqui.
+                                </p>
+                            </div>
+                        </div>
+                    )}
                 </TabsContent>
             </Tabs>
         </div>

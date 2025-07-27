@@ -76,7 +76,6 @@ export function useAuth(): AuthState & AuthActions {
 
       const currentUser = auth.currentUser;
       setUser(currentUser);
-      console.log(currentUser);
 
       // Verificar se o usuário precisa ser migrado
       if (currentUser && email && email.trim() !== '') {

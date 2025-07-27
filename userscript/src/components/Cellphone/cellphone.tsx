@@ -16,6 +16,7 @@ import { FindScreen } from "../Screens/FindScreen";
 import { AddPostScreen } from "../Screens/AddPostScreen";
 import { FavoritesScreen } from "../Screens/FavoritesScreen";
 import { MainScreen } from "../Screens/MainScreen";
+import { PostScreen } from "../Screens/PostScreen";
 
 interface CellphoneProps {
     isOpen: boolean;
@@ -30,8 +31,7 @@ export function Cellphone({ isOpen, onClose }: CellphoneProps) {
     if (!isOpen) return null;
 
     return (
-        <div className="ppm:fixed cellphone ppm:inset-0 ppm:bg-black/50 ppm:flex ppm:items-center ppm:justify-center ppm:z-50">
-            <div className="ppm:relative ppm:w-[300px] ppm:h-[600px] ppm:bg-gray-900 ppm:rounded-[3rem] ppm:p-2 ppm:shadow-2xl">
+            <div className="ppm:relative ppm:w-[400px] ppm:h-[800px] ppm:bg-gray-900 ppm:rounded-[3rem] ppm:p-2 ppm:shadow-2xl">
                 <CloseButton onClose={onClose} />
 
                 {/* TELA DO APARELHO */}
@@ -64,6 +64,7 @@ export function Cellphone({ isOpen, onClose }: CellphoneProps) {
                                     <Route path="/followers/:username" element={<FollowersScreen />} />
                                     <Route path="/following" element={<FollowingScreen />} />
                                     <Route path="/following/:username" element={<FollowingScreen />} />
+                                    <Route path="/post/:postId" element={<PostScreen />} />
                                 </Route>
 
                                 <Route path="*" element={<Navigate to="/home" replace />} />
@@ -75,6 +76,5 @@ export function Cellphone({ isOpen, onClose }: CellphoneProps) {
                     <div className="ppm:absolute ppm:bottom-2 ppm:left-1/2 ppm:-translate-x-1/2 ppm:w-32 ppm:h-1 ppm:bg-gray-400 ppm:rounded-full" />
                 </div>
             </div>
-        </div>
     );
 }

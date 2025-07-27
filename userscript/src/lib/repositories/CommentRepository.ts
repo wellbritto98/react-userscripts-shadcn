@@ -13,16 +13,29 @@ export class CommentRepository extends GenericRepository<Comment> {
     this.postRepository = new PostRepository();
   }
 
+  // Método de debug para verificar todos os comentários
+  async debugGetAllComments(): Promise<Comment[]> {
+    console.log('Debug: Buscando todos os comentários...');
+    const allComments = await this.find({});
+    console.log('Debug: Total de comentários na coleção:', allComments.length);
+    console.log('Debug: Comentários:', allComments);
+    return allComments;
+  }
+
   // Buscar comentários de um post
   async getCommentsByPost(postId: string, limitCount: number = 50): Promise<Comment[]> {
-    return this.find({
+    console.log('Buscando comentários para postId:', postId);
+    
+    const comments = await this.find({
       where: [
-        { field: 'postId', operator: '==', value: postId },
-        { field: 'parentCommentId', operator: '==', value: null }
+        { field: 'postId', operator: '==', value: postId }
       ],
       orderBy: [{ field: 'createdAt', direction: 'desc' }],
       limit: limitCount
     });
+    
+    console.log('Comentários encontrados:', comments.length);
+    return comments;
   }
 
   // Buscar comentários com dados do usuário

@@ -236,24 +236,6 @@ export function AddPostScreen() {
           </div>
         </CardContent>
       </Card>
-
-      {/* Botão de ação principal */}
-      <div className="ppm:sticky ppm:bottom-4 ppm:pt-4">
-        <Button
-          onClick={handleSubmit}
-          disabled={loading || !imageUrl.trim() || !caption.trim()}
-          className="ppm:w-full ppm:py-3 ppm:text-base ppm:font-medium"
-        >
-          {loading ? (
-            <div className="ppm:flex ppm:items-center ppm:gap-2">
-              <div className="ppm:animate-spin ppm:rounded-full ppm:h-4 ppm:w-4 ppm:border-b-2 ppm:border-white"></div>
-              Postando...
-            </div>
-          ) : (
-            "Compartilhar Post"
-          )}
-        </Button>
-      </div>
     </div>
   );
 } 

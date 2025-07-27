@@ -8,7 +8,6 @@ import { UserProfileScreen } from "@/components/Screens/UserProfileScreen";
 import { EditProfileScreen } from "@/components/Screens/EditProfileScreen";
 import { FollowersScreen } from "@/components/Screens/FollowersScreen";
 import { FollowingScreen } from "@/components/Screens/FollowingScreen";
-import { MainScreen } from "../Screens/MainScreen";
 import { AjudaScreen } from "../Screens/AjudaScreen";
 import { ProtectedRoute } from "../Screens/ProtectedRoute";
 import { AuthenticatedLayout } from "../Screens/AuthenticatedLayout";
@@ -16,6 +15,7 @@ import { HomeScreen } from "../Screens/HomeScreen";
 import { FindScreen } from "../Screens/FindScreen";
 import { AddPostScreen } from "../Screens/AddPostScreen";
 import { FavoritesScreen } from "../Screens/FavoritesScreen";
+import { MainScreen } from "../Screens/MainScreen";
 
 interface CellphoneProps {
     isOpen: boolean;
@@ -36,9 +36,10 @@ export function Cellphone({ isOpen, onClose }: CellphoneProps) {
                 <div className="ppm:w-full ppm:h-full ppm:bg-white ppm:rounded-[2.5rem] ppm:overflow-hidden ppm:relative">
                     <div className="ppm:absolute ppm:top-0 ppm:left-1/2 ppm:transform ppm:-translate-x-1/2 ppm:w-32 ppm:h-6 ppm:bg-black ppm:rounded-b-2xl ppm:z-10"></div>
                     <StatusBar />
-                    <MemoryRouter initialEntries={["/login"]}>
+                    <MemoryRouter initialEntries={["/"]}>
                         <div className="ppm:flex-1">
                             <Routes>
+                                <Route path="/" element={<MainScreen />} />
                                 {/* Rotas públicas */}
                                 <Route path="/login" element={<LoginScreen />} />
                                 <Route path="/register" element={<RegisterScreen />} />

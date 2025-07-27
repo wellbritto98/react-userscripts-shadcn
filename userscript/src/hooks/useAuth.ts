@@ -6,7 +6,9 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  AuthError
+  AuthError,
+  setPersistence,
+  browserLocalPersistence
 } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import { useNavigate } from 'react-router-dom';
@@ -46,6 +48,7 @@ export function useAuth(): AuthState & AuthActions {
    */
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log('onAuthStateChanged', user);
       setUser(user);
       setLoading(false);
     });
@@ -62,7 +65,15 @@ export function useAuth(): AuthState & AuthActions {
     try {
       setLoading(true);
       setError(null);
-      await signInWithEmailAndPassword(auth, email, password);
+      await setPersistence(auth, browserLocalPersistence)
+        .then(() => {
+          return signInWithEmailAndPassword(auth, email, password);
+        })
+        .catch((error) => {
+          console.error('Error setting persistence:', error);
+        });
+
+
       const currentUser = auth.currentUser;
       setUser(currentUser);
       console.log(currentUser);
@@ -81,7 +92,7 @@ export function useAuth(): AuthState & AuthActions {
             } else {
               console.warn('IDs inválidos para migração:', userByEmail.id, currentUser.uid);
             }
-          } 
+          }
         } catch (migrationError) {
           console.error('Erro na migração:', migrationError);
           // Não falhar o login por causa da migração
@@ -105,8 +116,8 @@ export function useAuth(): AuthState & AuthActions {
    * @param userData - Dados adicionais do usuário
    */
   const register = async (
-    email: string, 
-    password: string, 
+    email: string,
+    password: string,
     userData?: {
       username: string;
       displayName: string;
@@ -117,11 +128,11 @@ export function useAuth(): AuthState & AuthActions {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Criar usuário no Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      
+
       // Se temos dados adicionais, criar perfil no Firestore
       if (userData && user) {
         // Verificar se o username já existe
@@ -132,7 +143,7 @@ export function useAuth(): AuthState & AuthActions {
           setError('Este nome de usuário já está em uso.');
           return;
         }
-        
+
         // Criar perfil no Firestore usando o UID do Firebase Auth
         await userRepository.create({
           uid: user.uid, // Usar o UID do Firebase Auth como ID do documento
@@ -149,7 +160,7 @@ export function useAuth(): AuthState & AuthActions {
           isPrivate: false
         });
       }
-      
+
       navigate("/login");
     } catch (err) {
       const authError = err as AuthError;
@@ -168,7 +179,7 @@ export function useAuth(): AuthState & AuthActions {
       setError(null);
       await signOut(auth);
       setUser(null);
-      navigate("/login")  
+      navigate("/login")
     } catch (err) {
       const authError = err as AuthError;
       setError(getErrorMessage(authError.code));

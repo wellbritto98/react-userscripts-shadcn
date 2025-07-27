@@ -11,6 +11,10 @@ export interface User {
   followingCount?: number;
   postsCount?: number;
   isPrivate?: boolean;
+  // Campos para busca com n-grams
+  searchGrams2?: string[];
+  searchGrams3?: string[];
+  searchText?: string; // Texto normalizado para busca
 }
 
 export interface UserProfile extends Omit<User, 'email'> {

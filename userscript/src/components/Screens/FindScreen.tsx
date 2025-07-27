@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -7,6 +7,23 @@ import { userRepository } from "@/lib/repositories";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+// Hook para debounce
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
 export function FindScreen() {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<any[]>([]);
@@ -14,44 +31,58 @@ export function FindScreen() {
   const [touched, setTouched] = useState(false);
   const navigate = useNavigate();
 
-  const handleSearch = async (e: React.FormEvent) => {
+  // Debounce do termo de busca (300ms)
+  const debouncedSearch = useDebounce(search, 300);
+
+  // Busca automática quando o termo debounced muda
+  useEffect(() => {
+    const performSearch = async () => {
+      const term = debouncedSearch.trim();
+      
+      if (term.length < 2) {
+        setResults([]);
+        setTouched(false);
+        return;
+      }
+
+      setTouched(true);
+      setLoading(true);
+      
+      try {
+        // Usar a nova busca melhorada
+        const searchResults = await userRepository.searchUsersImproved(term, 20);
+        setResults(searchResults);
+      } catch (err) {
+        console.error('Erro na busca:', err);
+        setResults([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    performSearch();
+  }, [debouncedSearch]);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setTouched(true);
-    setLoading(true);
-    try {
-      const term = search.trim().toLowerCase();
-      // Busca por username (prefixo)
-      const usersByUsername = await userRepository.searchUsers(term, 10);
-      // Busca por displayName (prefixo)
-      const usersByDisplayName = await userRepository.searchUsersByDisplayName(term, 10);
-      // Junta e filtra resultados: termo em qualquer parte, case-insensitive
-      const allUsers = [...usersByUsername, ...usersByDisplayName];
-      const filtered = allUsers.filter((user, idx, arr) => {
-        // Remove duplicados por id
-        return arr.findIndex(u => u.id === user.id) === idx &&
-          (
-            user.username?.toLowerCase().includes(term) ||
-            user.displayName?.toLowerCase().includes(term)
-          );
-      });
-      setResults(filtered);
-    } catch (err) {
-      setResults([]);
-    } finally {
-      setLoading(false);
-    }
+    // A busca já acontece automaticamente via debounce
   };
 
   return (
     <div className="ppm:p-4 ppm:space-y-6">
-      <form onSubmit={handleSearch} className="ppm:mb-4">
+      <form onSubmit={handleSubmit} className="ppm:mb-4">
         <Input
           placeholder="Buscar usuário..."
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={handleSearchChange}
           className="ppm:w-full ppm:max-w-md ppm:mx-auto"
         />
       </form>
+      
       {loading ? (
         <div className="ppm:space-y-4">
           {[...Array(3)].map((_, i) => (
@@ -91,7 +122,13 @@ export function FindScreen() {
               </Card>
             ))
           ) : touched && search.trim() !== "" ? (
-            <div className="ppm:text-center ppm:text-gray-500 ppm:mt-8">Nenhum usuário encontrado.</div>
+            <div className="ppm:text-center ppm:text-gray-500 ppm:mt-8">
+              Nenhum usuário encontrado.
+            </div>
+          ) : search.trim() !== "" && search.trim().length < 2 ? (
+            <div className="ppm:text-center ppm:text-gray-500 ppm:mt-8">
+              Digite pelo menos 2 caracteres para buscar.
+            </div>
           ) : null}
         </div>
       )}

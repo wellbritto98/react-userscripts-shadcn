@@ -2,6 +2,7 @@ import { GenericRepository } from './GenericRepository';
 import { User, UserProfile, FollowRelationship } from '../firestore-models';
 import { collection, doc, getDocs, addDoc, deleteDoc, query, where, orderBy, limit, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import { generateUserSearchGrams, normalizeSearchText, generateNGrams, calculateSearchScore } from '../utils';
 
 export class UserRepository extends GenericRepository<User> {
   constructor() {
@@ -10,20 +11,46 @@ export class UserRepository extends GenericRepository<User> {
 
   // Sobrescrever o método create para usar o UID do Firebase Auth como ID do documento
   async create(data: Omit<User, 'id'> & { uid?: string }): Promise<string> {
+    // Gerar campos de busca
+    const searchData = generateUserSearchGrams(data.username, data.displayName);
+    
+    const userData = {
+      ...data,
+      ...searchData,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+
     if (data.uid) {
       // Se temos o UID, usar como ID do documento
       const docRef = doc(db, 'users', data.uid);
       await setDoc(docRef, {
-        ...data,
+        ...userData,
         id: data.uid, // Garantir que o campo id também seja o UID
-        createdAt: new Date(),
-        updatedAt: new Date()
       });
       return data.uid;
     } else {
       // Fallback para o método original se não tiver UID
-      return super.create(data);
+      return super.create(userData);
     }
+  }
+
+  // Atualizar campos de busca quando username ou displayName mudam
+  async updateSearchFields(userId: string, username?: string, displayName?: string): Promise<void> {
+    const user = await this.getById(userId);
+    if (!user) return;
+
+    const newUsername = username || user.username;
+    const newDisplayName = displayName !== undefined ? displayName : user.displayName;
+    
+    const searchData = generateUserSearchGrams(newUsername, newDisplayName);
+    
+    await this.update(userId, {
+      ...(username && { username: newUsername }),
+      ...(displayName !== undefined && { displayName: newDisplayName }),
+      ...searchData,
+      updatedAt: new Date()
+    });
   }
 
   // Buscar usuário por email
@@ -40,7 +67,92 @@ export class UserRepository extends GenericRepository<User> {
     });
   }
 
-  // Buscar usuários por termo de busca
+  // Busca melhorada com n-grams
+  async searchUsersImproved(searchTerm: string, limitCount: number = 50): Promise<UserProfile[]> {
+    const normalizedTerm = normalizeSearchText(searchTerm);
+    
+    if (normalizedTerm.length < 2) {
+      return [];
+    }
+
+    // Gerar n-grams do termo de busca
+    const termGrams2 = generateNGrams(normalizedTerm, 2);
+    const termGrams3 = generateNGrams(normalizedTerm, 3);
+
+    // Limitar a 10 n-grams para array-contains-any
+    const limitedGrams2 = termGrams2.slice(0, 10);
+    const limitedGrams3 = termGrams3.slice(0, 10);
+
+    // Buscar por 2-grams
+    const usersBy2Grams = await this.find({
+      where: [{ field: 'searchGrams2', operator: 'array-contains-any', value: limitedGrams2 }],
+      limit: limitCount
+    });
+
+    // Buscar por 3-grams
+    const usersBy3Grams = await this.find({
+      where: [{ field: 'searchGrams3', operator: 'array-contains-any', value: limitedGrams3 }],
+      limit: limitCount
+    });
+
+    // Combinar resultados e remover duplicados
+    const allUsers = [...usersBy2Grams, ...usersBy3Grams];
+    const uniqueUsers = allUsers.filter((user, idx, arr) => 
+      arr.findIndex(u => u.id === user.id) === idx
+    );
+
+    // Filtrar no cliente para garantir que contém todos os n-grams do termo
+    const filteredUsers = uniqueUsers.filter(user => {
+      const userGrams = {
+        searchGrams2: user.searchGrams2 || [],
+        searchGrams3: user.searchGrams3 || []
+      };
+
+      // Verificar se contém todos os 2-grams do termo
+      const hasAll2Grams = termGrams2.every(gram => 
+        userGrams.searchGrams2.includes(gram)
+      );
+
+      // Verificar se contém todos os 3-grams do termo
+      const hasAll3Grams = termGrams3.every(gram => 
+        userGrams.searchGrams3.includes(gram)
+      );
+
+      return hasAll2Grams && hasAll3Grams;
+    });
+
+    // Calcular scores e ordenar
+    const scoredUsers = filteredUsers.map(user => ({
+      user,
+      score: calculateSearchScore(user, searchTerm, {
+        searchGrams2: user.searchGrams2 || [],
+        searchGrams3: user.searchGrams3 || []
+      })
+    }));
+
+    // Ordenar por score (decrescente) e limitar
+    const sortedUsers = scoredUsers
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limitCount)
+      .map(item => item.user);
+
+    // Converter para UserProfile
+    return sortedUsers.map(user => ({
+      id: user.id,
+      username: user.username,
+      avatarUrl: user.avatarUrl,
+      bio: user.bio,
+      displayName: user.displayName,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      followersCount: user.followersCount,
+      followingCount: user.followingCount,
+      postsCount: user.postsCount,
+      isPrivate: user.isPrivate
+    }));
+  }
+
+  // Buscar usuários por termo de busca (método legado - manter para compatibilidade)
   async searchUsers(searchTerm: string, limitCount: number = 10): Promise<UserProfile[]> {
     // Nota: Firestore não suporta busca por texto completo nativamente
     // Esta é uma implementação básica que busca por username
@@ -67,7 +179,7 @@ export class UserRepository extends GenericRepository<User> {
     }));
   }
 
-  // Buscar usuários por displayName (prefixo)
+  // Buscar usuários por displayName (prefixo) - método legado
   async searchUsersByDisplayName(searchTerm: string, limitCount: number = 10): Promise<UserProfile[]> {
     const users = await this.find({
       where: [
@@ -261,6 +373,44 @@ export class UserRepository extends GenericRepository<User> {
       console.log(`Usuário migrado: ${userId} -> ${uid}`);
     } catch (error) {
       console.error('Erro ao migrar usuário:', error);
+      throw error;
+    }
+  }
+
+  // Migrar todos os usuários existentes para incluir campos de busca
+  async migrateAllUsersToSearchFields(): Promise<void> {
+    try {
+      console.log('Iniciando migração dos campos de busca...');
+      
+      const allUsers = await this.find({});
+      let migratedCount = 0;
+      
+      for (const user of allUsers) {
+        // Pular se já tem os campos de busca
+        if (user.searchGrams2 && user.searchGrams3) {
+          continue;
+        }
+        
+        // Gerar campos de busca
+        const searchData = generateUserSearchGrams(user.username, user.displayName);
+        
+        // Atualizar usuário
+        await this.update(user.id!, {
+          ...searchData,
+          updatedAt: new Date()
+        });
+        
+        migratedCount++;
+        
+        // Log a cada 10 usuários migrados
+        if (migratedCount % 10 === 0) {
+          console.log(`${migratedCount} usuários migrados...`);
+        }
+      }
+      
+      console.log(`Migração concluída! ${migratedCount} usuários atualizados.`);
+    } catch (error) {
+      console.error('Erro na migração:', error);
       throw error;
     }
   }

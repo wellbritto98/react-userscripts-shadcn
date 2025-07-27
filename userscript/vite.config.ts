@@ -16,10 +16,10 @@ export default defineConfig(({ mode }) => {
         base: "./",
         build: {
             cssCodeSplit: false,
-            cssMinify: false,
+            cssMinify: true,
             emptyOutDir: false,
             outDir: "dist",
-            minify: false,
+            minify: true,
             sourcemap: false,
             rollupOptions: {
                 input: {

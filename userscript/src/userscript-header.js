@@ -1,9 +1,8 @@
 // ==UserScript==
-// @name     React Userscripts
-// @namespace https://github.com/siefkenj/react-userscripts
+// @name     Popgram
 // @version  1.1
-// @description A sample userscript built using react
-// @include https://*.google.com*
+// @description Development mode for React Userscripts.
+// @include https://*.popmundo.com/*
 // @grant    none
 // ==/UserScript==
 

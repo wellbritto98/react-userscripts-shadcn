@@ -13,12 +13,14 @@ import { useUserProfile } from "@/hooks/useUserProfile";
 import { useNavigate, useParams } from "react-router-dom";
 import { userRepository } from "@/lib/repositories";
 import { User as UserModel } from "@/lib/firestore-models";
+import { useAppBar } from "@/components/ui/AppBarContext";
 
 export function UserProfileScreen() {
     const { user: authUser, loading: authLoading, logout } = useAuth();
     const { userProfile, loading: profileLoading, updateProfile } = useUserProfile();
     const navigate = useNavigate();
     const { username } = useParams<{ username: string }>();
+    const { setAppBarContent } = useAppBar();
 
     const [profileUser, setProfileUser] = useState<UserModel | null>(null);
     const [loadingProfile, setLoadingProfile] = useState(false);
@@ -58,6 +60,19 @@ export function UserProfileScreen() {
 
         loadProfile();
     }, [username, userProfile, authUser, isOwnProfile]);
+
+    // Configurar AppBar com o username
+    useEffect(() => {
+        const user = profileUser || userProfile;
+        if (user) {
+            setAppBarContent(
+                <span className="ppm:text-lg ppm:font-semibold ppm:text-gray-900">
+                    {user.username}
+                </span>
+            );
+        }
+        return () => setAppBarContent(null);
+    }, [profileUser, userProfile, setAppBarContent]);
 
     const handleLogout = async () => {
         await logout();
@@ -148,10 +163,10 @@ export function UserProfileScreen() {
 
                     {/* Informações do Perfil */}
                     <div className="ppm:flex-1 ppm:space-y-4">
-                        {/* Username */}
+                        {/* Display Name (substituindo o username) */}
                         <div className="ppm:flex ppm:items-center ppm:space-x-4">
                             <h1 className="ppm:text-xl ppm:font-semibold ppm:text-gray-900">
-                                {user.username}
+                                {user.displayName}
                             </h1>
                         </div>
 
@@ -184,9 +199,8 @@ export function UserProfileScreen() {
                     </div>
                 </div>
                 <div className="ppm:flex ppm:flex-col ppm:items-start ppm:gap-4 ppm:w-full">
-                    {/* Nome e Bio */}
+                    {/* Bio */}
                     <div className="ppm:space-y-1 ppm:w-full">
-                        <h2 className="ppm:font-semibold ppm:text-gray-900">{user.displayName}</h2>
                         {user.bio && (
                             <p className="ppm:text-gray-600 ppm:text-sm">{user.bio}</p>
                         )}

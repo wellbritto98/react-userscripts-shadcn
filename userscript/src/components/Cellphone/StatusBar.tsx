@@ -37,10 +37,10 @@ export function StatusBar() {
     }, []);
 
     return (
-        <div className="ppm:h-12 ppm:bg-gray-50 ppm:flex ppm:items-center ppm:justify-between ppm:px-6 ppm:pt-6">
+        <div className="ppm:h-12  ppm:bg-white ppm:flex ppm:items-center ppm:justify-between ppm:px-6 ppm:pt-6">
             <span className="ppm:text-sm ppm:font-medium">{currentTime}</span>
             <div className="ppm:flex ppm:items-center ppm:gap-1">
-                <div className="ppm:w-4 ppm:h-2 ppm:bg-green-500 ppm:rounded-sm">100%</div>
+                <div className="ppm:w-4 ppm:h-2 ppm:bg-green-500 ppm:rounded-sm"></div>
             </div>
         </div>
     );

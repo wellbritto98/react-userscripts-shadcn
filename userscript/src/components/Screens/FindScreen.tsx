@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -6,6 +6,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { userRepository } from "@/lib/repositories";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAppBar } from "@/components/ui/AppBarContext";
+import { Search } from "lucide-react";
 
 // Hook para debounce
 function useDebounce<T>(value: T, delay: number): T {
@@ -25,14 +27,38 @@ function useDebounce<T>(value: T, delay: number): T {
 }
 
 export function FindScreen() {
+  const { setAppBarContent } = useAppBar();
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [touched, setTouched] = useState(false);
   const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Debounce do termo de busca (300ms)
   const debouncedSearch = useDebounce(search, 300);
+
+  // Atualiza o AppBar com o input de busca
+  useEffect(() => {
+    setAppBarContent(
+      <div className="ppm:relative ppm:w-full ppm:max-w-md ppm:mx-auto">
+        <span className="ppm:absolute ppm:left-3 ppm:top-1/2 ppm:-translate-y-1/2 ppm:text-gray-400">
+          <Search className="ppm:w-5 ppm:h-5" />
+        </span>
+        <Input
+          ref={inputRef}
+          placeholder="Buscar usuário..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          className="ppm:w-full ppm:pl-10 ppm:max-w-md ppm:mx-auto"
+          autoFocus
+        />
+      </div>
+    );
+  }, [search, setAppBarContent]);
+  useEffect(() => {
+    return () => setAppBarContent(null);
+  }, [setAppBarContent]);
 
   // Busca automática quando o termo debounced muda
   useEffect(() => {
@@ -74,14 +100,15 @@ export function FindScreen() {
 
   return (
     <div className="ppm:p-4 ppm:space-y-6">
-      <form onSubmit={handleSubmit} className="ppm:mb-4">
+      {/* O input agora está no AppBar! */}
+      {/* <form onSubmit={handleSubmit} className="ppm:mb-4">
         <Input
           placeholder="Buscar usuário..."
           value={search}
           onChange={handleSearchChange}
           className="ppm:w-full ppm:max-w-md ppm:mx-auto"
         />
-      </form>
+      </form> */}
       
       {loading ? (
         <div className="ppm:space-y-4">

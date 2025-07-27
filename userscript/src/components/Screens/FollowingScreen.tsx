@@ -9,8 +9,10 @@ import { useUserProfile } from "@/hooks/useUserProfile";
 import { useNavigate, useParams } from "react-router-dom";
 import { userRepository } from "@/lib/repositories";
 import { User as UserModel } from "@/lib/firestore-models";
+import { useAppBar } from "../ui/AppBarContext";
 
 export function FollowingScreen() {
+    const { setAppBarContent } = useAppBar();
     const { user: authUser } = useAuth();
     const { userProfile } = useUserProfile();
     const navigate = useNavigate();
@@ -55,6 +57,27 @@ export function FollowingScreen() {
         loadFollowing();
     }, [targetUsername]);
 
+    useEffect(() => {
+        setAppBarContent(
+            <div className="ppm:flex ppm:items-center ppm:space-x-4 ">
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => navigate(-1)}
+                    className="ppm:p-2"
+                >
+                    <ArrowLeft className="ppm:w-5 ppm:h-5" />
+                </Button>
+                <p className="ppm:text-sm ppm:text-gray-600">
+                    {targetUsername ? `@${targetUsername}` : ""}
+                </p>
+            </div>
+        );
+    }, [setAppBarContent]); // "setAppBarContent" agora é estável
+    useEffect(() => {
+        return () => setAppBarContent(null);
+    }, [setAppBarContent]);
+
     const handleUnfollow = async (followingId: string) => {
         if (!authUser || !followingId) return;
 
@@ -87,23 +110,10 @@ export function FollowingScreen() {
     return (
         <div className="ppm:p-4 ppm:space-y-4">
             {/* Header */}
-            <div className="ppm:flex ppm:items-center ppm:space-x-4 ppm:mb-4">
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => navigate(-1)}
-                    className="ppm:p-2"
-                >
-                    <ArrowLeft className="ppm:w-5 ppm:h-5" />
-                </Button>
-                <div>
-                    <h1 className="ppm:text-lg ppm:font-semibold ppm:text-gray-900">
-                        Seguindo
-                    </h1>
-                    <p className="ppm:text-sm ppm:text-gray-600">
-                        {targetUsername ? `@${targetUsername}` : ''}
-                    </p>
-                </div>
+            <div>
+                <h1 className="ppm:text-lg ppm:font-semibold ppm:text-gray-900">
+                    Seguindo
+                </h1>
             </div>
 
             {/* Lista de Seguindo */}

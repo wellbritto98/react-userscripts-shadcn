@@ -7,8 +7,10 @@ import { useUserProfile } from "@/hooks/useUserProfile";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { userRepository } from "@/lib/repositories";
+import { useAppBar } from "../ui/AppBarContext";
 
 export function EditProfileScreen() {
+    const { setAppBarContent } = useAppBar();
     const { userProfile, loading: profileLoading, updateProfile } = useUserProfile();
     const navigate = useNavigate();
     
@@ -28,6 +30,24 @@ export function EditProfileScreen() {
             setAvatarUrl(userProfile.avatarUrl || "");
         }
     }, [userProfile]);
+
+    // AppBar customizado
+    useEffect(() => {
+        setAppBarContent(
+            <div className="ppm:flex ppm:items-center ppm:space-x-4">
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => navigate("/profile")}
+                    className="ppm:p-2"
+                >
+                    <ArrowLeft className="ppm:w-5 ppm:h-5" />
+                </Button>
+                <span className="ppm:text-lg ppm:font-bold ppm:text-gray-900">Editar Perfil</span>
+            </div>
+        );
+        return () => setAppBarContent(null);
+    }, [setAppBarContent, navigate]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -97,23 +117,7 @@ export function EditProfileScreen() {
     return (
         <>
             <CardHeader className="ppm:text-center ppm:pb-6">
-                <div className="ppm:flex ppm:items-center ppm:justify-between ppm:mb-4">
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={handleCancel}
-                        className="ppm:p-2"
-                    >
-                        <ArrowLeft className="ppm:w-4 ppm:h-4" />
-                    </Button>
-                    <CardTitle className="ppm:text-xl ppm:font-bold ppm:text-gray-900 ppm:flex-1">
-                        Editar Perfil
-                    </CardTitle>
-                    <div className="ppm:w-10"></div> {/* Espaçador para centralizar o título */}
-                </div>
-                <p className="ppm:text-gray-600 ppm:text-sm">
-                    Atualize suas informações
-                </p>
+                {/* AppBar agora cuida do header */}
             </CardHeader>
             <CardContent>
                 {error && (

@@ -2,6 +2,7 @@ import { GenericRepository } from './GenericRepository';
 import { Comment, CommentWithUser } from '../firestore-models';
 import { UserRepository } from './UserRepository';
 import { PostRepository } from './PostRepository';
+import { ActivityEvents } from '../events/ActivityEvents';
 
 export class CommentRepository extends GenericRepository<Comment> {
   private userRepository: UserRepository;
@@ -88,6 +89,14 @@ export class CommentRepository extends GenericRepository<Comment> {
 
     // Atualizar contador de comentários do post
     await this.postRepository.updateCommentCount(commentData.postId, 1);
+
+    // Criar atividade de comentário
+    await ActivityEvents.onPostCommented(
+      commentData.postId,
+      commentId,
+      commentData.userId,
+      commentData.text
+    );
 
     return commentId;
   }

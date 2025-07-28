@@ -1,6 +1,7 @@
 import { GenericRepository } from './GenericRepository';
 import { Post, PostWithUser } from '../firestore-models';
 import { UserRepository } from './UserRepository';
+import { ActivityEvents } from '../events/ActivityEvents';
 
 export class PostRepository extends GenericRepository<Post> {
   private userRepository: UserRepository;
@@ -108,6 +109,11 @@ export class PostRepository extends GenericRepository<Post> {
 
     // Atualizar contador de posts do usuário
     await this.userRepository.updatePostsCount(postData.userId, 1);
+
+    // Criar atividades de menção se houver tags
+    if (postData.tags && postData.tags.length > 0) {
+      await ActivityEvents.onPostMentioned(postId, postData.userId, postData.tags);
+    }
 
     return postId;
   }

@@ -2,6 +2,7 @@ import { GenericRepository } from './GenericRepository';
 import { Like } from '../firestore-models';
 import { PostRepository } from './PostRepository';
 import { CommentRepository } from './CommentRepository';
+import { ActivityEvents } from '../events/ActivityEvents';
 
 export class LikeRepository extends GenericRepository<Like> {
   private postRepository: PostRepository;
@@ -39,8 +40,12 @@ export class LikeRepository extends GenericRepository<Like> {
     // Atualizar contador
     if (targetType === 'post') {
       await this.postRepository.updateLikeCount(targetId, 1);
+      // Criar atividade de like
+      await ActivityEvents.onPostLiked(targetId, userId);
     } else {
       await this.commentRepository.updateLikeCount(targetId, 1);
+      // Criar atividade de like em comentário
+      await ActivityEvents.onCommentLiked(targetId, userId);
     }
   }
 

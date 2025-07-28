@@ -2,6 +2,7 @@ export * from './User';
 export * from './Post';
 export * from './Comment';
 export * from './Like';
+export * from './Activity';
 
 // Tipos utilitários
 export interface FirestoreTimestamp {

@@ -11,5 +11,5 @@ export { AuthenticatedLayout } from './AuthenticatedLayout';
 export { HomeScreen } from './HomeScreen';
 export { FindScreen } from './FindScreen';
 export { AddPostScreen } from './AddPostScreen';
-export { FavoritesScreen } from './FavoritesScreen';
+export { HistoryScreen } from './HistoryScreen';
 export { AdminScreen } from './AdminScreen'; 

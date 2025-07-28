@@ -3,6 +3,7 @@ import { User, UserProfile, FollowRelationship } from '../firestore-models';
 import { collection, doc, getDocs, addDoc, deleteDoc, query, where, orderBy, limit, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { generateUserSearchGrams, normalizeSearchText, generateNGrams, calculateSearchScore } from '../utils';
+import { ActivityEvents } from '../events/ActivityEvents';
 
 export class UserRepository extends GenericRepository<User> {
   constructor() {
@@ -220,6 +221,9 @@ export class UserRepository extends GenericRepository<User> {
     // Atualiza contadores
     await this.updateFollowersCount(followedId, 1);
     await this.updateFollowingCount(followerId, 1);
+
+    // Criar atividade de follow
+    await ActivityEvents.onUserFollowed(followedId, followerId);
   }
 
   // Deixar de seguir usuário

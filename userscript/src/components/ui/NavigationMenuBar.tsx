@@ -1,7 +1,7 @@
 
 import { House, MagnifyingGlass, Plus, Heart, User } from "phosphor-react";
 import { NavLink } from "react-router-dom";
-
+import { NotificationBadge } from "./NotificationBadge";
 
 export function NavigationMenuBar() {
   const iconProps = { size: 16 };
@@ -24,8 +24,13 @@ export function NavigationMenuBar() {
       <NavLink to="/add-post" className="ppm:flex-1 ppm:flex ppm:justify-center" title="Adicionar">
         {({ isActive }) => <Plus {...iconProps} color={isActive ? '#000' : '#888'} weight={isActive ? 'fill' : 'regular'} />}
       </NavLink>
-      <NavLink to="/favorites" className="ppm:flex-1 ppm:flex ppm:justify-center" title="Favoritos">
-        {({ isActive }) => <Heart {...iconProps} color={isActive ? '#000' : '#888'} weight={isActive ? 'fill' : 'regular'} />}
+      <NavLink to="/history" className="ppm:flex-1 ppm:flex ppm:justify-center ppm:relative" title="Atividades">
+        {({ isActive }) => (
+          <div className="ppm:relative">
+            <Heart {...iconProps} color={isActive ? '#000' : '#888'} weight={isActive ? 'fill' : 'regular'} />
+            <NotificationBadge />
+          </div>
+        )}
       </NavLink>
       <NavLink to="/profile" className="ppm:flex-1 ppm:flex ppm:justify-center" title="Perfil">
         {({ isActive }) => <User {...iconProps} color={isActive ? '#000' : '#888'} weight={isActive ? 'fill' : 'regular'} />}

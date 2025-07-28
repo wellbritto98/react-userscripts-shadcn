@@ -13,7 +13,7 @@ import { AuthenticatedLayout } from "../Screens/AuthenticatedLayout";
 import { HomeScreen } from "../Screens/HomeScreen";
 import { FindScreen } from "../Screens/FindScreen";
 import { AddPostScreen } from "../Screens/AddPostScreen";
-import { FavoritesScreen } from "../Screens/FavoritesScreen";
+import { HistoryScreen } from "../Screens/HistoryScreen";
 import { MainScreen } from "../Screens/MainScreen";
 import { PostScreen } from "../Screens/PostScreen";
 import { NotAuthenticatedLayout } from "../Screens/NotAuthenticatedLayout";
@@ -61,7 +61,7 @@ export function Cellphone({ isOpen, onClose }: CellphoneProps) {
                   <Route path="/home" element={<HomeScreen />} />
                   <Route path="/find" element={<FindScreen />} />
                   <Route path="/add-post" element={<AddPostScreen />} />
-                  <Route path="/favorites" element={<FavoritesScreen />} />
+                  <Route path="/history" element={<HistoryScreen />} />
                   <Route path="/profile" element={<UserProfileScreen />} />
                   <Route
                     path="/profile/:username"

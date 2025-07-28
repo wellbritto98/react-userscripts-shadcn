@@ -63,12 +63,12 @@ export function FollowingScreen() {
                 <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate(-1)}    
                     className="ppm:p-2"
                 >
                     <ArrowLeft className="ppm:w-5 ppm:h-5" />
                 </Button>
-                <p className="ppm:text-sm ppm:text-gray-600">
+                <p className="ppm:text-xs ppm:text-gray-600">
                     {targetUsername ? `@${targetUsername}` : ""}
                 </p>
             </div>
@@ -111,7 +111,7 @@ export function FollowingScreen() {
         <div className="ppm:p-4 ppm:space-y-4">
             {/* Header */}
             <div>
-                <h1 className="ppm:text-lg ppm:font-semibold ppm:text-gray-900">
+                <h1 className="ppm:text-sm ppm:font-semibold ppm:text-gray-900">
                     Seguindo
                 </h1>
             </div>
@@ -120,8 +120,8 @@ export function FollowingScreen() {
             {loading ? (
                 <div className="ppm:space-y-4">
                     {[...Array(5)].map((_, i) => (
-                        <Card key={i}>
-                            <CardContent className="ppm:flex ppm:items-center ppm:gap-4 ">
+                        <Card className="ppm:p-2" key={i}>
+                            <CardContent className="ppm:flex ppm:items-center ppm:px-2 ppm:gap-4 ">
                                 <Skeleton className="ppm:w-12 ppm:h-12 ppm:rounded-full" />
                                 <div className="ppm:flex-1">
                                     <Skeleton className="ppm:w-32 ppm:h-4 ppm:mb-2" />
@@ -138,10 +138,10 @@ export function FollowingScreen() {
                         following.map(followedUser => (
                             <Card 
                                 key={followedUser.id} 
-                                className="ppm:cursor-pointer ppm:hover:bg-gray-50 ppm:transition-colors"
+                                className="ppm:cursor-pointer ppm:hover:bg-gray-50 ppm:transition-colors ppm:p-2"
                                 onClick={() => handleUserClick(followedUser.username)}
                             >
-                                <CardContent className="ppm:flex ppm:items-center ppm:gap-4">
+                                <CardContent className="ppm:flex ppm:items-center ppm:px-2 ppm:gap-4">
                                     <Avatar className="ppm:w-12 ppm:h-12">
                                         <AvatarImage src={followedUser.avatarUrl || ''} alt={followedUser.displayName || followedUser.username} />
                                         <AvatarFallback className="ppm:bg-blue-500 ppm:text-white">
@@ -150,10 +150,10 @@ export function FollowingScreen() {
                                     </Avatar>
                                     
                                     <div className="ppm:flex-1 ppm:min-w-0">
-                                        <div className="ppm:font-semibold ppm:text-gray-900 ppm:truncate">
+                                        <div className="ppm:font-semibold ppm:text-sm ppm:text-gray-900 ppm:truncate">
                                             {followedUser.displayName}
                                         </div>
-                                        <div className="ppm:text-gray-500 ppm:text-sm ppm:truncate">
+                                        <div className="ppm:text-gray-500 ppm:text-xs ppm:truncate">
                                             @{followedUser.username}
                                         </div>
                                     </div>
@@ -184,7 +184,7 @@ export function FollowingScreen() {
                         ))
                     ) : (
                         <div className="ppm:text-center ppm:text-gray-500 ppm:py-8">
-                            <p>Não está seguindo ninguém ainda.</p>
+                            <p className="ppm:text-xs">Não está seguindo ninguém ainda.</p>
                         </div>
                     )}
                 </div>

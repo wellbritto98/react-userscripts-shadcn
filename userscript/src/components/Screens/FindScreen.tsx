@@ -114,7 +114,7 @@ export function FindScreen() {
         <div className="ppm:space-y-4">
           {[...Array(3)].map((_, i) => (
             <Card key={i}>
-              <CardContent className="ppm:flex ppm:items-center ppm:gap-4 ppm:py-4">
+              <CardContent className="ppm:flex ppm:items-center ppm:gap-4 ppm:py-2">
                 <Skeleton className="ppm:w-12 ppm:h-12 ppm:rounded-full" />
                 <div className="ppm:flex-1">
                   <Skeleton className="ppm:w-32 ppm:h-4 ppm:mb-2" />
@@ -126,35 +126,33 @@ export function FindScreen() {
           ))}
         </div>
       ) : (
-        <div className="ppm:space-y-4">
+        <div className="ppm:space-y-2">
           {results.length > 0 ? (
             results.map(user => (
-              <Card key={user.id}>
-                <CardContent className="ppm:flex ppm:items-center ppm:gap-4">
+              <Card 
+                key={user.id}
+                className="ppm:cursor-pointer ppm:hover:bg-gray-50 ppm:transition-colors ppm:p-2"
+                onClick={() => navigate(`/profile/${user.username}`)}
+              >
+                <CardContent className="ppm:flex ppm:items-center ppm:px-2 ppm:gap-4">
                   <Avatar className="ppm:w-12 ppm:h-12">
                     <AvatarImage src={user.avatarUrl || ''} alt={user.displayName || user.username} />
                     <AvatarFallback>{(user.displayName || user.username || "?").slice(0,2).toUpperCase()}</AvatarFallback>
                   </Avatar>
                   <div className="ppm:flex-1 ppm:min-w-0">
-                    <div className="ppm:font-semibold ppm:text-gray-900 ppm:truncate">{user.displayName}</div>
-                    <div className="ppm:text-gray-500 ppm:text-sm ppm:truncate">@{user.username}</div>
+                    <div className="ppm:font-semibold ppm:text-sm ppm:text-gray-900 ppm:truncate">{user.displayName}</div>
+                    <div className="ppm:text-gray-500 ppm:text-xs ppm:truncate">@{user.username}</div>
                   </div>
-                  <Button
-                    size="sm"
-                    onClick={() => navigate(`/profile/${user.username}`)}
-                  >
-                    Ver perfil
-                  </Button>
                 </CardContent>
               </Card>
             ))
           ) : touched && search.trim() !== "" ? (
             <div className="ppm:text-center ppm:text-gray-500 ppm:mt-8">
-              Nenhum usuário encontrado.
+              <p className="ppm:text-xs">Nenhum usuário encontrado.</p>
             </div>
           ) : search.trim() !== "" && search.trim().length < 2 ? (
             <div className="ppm:text-center ppm:text-gray-500 ppm:mt-8">
-              Digite pelo menos 2 caracteres para buscar.
+              <p className="ppm:text-xs">Digite pelo menos 2 caracteres para buscar.</p>
             </div>
           ) : null}
         </div>

@@ -93,7 +93,7 @@ export function FollowersScreen() {
         >
           <ArrowLeft className="ppm:w-5 ppm:h-5" />
         </Button>
-        <p className="ppm:text-sm ppm:text-gray-600">
+        <p className="ppm:text-xs ppm:text-gray-600">
           {targetUsername ? `@${targetUsername}` : ""}
         </p>
       </div>
@@ -142,7 +142,7 @@ export function FollowersScreen() {
     <div className="ppm:p-4 ppm:space-y-4">
       {/* Header */}
       <div>
-        <h1 className="ppm:text-lg ppm:font-semibold ppm:text-gray-900">
+        <h1 className="ppm:text-sm ppm:font-semibold ppm:text-gray-900">
           Seguidores
         </h1>
       </div>
@@ -169,10 +169,10 @@ export function FollowersScreen() {
             followers.map((follower) => (
               <Card
                 key={follower.id}
-                className="ppm:cursor-pointer ppm:hover:bg-gray-50 ppm:transition-colors"
+                className="ppm:cursor-pointer ppm:hover:bg-gray-50 ppm:transition-colors ppm:p-2"
                 onClick={() => handleUserClick(follower.username)}
               >
-                <CardContent className="ppm:flex ppm:items-center ppm:gap-4">
+                <CardContent className="ppm:flex ppm:items-center ppm:px-2 ppm:gap-4">
                   <Avatar className="ppm:w-12 ppm:h-12">
                     <AvatarImage
                       src={follower.avatarUrl || ""}
@@ -184,10 +184,10 @@ export function FollowersScreen() {
                   </Avatar>
 
                   <div className="ppm:flex-1 ppm:min-w-0">
-                    <div className="ppm:font-semibold ppm:text-gray-900 ppm:truncate">
+                    <div className="ppm:font-semibold ppm:text-sm ppm:text-gray-900 ppm:truncate">
                       {follower.displayName}
                     </div>
-                    <div className="ppm:text-gray-500 ppm:text-sm ppm:truncate">
+                    <div className="ppm:text-gray-500 ppm:text-xs ppm:truncate">
                       @{follower.username}
                     </div>
                   </div>
@@ -211,12 +211,10 @@ export function FollowersScreen() {
                       ) : followingStates[follower.id!] ? (
                         <>
                           <UserCheck className="ppm:w-4 ppm:h-4" />
-                          <span>Seguindo</span>
                         </>
                       ) : (
                         <>
                           <UserPlus className="ppm:w-4 ppm:h-4" />
-                          <span>Seguir</span>
                         </>
                       )}
                     </Button>
@@ -226,7 +224,7 @@ export function FollowersScreen() {
             ))
           ) : (
             <div className="ppm:text-center ppm:text-gray-500 ppm:py-8">
-              <p>Nenhum seguidor ainda.</p>
+              <p className="ppm:text-xs">Nenhum seguidor ainda.</p>
             </div>
           )}
         </div>

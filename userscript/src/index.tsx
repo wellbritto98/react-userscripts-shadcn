@@ -35,11 +35,11 @@ async function main() {
     iframe = document.createElement("iframe");
     iframe.id = iframeId;
     iframe.style.border = "none";
-    iframe.style.width = "450px";
-    iframe.style.height = "850px";
+    iframe.style.width = "100vw";
+    iframe.style.height = "100vh";
     iframe.style.position = "fixed";
-    iframe.style.top = "10px";
-    iframe.style.left = "10px";
+    iframe.style.top = "0";
+    iframe.style.left = "0";
     iframe.style.zIndex = "2147483647";
     iframe.style.display = "none";
     iframe.style.background = "transparent";

@@ -202,7 +202,7 @@ export function UserProfileScreen() {
             <div className="ppm:flex ppm:flex-col ppm:gap-4 ppm:items-start ppm:space-x-8">
                 {/* Avatar */}
                 <div className="ppm:flex ppm:flex-row ppm:items-start ppm:space-x-8">
-                    <Avatar className="ppm:w-24 ppm:h-24">
+                    <Avatar className="ppm:w-16 ppm:h-16">
                         <AvatarImage src={user.avatarUrl || ''} alt={user.displayName || ''} />
                         <AvatarFallback className="ppm:text-2xl ppm:bg-blue-500">
                             {getInitials(user.displayName || '')}
@@ -213,32 +213,32 @@ export function UserProfileScreen() {
                     <div className="ppm:flex-1 ppm:space-y-4">
                         {/* Display Name (substituindo o username) */}
                         <div className="ppm:flex ppm:items-center ppm:space-x-4">
-                            <h1 className="ppm:text-xl ppm:font-semibold ppm:text-gray-900">
+                            <h1 className="ppm:text-base ppm:font-semibold ppm:text-gray-900">
                                 {user.displayName}
                             </h1>
                         </div>
 
                         {/* Estatísticas */}
-                        <div className="ppm:flex ppm:space-x-8 ppm:text-sm">
+                        <div className="ppm:flex ppm:space-x-6 ppm:text-xs">
                             <div className="ppm:flex ppm:flex-col ppm:items-center ppm:space-x-1">
-                                <span className="ppm:font-semibold">{user.postsCount || 0}</span>
-                                <span className="ppm:text-gray-600">Posts</span>
+                                <span className="ppm:font-semibold ppm:text-sm">{user.postsCount || 0}</span>
+                                <span className="ppm:text-gray-600 ppm:text-xs">Posts</span>
                             </div>
                             <button 
                                 type="button"
                                 onClick={() => navigate(`/followers/${user.username}`)}
                                 className="ppm:flex ppm:flex-col ppm:items-center ppm:space-x-1 ppm:cursor-pointer ppm:hover:opacity-80"
                             >
-                                <span className="ppm:font-semibold">{user.followersCount || 0}</span>
-                                <span className="ppm:text-gray-600">Seguidores</span>
+                                <span className="ppm:font-semibold ppm:text-sm">{user.followersCount || 0}</span>
+                                <span className="ppm:text-gray-600 ppm:text-xs">Seguidores</span>
                             </button>
                             <button 
                                 type="button"
                                 onClick={() => navigate(`/following/${user.username}`)}
                                 className="ppm:flex ppm:flex-col ppm:items-center ppm:space-x-1 ppm:cursor-pointer ppm:hover:opacity-80"
                             >
-                                <span className="ppm:font-semibold">{user.followingCount || 0}</span>
-                                <span className="ppm:text-gray-600">Seguindo</span>
+                                <span className="ppm:font-semibold ppm:text-sm">{user.followingCount || 0}</span>
+                                <span className="ppm:text-gray-600 ppm:text-xs">Seguindo</span>
                             </button>
                         </div>
 
@@ -250,7 +250,7 @@ export function UserProfileScreen() {
                     {/* Bio */}
                     <div className="ppm:space-y-1 ppm:w-full">
                         {user.bio && (
-                            <p className="ppm:text-gray-600 ppm:text-sm">{user.bio}</p>
+                            <p className="ppm:text-gray-600 ppm:text-xs">{user.bio}</p>
                         )}
                     </div>
 
@@ -263,7 +263,7 @@ export function UserProfileScreen() {
                                 className="ppm:flex ppm:items-center ppm:space-x-2"
                             >
                                 <Edit className="ppm:w-4 ppm:h-4" />
-                                <span>Editar Perfil</span>
+                                <span className="ppm:text-xs">Editar Perfil</span>
                             </Button>
                             <Button
                                 onClick={handleLogout}
@@ -273,7 +273,7 @@ export function UserProfileScreen() {
                                 disabled={authLoading}
                             >
                                 <LogOut className="ppm:w-4 ppm:h-4" />
-                                {authLoading ? 'Saindo...' : 'Sair da Conta'}
+                                <span className="ppm:text-xs">{authLoading ? 'Saindo...' : 'Sair da Conta'}</span>
                             </Button>
                         </div>
 
@@ -285,7 +285,7 @@ export function UserProfileScreen() {
                             className="ppm:flex ppm:items-center ppm:space-x-2 ppm:w-full"
                         >
                             <UserCheck className="ppm:w-4 ppm:h-4" />
-                            <span>{isFollowing ? 'Seguindo' : 'Seguir'}</span>
+                            <span className="ppm:text-xs">{isFollowing ? 'Seguindo' : 'Seguir'}</span>
                         </Button>
                     )}
                 </div>
@@ -303,7 +303,7 @@ export function UserProfileScreen() {
                         className="ppm:flex ppm:items-center ppm:space-x-2 ppm:data-[state=active]:border-b-2 ppm:data-[state=active]:border-blue-500 ppm:data-[state=active]:text-blue-600 ppm:rounded-none ppm:bg-transparent ppm:shadow-none"
                     >
                         <Grid className="ppm:w-4 ppm:h-4" />
-                        <span className="ppm:text-sm ppm:font-medium">Posts</span>
+                        <span className="ppm:text-xs ppm:font-medium">Posts</span>
                     </TabsTrigger>
 
                     <TabsTrigger
@@ -311,7 +311,7 @@ export function UserProfileScreen() {
                         className="ppm:flex ppm:items-center ppm:space-x-2 ppm:data-[state=active]:border-b-2 ppm:data-[state=active]:border-blue-500 ppm:data-[state=active]:text-blue-600 ppm:rounded-none ppm:bg-transparent ppm:shadow-none"
                     >
                         <UserCheck className="ppm:w-4 ppm:h-4" />
-                        <span className="ppm:text-sm ppm:font-medium">Marcado</span>
+                        <span className="ppm:text-xs ppm:font-medium">Marcado</span>
                     </TabsTrigger>
                 </TabsList>
 
@@ -357,10 +357,10 @@ export function UserProfileScreen() {
                                 <Camera className="ppm:w-8 ppm:h-8 ppm:text-gray-400" />
                             </div>
                             <div className="ppm:text-center">
-                                <h3 className="ppm:text-lg ppm:font-semibold ppm:text-gray-900">
+                                <h3 className="ppm:text-sm ppm:font-semibold ppm:text-gray-900">
                                     Nenhum Post Ainda
                                 </h3>
-                                <p className="ppm:text-gray-600 ppm:text-sm">
+                                <p className="ppm:text-gray-600 ppm:text-xs">
                                     Quando você compartilhar fotos e vídeos, eles aparecerão aqui.
                                 </p>
                             </div>
@@ -410,10 +410,10 @@ export function UserProfileScreen() {
                                 <UserCheck className="ppm:w-8 ppm:h-8 ppm:text-gray-400" />
                             </div>
                             <div className="ppm:text-center">
-                                <h3 className="ppm:text-lg ppm:font-semibold ppm:text-gray-900">
+                                <h3 className="ppm:text-sm ppm:font-semibold ppm:text-gray-900">
                                     Nenhuma Foto Marcada
                                 </h3>
-                                <p className="ppm:text-gray-600 ppm:text-sm">
+                                <p className="ppm:text-gray-600 ppm:text-xs">
                                     Fotos em que você foi marcado aparecerão aqui.
                                 </p>
                             </div>

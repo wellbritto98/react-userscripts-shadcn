@@ -1,0 +1,14 @@
+[debug] [2025-07-28T12:55:38.522Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"apiKey"}
+[debug] [2025-07-28T12:55:38.532Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"apiKey"}
+[debug] [2025-07-28T12:55:38.604Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"apiKey"}
+[debug] [2025-07-28T12:55:38.606Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"apiKey"}
+[debug] [2025-07-28T12:55:38.608Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"apiKey"}
+[debug] [2025-07-28T12:55:38.610Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"apiKey"}
+[debug] [2025-07-28T12:55:38.612Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"apiKey"}
+[debug] [2025-07-28T12:55:38.614Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"apiKey"}
+[debug] [2025-07-28T12:55:38.621Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"apiKey"}
+[debug] [2025-07-28T12:55:38.624Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"apiKey"}
+[debug] [2025-07-28T12:55:38.626Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-07-28T12:55:38.626Z] > authorizing via signed-in user (eng.jwellbritto@gmail.com)
+[debug] [2025-07-28T12:55:38.626Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-07-28T12:55:38.626Z] > authorizing via signed-in user (eng.jwellbritto@gmail.com)
